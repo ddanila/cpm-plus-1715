@@ -107,3 +107,27 @@ Implementation CI passed for both repositories:
 and [Pico1715 checks](https://github.com/ddanila/Pico1715/actions/runs/40491196444).
 The final report-only commit does not change the qualified sources or dependency
 pins. These results supersede the older firmware report's CRC-fault claim.
+
+## Keyboard reliability milestone — 2026-10-27
+
+All 43 cases passed separately with the native/reference-ROM runner, native/public
+fixture, and shared firmware/RTL/reference-ROM runner (129 case executions).
+All 17 host tests passed, and a fresh source tree reproduced all nine generated
+artifacts. The ten additional cases exercise asynchronous arrivals during BIOS
+disk operations, queue wrap/overflow, prefix decoding, warm boot, reset, and
+faster-input overload. Scheduled bytes are attempted once without backpressure.
+
+The largest observed service-entry gap across the eight positive keyboard cases
+was 86,904 CPU clocks in native/reference-ROM simulation and 87,188 clocks in
+firmware/RTL simulation (about 35.5 ms), against the tested 101,000-clock character
+period. These are observations within the test windows, not an exhaustive phase
+proof or a measured physical keyboard rate. Nominal cases had no FIFO-full
+rejections; deliberate queue overflow retained the oldest 128 characters and
+counted 32 drops. Faster-input cases exposed receiver loss as expected.
+
+Implementation CI passed for both repositories:
+[CP/M checks](https://github.com/ddanila/cpm-plus-1715/actions/runs/40502678499)
+and [Pico1715 checks](https://github.com/ddanila/Pico1715/actions/runs/40501975438).
+Release packaging accepted all four current reports and produced identical ZIP
+bytes on repeat invocation. The final report/documentation commit does not change the qualified sources or
+dependency pins. Physical timing and electrical qualification remain outstanding.
