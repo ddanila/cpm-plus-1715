@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "hardware_executed": false,
+  "note": "Core diagnostic bytecode is identical in all runs. These reports identify the exact runner binaries used; no hardware qualification.",
+  "runs": {
+    "cpm3-native": {
+      "schema": 1,
+      "hardware_executed": false,
+      "backend": "native",
+      "binary_sha256": "89f3db66fc26d79cd59f1acae6b6cca656ada54f2f5d525b89c70528b8604532",
+      "rom_sha256": "639db4e6c4bea3042bfc7ea2ab83ee475e9391766bd5cffc370e0b59affdeac2",
+      "program_sha256": "258890fbb8612d894e8e92b69bb914244fd5cc5ea7a637be99e24772fc9273be",
+      "cases": [
+        {
+          "case": "info",
+          "marker": "P1715TEST INFO PASS",
+          "exit_status": 0,
+          "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+          "output_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e"
+        },
+        {
+          "case": "write",
+          "marker": "P1715TEST WRITE PASS",
+          "exit_status": 0,
+          "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "cold-verify",
+          "marker": "P1715TEST VERIFY PASS",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "collision",
+          "marker": "P1715TEST COLLISION FAIL",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "corrupt",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "500d7350e24d867288d590a11315b0d016b97e6f90fbc11b95f0435e750b8b47",
+          "output_sha256": "500d7350e24d867288d590a11315b0d016b97e6f90fbc11b95f0435e750b8b47"
+        },
+        {
+          "case": "disk-full",
+          "marker": "P1715TEST IO FAIL",
+          "exit_status": 0,
+          "input_sha256": "96b8280b4a3a0958068b5a0afc61b6a4606f3527dc55e4030f7ecfb726ca5025",
+          "output_sha256": "2eb6c23ef543c3a8722d3c99d15ef7e225a4e94b0c0f254021e3bcc308bc914b"
+        },
+        {
+          "case": "write-protect",
+          "marker": "CP/M Error On A: Disk I/O",
+          "exit_status": 0,
+          "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+          "output_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e"
+        },
+        {
+          "case": "cleanup",
+          "marker": "P1715TEST CLEAN PASS",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8"
+        },
+        {
+          "case": "cold-missing",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8",
+          "output_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8"
+        }
+      ]
+    },
+    "cpm3-firmware": {
+      "schema": 1,
+      "hardware_executed": false,
+      "backend": "firmware",
+      "binary_sha256": "81cf8c974b0aeda982000b89ffdff5fe3985dca56543467a773b1eccbd152999",
+      "rom_sha256": "639db4e6c4bea3042bfc7ea2ab83ee475e9391766bd5cffc370e0b59affdeac2",
+      "program_sha256": "258890fbb8612d894e8e92b69bb914244fd5cc5ea7a637be99e24772fc9273be",
+      "cases": [
+        {
+          "case": "info",
+          "marker": "P1715TEST INFO PASS",
+          "exit_status": 0,
+          "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+          "output_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e"
+        },
+        {
+          "case": "write",
+          "marker": "P1715TEST WRITE PASS",
+          "exit_status": 0,
+          "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "cold-verify",
+          "marker": "P1715TEST VERIFY PASS",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "collision",
+          "marker": "P1715TEST COLLISION FAIL",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1"
+        },
+        {
+          "case": "corrupt",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "500d7350e24d867288d590a11315b0d016b97e6f90fbc11b95f0435e750b8b47",
+          "output_sha256": "500d7350e24d867288d590a11315b0d016b97e6f90fbc11b95f0435e750b8b47"
+        },
+        {
+          "case": "cleanup",
+          "marker": "P1715TEST CLEAN PASS",
+          "exit_status": 0,
+          "input_sha256": "fba2c5e6c744c818fbebd97b4790764e1abcd82fe3309d5380550b2947379fd1",
+          "output_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8"
+        },
+        {
+          "case": "cold-missing",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8",
+          "output_sha256": "b94bd575054352efc1674d16af0cde62198f41b7573077bf48d2528eaff6e4d8"
+        }
+      ]
+    },
+    "scp-native": {
+      "schema": 1,
+      "hardware_executed": false,
+      "backend": "native",
+      "binary_sha256": "89f3db66fc26d79cd59f1acae6b6cca656ada54f2f5d525b89c70528b8604532",
+      "rom_sha256": "51cb80639b5667f2611da71ce7305061566cf3474bda7db6fc82709d08e46d01",
+      "program_sha256": "258890fbb8612d894e8e92b69bb914244fd5cc5ea7a637be99e24772fc9273be",
+      "cases": [
+        {
+          "case": "info",
+          "marker": "P1715TEST INFO PASS",
+          "exit_status": 0,
+          "input_sha256": "ee85760f07443c58a095a0d8bba0bd8395210a6bdea5a82a104e4fd4a9efc296",
+          "output_sha256": "ee85760f07443c58a095a0d8bba0bd8395210a6bdea5a82a104e4fd4a9efc296"
+        },
+        {
+          "case": "write",
+          "marker": "P1715TEST WRITE PASS",
+          "exit_status": 0,
+          "input_sha256": "ee85760f07443c58a095a0d8bba0bd8395210a6bdea5a82a104e4fd4a9efc296",
+          "output_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03"
+        },
+        {
+          "case": "cold-verify",
+          "marker": "P1715TEST VERIFY PASS",
+          "exit_status": 0,
+          "input_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03",
+          "output_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03"
+        },
+        {
+          "case": "collision",
+          "marker": "P1715TEST COLLISION FAIL",
+          "exit_status": 0,
+          "input_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03",
+          "output_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03"
+        },
+        {
+          "case": "corrupt",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "9dbaebcc8340c2973ff11e2983d7e52581f49825de69a59295b9e34299f040d6",
+          "output_sha256": "9dbaebcc8340c2973ff11e2983d7e52581f49825de69a59295b9e34299f040d6"
+        },
+        {
+          "case": "cleanup",
+          "marker": "P1715TEST CLEAN PASS",
+          "exit_status": 0,
+          "input_sha256": "37b2a385e19c84fd10f83a52f6dd45978bfbf6f09370857242a80d8cc2a61e03",
+          "output_sha256": "4cd8ccbb1cf0a6468cea7c415e674a3d45097ec08b44f56e21c1ff8b3727f2b7"
+        },
+        {
+          "case": "cold-missing",
+          "marker": "P1715TEST VERIFY FAIL",
+          "exit_status": 0,
+          "input_sha256": "4cd8ccbb1cf0a6468cea7c415e674a3d45097ec08b44f56e21c1ff8b3727f2b7",
+          "output_sha256": "4cd8ccbb1cf0a6468cea7c415e674a3d45097ec08b44f56e21c1ff8b3727f2b7"
+        }
+      ]
+    }
+  }
+}

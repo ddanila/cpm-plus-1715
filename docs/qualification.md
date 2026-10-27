@@ -152,3 +152,12 @@ with `python3 tools/build_wasm_probe.py` (add `--firmware` for the firmware back
 Pass the resulting launcher to `tools/check_runtime.py` exactly like a native
 probe. Browser UI workflow coverage belongs to DAC's classic-workstation guide;
 these reports qualify deterministic simulator execution, not physical hardware.
+
+## Portable diagnostics increment
+
+The bundled `P1715TST.COM` has separate [diagnostic qualification](../reports/diagnostics.json):
+nine native CP/M 3 scenarios, seven shared-firmware/RTL CP/M 3 scenarios, and seven
+local reference-ROM/SCP scenarios. Reports retain the exact guest program, runner,
+ROM and input/output disk hashes. The utility is verified independently against
+host-read file contents; cold verification, collision and corruption failures
+preserve unrelated files. This adds no physical execution claim.
