@@ -106,3 +106,8 @@ all: $(BUILD)/keyboard-map.json
 $(BUILD)/keyboard-test.cim: src/keyboard-test.asm $(BUILD)/keyboard.inc $(ZMAC)
 	$(ZMAC) --zmac -o $@ $<
 all: $(BUILD)/keyboard-test.cim
+
+$(BUILD)/p1715test.cim: src/p1715test.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/p1715test.lst $<
+$(OUT)/cpm-plus-1715.img: $(BUILD)/p1715test.cim
+all: $(BUILD)/p1715test.cim

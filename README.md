@@ -96,3 +96,6 @@ The normal build assembles the 1715 BIOS and platform services and generates
 CPM3.SYS with DRI tools. It consumes pinned upstream `BDOS3.SPR` and `CCP.COM`
 inputs, as the Juku baseline does; the matching upstream source archive is
 included. It does not independently rebuild every DRI kernel/utility module.
+
+The image also includes [P1715TST guest diagnostics](docs/diagnostics.md) for
+patterned storage checks and cold-boot verification, using portable CP/M BDOS.

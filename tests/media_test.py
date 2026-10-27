@@ -62,14 +62,15 @@ class MediaTests(unittest.TestCase):
             self.assertNotEqual(subprocess.run(cmd+[str(output)],capture_output=True).returncode, 0)
 
     def test_builder_matches_previous_allocation_algorithm(self):
-        # Independent byte-level oracle for the original v0.1 layout. Boot bytes
-        # intentionally change with platform code; directory/data must not.
+        # Independent allocation oracle, including the new diagnostic utility.
+        # Boot bytes intentionally change with platform code.
         import zipfile
         from build_image import put
         d = bytearray([0xe5])*SIZE; block=2
         items=[('CPM3.SYS',(ROOT/'build/cpm3.sys').read_bytes()),('CCP.COM',(ROOT/'third_party/cpm3/ccp.com').read_bytes())]
         with zipfile.ZipFile(ROOT/'third_party/cpm3/releases/cpm3bin_unix-20260607.zip') as z:
             items += [(n.upper()+'.COM',z.read(n+'.com')) for n in ('dir','type','pip','erase','rename','show','set','submit')]
+        items += [('P1715TST.COM',(ROOT/'build/p1715test.cim').read_bytes())]
         items += [('HELLO.TXT',b'Native CP/M Plus on Robotron 1715\r\n\x1a'),('TEST.SUB',b'DIR HELLO.TXT\r\nTYPE HELLO.TXT\r\n\x1a')]
         for slot,(name,data) in enumerate(items):
             stem,ext=name.split('.');e=bytearray(32);e[1:12]=(stem.ljust(8)+ext.ljust(3)).encode();e[15]=(len(data)+127)//128

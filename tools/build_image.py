@@ -35,6 +35,7 @@ def image():
     with zipfile.ZipFile(archive) as z:
         for name in ('dir','type','pip','erase','rename','show','set','submit'):
             block=put(disk,name.upper()+'.COM',z.read(name+'.com'),block)
+    block=put(disk,'P1715TST.COM',(ROOT/'build/p1715test.cim').read_bytes(),block)
     block=put(disk,'HELLO.TXT',b'Native CP/M Plus on Robotron 1715\r\n\x1a',block)
     block=put(disk,'TEST.SUB',b'DIR HELLO.TXT\r\nTYPE HELLO.TXT\r\n\x1a',block)
     out=ROOT/'out';out.mkdir(exist_ok=True)
