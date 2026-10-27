@@ -1,64 +1,92 @@
 # Qualification boundaries
 
-Reports record generated-image and runner hashes, source fingerprints, screen
-captures, controller counters and independent media comparisons. They describe
-execution in a model, not a physical 1715 or measured RP2350 timing.
+The runtime suite defines 33 scenarios and records generated-image, build-output,
+source, dependency, ROM and runner fingerprints. It executes the guest on the
+unchanged Z80/bus seam and checks exported media; it does not intercept BDOS calls.
+The report's `rom_profile` distinguishes `public-fixture` from `stock-reference`.
+`hardware_executed` remains false.
 
-`native-runtime.json` uses the unchanged external reference ROM and timed PIO
-controller. `public-runtime.json` uses the source-built entry fixture and the
-same Z80/controller model. Each covers 19 scenarios: boot and directory,
-SUBMIT-driven utilities, cold persistence, erase and cold deletion, keyboard
-editing/warm boot, explicit multi-record warm boot, 256 distinct records across
-extents, cold comparison, deliberate corruption, disk full and cold comparison,
-write protection, missing SYS, damaged SYS header and payload, absent media,
-CRC fault injection and reset during an incomplete write.
+## Coverage
 
-The full fixture leaves ten free 2 KiB blocks. The guest must stop after 160
-128-byte records; the host independently checks those bytes and the next cold
-boot reads them back. This caught and fixed insufficient space for CP/M's
-second allocation vector. The ordinary indexed workload checks 32768 bytes.
+- Boot and utilities: directory listing, SUBMIT-driven PIP/TYPE/RENAME/SHOW,
+  cold persistence, erase/cold deletion, keyboard editing and warm boot.
+- Boot loader: guest SET of SYS/RO attributes followed by cold boot, fragmented
+  SYS in the final directory slot, reserved/out-of-range/repeated allocations,
+  wrong record count, wrong extent and unused allocation pointers.
+- Guest storage: four-record BDOS reads and writes, reverse random reads,
+  USER isolation/cold directory visibility, full directory with free data blocks,
+  a 32 KiB PIP copy, and restoration of multi-record count on warm boot.
+- Indexed storage: 256 distinct records across extents, cold comparison,
+  deliberate payload corruption, disk full after 160 records and cold comparison.
+- Faults: write protection, missing SYS, damaged SYS header/payload, absent media,
+  CRC injection, reset during an incomplete write, and a cold read of the recovered
+  copy. Host checks require exact recovered contents and unchanged unrelated files.
 
-The native suite's good transfers require zero overrun, underflow, drop,
-transmit fault, SIO error and rejected-write counters. Deliberate CRC faults
-are negative tests, not successful transfers. Runtime cycle bounds include
-room for error handling; an optional literal screen marker followed by 20
-million additional CPU clocks cuts otherwise idle test time. Tests still
-validate outputs and media independently.
+Host tests separately exercise empty files, padding, attributes, user areas,
+EX/S2 boundary crossing, malformed extents/allocations, directory and disk
+exhaustion without modifying input, and exclusive output creation. An independent
+byte-level oracle checks the original directory/data layout. New platform bytes
+in the reserved boot area intentionally change.
 
-The public fixture does not exercise the original ROM descriptor/4000h stage.
-The actual ROM is private test input; no result silently substitutes the fixture
-for that ROM. Source-only CI covers the public fixture and uploads a generated
-simulator package. The original ROM's identity has not been tied to a physical
-specimen, as documented in Pico1715.
+Good transfers require zero overrun, underflow, drop, transmit-fault, SIO-error
+and rejected-write counters. Negative media tests require absence of the OS prompt
+and appropriate transfer activity (none for absent media, nonzero for CRC faults).
+The public fixture must emit its boot-error diagnostic. A configured fault alone
+is not a pass. Firmware diagnostics, including storage/RTL details, are retained
+in each case's stderr and in its report.
 
-Pico1715's runner changes preserve existing defaults. Its nine stock-SCP timed
-cases, portable tests and firmware smoke pass; its integration commit also has
-a passing GitHub Actions run. The co-simulation builder now forces a final link
-after externally compiled C objects change, preventing stale-runner evidence.
+The original firmware CRC test did not establish rejection: service initialization
+cleared the injected option and the OS booted. The updated host bridge applies
+explicit faults after initialization, and the updated suite rejects that prior
+false-positive outcome. Earlier 19-case reports should not be read as evidence
+of firmware CRC-fault rejection.
 
-Before physical deployment, verify mainboard revision, connector orientation,
-voltage translation and board power gates independently. Then qualify CTC/SIO
-clocking, keyboard input, CRT output, sector timing, seek delays, protection,
-reset and cold persistence on disposable media. The simulator's controller
+## Running and publishing
+
+Build runners with `make probe` or `make firmware-probe`. Their hash-bound sidecar
+manifests identify the backend and exact clean dependency commits. The runtime
+harness checks these before starting. Unknown ROMs are rejected: use the locally
+built public fixture or the reference hash documented in NOTICE.
+
+Each invocation owns a unique run directory under `--out`, with private input
+copies and per-case stdout/stderr, RAM, screen and exported image. Timeouts and
+SIGINT/SIGTERM terminate and reap the runner process group. A passing report is
+written in that run directory and atomically published to `--report` only after
+all checks and stable-source/output checks pass. Incomplete runs retain diagnostics
+without a success report. Old report files are not evidence for changed sources.
+
+CI runs the full native public-fixture suite, a fresh-tree build comparison of
+seven generated artifacts, and a separate firmware/RTL boot plus CRC-fault smoke.
+Packaging accepts explicit reports only and checks fingerprints and the complete
+expected case set. The default CI package requires full native public-fixture and
+reproducibility reports. `--release` additionally requires full native and firmware
+reference-ROM reports. The ZIP includes those selected reports, design/qualification
+and disk-tool documentation, licences and a manifest. Fixed ZIP timestamps and
+ordering produce identical packages for identical inputs.
+
+## What simulation does not establish
+
+The fixture installs platform services using ordinary Z80 instructions, then
+enters the filesystem loader. It does not exercise the stock descriptor or the
+4000h bootstrap; the external reference-ROM suites cover those stages. The ROM is
+private test input, and its identity is not tied to a physical specimen.
+
+The runner's legacy `rom_handoff_*` counters observe address 0204h. They are not
+an OS-success signal for the public fixture, where unrelated code may reach that
+address. Exit status must agree with that runner contract; guest screen and media
+checks independently determine success. Cycle bounds and optional screen markers
+followed by a 20-million-clock tail limit runtime without changing guest state.
+
+Firmware/RTL executes the shared production service/storage C and actual frontend
+RTL with a host GPIO/SD HAL. It does not execute RP2350 instructions or measure
+SD latency, bus setup/hold, electrical levels or power-loss durability. The model
 rejects malformed writes atomically and does not model damaged physical tracks.
 
-The runner's legacy `rom_handoff_*` counters observe the reference ROM's 0204h
-exit. They are meaningful only in the external-reference-ROM suite; unrelated
-code can execute at that address in the public fixture. Public qualification
-uses screen, guest workload and independently parsed disk evidence instead.
-Keyboard injection is a paced completed-byte source that waits for modeled SIO
-FIFO space. It does not qualify a physical keyboard's baud timing or typing
-through long, interrupt-disabled disk operations.
+Keyboard injection waits for modeled SIO FIFO space. It does not qualify physical
+baud timing or typing through interrupt-disabled disk operations. Long command
+sequences run through guest SUBMIT so the next command follows completion.
 
-## Shared firmware/RTL result
-
-`firmware-runtime.json` passes the same 19 cases using the unchanged reference
-ROM, production `firmware/service.c` and `firmware/store.c`, the actual frontend
-RTL, and the host GPIO/SD HAL. It verifies the indexed 32768-byte file, 160-record
-disk-full boundary and cold persistence. Reset during an incomplete write
-preserves the model-owned image at reset and recovers to the CP/M boot path.
-
-This does not execute RP2350 instructions or qualify measured SD latency,
-physical bus setup/hold times, electrical levels or power-loss durability.
-The backend is pinned to Pico1715 aeb29a62f7c81a28da992b42f30fddbe25193028;
-the native motherboard is pinned to DAC 98f8f808c08ce21f6b98a00b95185f1e2226e70d.
+Before physical deployment, verify mainboard revision, connector orientation,
+voltage translation and power gates, then measure CTC/SIO clocking, CRT output,
+sector timing, seek delays, protection, reset and cold persistence on disposable
+media. These remain physical qualification gates.

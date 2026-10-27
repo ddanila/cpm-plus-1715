@@ -39,3 +39,13 @@ receiver is initialized by the bootstrap once; reinitializing it in the CP/M
 cold entry could discard already received input. Test command spacing is
 explicit because CP/M utilities can consume type-ahead while checking for
 abort; the harness does not inject BIOS return values.
+
+## Boot-media validation
+
+The loader ignores filename attribute bits when finding user-0 CPM3.SYS. Its
+fixed generated 72-record format requires extent zero, five unique allocation
+blocks in 2..389, and zero unused allocation slots. It checks these before loading
+resident payload bytes, then checks the SYS header and generated payload CRC.
+The directory may place SYS last and the five blocks may be fragmented. This is
+not a general arbitrary-sized SYS loader: rebuild platform/bootstrap and SYS
+together when changing the resident layout.

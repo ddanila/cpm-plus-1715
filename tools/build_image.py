@@ -3,21 +3,13 @@
 from pathlib import Path
 import sys, struct, zipfile, hashlib, json
 ROOT=Path(__file__).resolve().parents[1]
+from media import add, inspect
+
 def put(disk,name,data,block):
-    stem,ext=name.split('.')
-    name=(stem.ljust(8)+ext.ljust(3)).encode('ascii')
-    records=(len(data)+127)//128
-    for extent in range((records+127)//128):
-        slot=next(i for i in range(20480,24576,32) if disk[i]==0xe5)
-        chunk=data[extent*16384:(extent+1)*16384]
-        e=bytearray(32);e[1:12]=name;e[12]=extent&31;e[14]=extent>>5;e[15]=(len(chunk)+127)//128
-        for j in range((len(chunk)+2047)//2048):
-            assert 2<=block<390
-            e[16+2*j:18+2*j]=struct.pack('<H',block)
-            part=chunk[j*2048:(j+1)*2048];off=20480+block*2048
-            disk[off:off+len(part)]=part;block+=1
-        disk[slot:slot+32]=e
-    return block
+    updated=add(disk,name,data,system=True,start_block=block)
+    disk[:]=updated
+    allocations=inspect(updated)[(0,name)].blocks
+    return max(allocations,default=block-1)+1
 
 def image():
     disk=bytearray([0xe5])*819200

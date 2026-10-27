@@ -15,3 +15,8 @@ if a.firmware:
 else:
  sources=[pico/'tools/classic_probe.c',pico/'model/controller.c',dac/'machines/robotron1715/pc1715.c',dac/'common/cpu/z80.c',dac/'common/trace/trace.c']
  subprocess.run(['cc','-std=c11','-O2','-Wall','-Wextra','-Werror','-fsanitize=undefined','-fno-sanitize-recover=all','-I',str(dac),*map(str,sources),'-o',str(r/'build/classic-probe')],check=True)
+
+from evidence import atomic_json, sha
+binary=r/'build/firmware/classic-probe' if a.firmware else r/'build/classic-probe'
+atomic_json(str(binary)+'.json', dict(schema=1, backend='firmware' if a.firmware else 'native',
+    binary_sha256=sha(binary.read_bytes()), dependencies=json.loads((r/'dependencies.json').read_text())))

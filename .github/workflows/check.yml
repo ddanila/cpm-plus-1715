@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/Pico1715
-          ref: aeb29a62f7c81a28da992b42f30fddbe25193028
+          ref: 5017b9db1e1131cc08c231bd68c4affad5b2c10a
           path: build/deps/Pico1715
       - uses: actions/checkout@v4
         with:
@@ -22,8 +22,34 @@ jobs:
       - run: make -j2 all test
       - run: make probe PICO=build/deps/Pico1715 DAC=build/deps/dac-emulation
       - run: python3 tools/check_runtime.py --binary build/classic-probe --rom build/test.rom --backend native --suite all --out local/ci --report reports/public-runtime.json
-      - run: python3 tools/package.py
+      - run: python3 tools/check_reproducible.py
+      - run: python3 tools/package.py --report reports/public-runtime.json --report reports/reproducible.json
       - uses: actions/upload-artifact@v4
         with:
           name: cpm-plus-1715-simulator
           path: out/cpm-plus-1715-simulator.zip
+
+  firmware-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y build-essential bison verilator
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/Pico1715
+          ref: 5017b9db1e1131cc08c231bd68c4affad5b2c10a
+          path: build/deps/Pico1715
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/dac-emulation
+          ref: 98f8f808c08ce21f6b98a00b95185f1e2226e70d
+          path: build/deps/dac-emulation
+      - run: make -j2 all test-rom
+      - run: make firmware-probe PICO=build/deps/Pico1715 DAC=build/deps/dac-emulation
+      - run: python3 tools/check_runtime.py --binary build/firmware/classic-probe --rom build/test.rom --backend firmware --suite smoke --out local/firmware-smoke --report local/firmware-smoke.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: firmware-smoke-evidence
+          path: local/firmware-smoke/

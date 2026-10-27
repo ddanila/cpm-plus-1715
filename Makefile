@@ -20,7 +20,7 @@ $(BUILD)/platform.cim: src/platform.asm $(BUILD)/system.inc $(ZMAC)
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform.lst $<
 $(BUILD)/cpm3.sys: src/cpm3-bios.asm tools/regenerate_cpm3.py $(ZXCC)
 	$(PYTHON) tools/regenerate_cpm3.py --adapter-address 0xc000 --top-page 0xbf --metadata-policy gencpm --output $@
-$(OUT)/cpm-plus-1715.img: $(BUILD)/platform.cim $(BUILD)/cpm3.sys tools/build_image.py
+$(OUT)/cpm-plus-1715.img: $(BUILD)/platform.cim $(BUILD)/cpm3.sys tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py
 $(BUILD) $(OUT) $(BIN) $(BUILD)/zmac:
 	mkdir -p $@
@@ -90,3 +90,9 @@ probe:
 	$(PYTHON) tools/build_probe.py --pico $(PICO) --dac $(DAC)
 firmware-probe:
 	$(PYTHON) tools/build_probe.py --pico $(PICO) --dac $(DAC) --firmware
+
+$(BUILD)/reliability-test.cim: src/reliability-test.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ $<
+$(BUILD)/directory-test.cim: src/directory-test.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ $<
+all: $(BUILD)/reliability-test.cim $(BUILD)/directory-test.cim

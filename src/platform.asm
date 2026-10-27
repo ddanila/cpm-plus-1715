@@ -559,8 +559,11 @@ scanentry: push bc
         inc hl
         ld de,sysname
         ld b,11
-matchname: ld a,(de)
-        cp (hl)
+matchname: ld a,(hl)
+        and 7fh
+        ld c,a
+        ld a,(de)
+        cp c
         jr nz,nomatch
         inc hl
         inc de
@@ -587,7 +590,48 @@ nomatch: pop hl
         ld (dirleft),a
         jr nz,scanrecord
         jp booterror
-loadsys: ld a,(sysentry+15)
+loadsys: ld a,(sysentry+14)
+        or a
+        jp nz,booterror
+        ; Exactly five blocks contain the 72-record generated system.
+        ; Validate all before reading any payload into resident memory.
+        ld ix,sysentry+16
+        ld b,5
+sysblocks: ld l,(ix+0)
+        ld h,(ix+1)
+        ld de,2
+        or a
+        sbc hl,de
+        jp c,booterror
+        ld de,388
+        or a
+        sbc hl,de
+        jp nc,booterror
+        ld hl,sysentry+16
+        ld a,5
+        sub b
+        ld c,a
+        jr z,sysblocknext
+sysunique: ld a,(hl)
+        cp (ix+0)
+        inc hl
+        jr nz,sysdifferent
+        ld a,(hl)
+        cp (ix+1)
+        jp z,booterror
+sysdifferent: inc hl
+        dec c
+        jr nz,sysunique
+sysblocknext: inc ix
+        inc ix
+        djnz sysblocks
+        ld b,6
+sysunused: ld a,(ix+0)
+        or a
+        jp nz,booterror
+        inc ix
+        djnz sysunused
+        ld a,(sysentry+15)
         cp 72
         jp nz,booterror
         xor a

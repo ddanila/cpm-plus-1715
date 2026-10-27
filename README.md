@@ -38,7 +38,9 @@ python3 tools/check_runtime.py --binary build/classic-probe \
 For complete reference-ROM boot qualification, supply the external
 `r1715bt.bin` identified in `NOTICE.md`; it is not redistributed. Replace the
 binary with `build/firmware/classic-probe` and backend with `firmware` for the
-shared production firmware/RTL path. Every output directory must be new.
+shared production firmware/RTL path. Each invocation creates a unique run
+directory beneath `--out` and saves stdout/stderr there. `--report` is an
+atomically published summary; failed runs do not publish a passing summary.
 Tests use private disk copies; source images remain unchanged.
 
 The public fixture installs our resident platform services with ordinary Z80
@@ -66,8 +68,26 @@ mainboard, then repeat boot, utilities, protection, reset and persistence tests
 on disposable media. No physical execution or production readiness is claimed.
 
 New sources are MIT; adapted Juku sources are BSD-2-Clause. CP/M and build tools
-retain their separate terms; see `NOTICE.md`. `python3 tools/package.py` produces
-a deterministic simulator package with hashes and qualification reports.
+retain their separate terms; see `NOTICE.md`.
+
+## Disk tools and packages
+
+See [disk tools](docs/disk-tools.md) for checked list, import, extraction and
+validation commands. Imports always write a separate image; system files are
+rebuilt through `make`.
+
+```sh
+python3 tools/check_reproducible.py
+python3 tools/package.py --report reports/public-runtime.json --report reports/reproducible.json
+```
+
+The packaging command requires current source/output fingerprints, complete
+passing runtime cases, and fresh-build reproducibility evidence. It never picks
+up reports implicitly. To produce a release-qualified simulator package, also
+supply `--release --report reports/native-runtime.json --report reports/firmware-runtime.json`.
+Those two reports must cover the full suite with the reference ROM. CI packages
+carry the narrower `ci` qualification label. Both remain simulation-only.
+See [qualification](docs/qualification.md) for coverage and limits.
 
 The normal build assembles the 1715 BIOS and platform services and generates
 CPM3.SYS with DRI tools. It consumes pinned upstream `BDOS3.SPR` and `CCP.COM`
