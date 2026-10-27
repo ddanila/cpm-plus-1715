@@ -96,3 +96,13 @@ $(BUILD)/reliability-test.cim: src/reliability-test.asm $(ZMAC)
 $(BUILD)/directory-test.cim: src/directory-test.asm $(ZMAC)
 	$(ZMAC) --zmac -o $@ $<
 all: $(BUILD)/reliability-test.cim $(BUILD)/directory-test.cim
+
+$(BUILD)/keyboard-map.json: $(BUILD)/platform.cim tools/keyboard_map.py
+	$(PYTHON) tools/keyboard_map.py
+$(BUILD)/keyboard.inc: $(BUILD)/keyboard-map.json
+	@test -f $@ || $(PYTHON) tools/keyboard_map.py
+all: $(BUILD)/keyboard-map.json
+
+$(BUILD)/keyboard-test.cim: src/keyboard-test.asm $(BUILD)/keyboard.inc $(ZMAC)
+	$(ZMAC) --zmac -o $@ $<
+all: $(BUILD)/keyboard-test.cim

@@ -30,7 +30,7 @@ def main():
     ap=argparse.ArgumentParser()
     for n in ['binary','rom','out']:ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--backend',choices=['native','firmware'],required=True)
-    ap.add_argument('--suite',choices=['base','storage','faults','extra','boot','smoke','all'],default='all')
+    ap.add_argument('--suite',choices=['base','storage','faults','extra','boot','keyboard','keyboard-rates','smoke','all'],default='all')
     ap.add_argument('--report',type=Path,required=True)
     a=ap.parse_args()
     # --out is a run root; every invocation owns an immutable unique directory.
@@ -50,13 +50,17 @@ def main():
     sources=fingerprint()
     env={k:v for k,v in os.environ.items() if not k.startswith('PICO1715_')}
     env.update(PICO1715_TIMED='0',PICO1715_KEY_START='30000000',PICO1715_COMMAND_GAP='100000000')
-    def run(name,data,commands,markers,cycles=160000000,mode=None,extra=None,unchanged=False,faults=False):
+    def run(name,data,commands,markers,cycles=160000000,mode=None,extra=None,unchanged=False,faults=False,events=None):
         source=a.out/(name+'.img');source.write_bytes(data)
         dest=a.out/name;dest.mkdir();settings=env|{'PICO1715_CYCLES':str(cycles)}|(extra or {})
         if name in ['boot-dir','cold-read','cold-delete','indexed-extents','indexed-cold','corruption-negative','disk-full','disk-full-cold','write-protect','missing-system','bad-system-header','bad-system-payload','utilities','multi-warmboot']:
             settings['PICO1715_STOP_TEXT']=('CPM1715 UTILITIES COMPLETE' if name=='utilities' else markers[0] if name!='boot-dir' else 'HELLO    TXT')
         if markers and name not in ('keyboard-warmboot','erase','reset-write','set-system-attributes'):
             settings.setdefault('PICO1715_STOP_TEXT',markers[-1] if name=='multi-random-user' else markers[0])
+        if events is not None:
+            path=dest/'keyboard-events.txt'
+            path.write_text(''.join(f'{tick} {byte}\n' for tick,byte in events))
+            settings['PICO1715_KEY_SCHEDULE']=str(path.resolve())
         code,stdout,stderr=execute([str(a.binary.resolve()),str(a.rom.resolve()),str(source.resolve()),str(dest.resolve()),commands,*([mode] if mode else [])],settings,dest)
         assert code in (0,1),(name,code,stderr)
         assert len((dest/'ram.bin').read_bytes())==65536
@@ -79,9 +83,18 @@ def main():
         if not faults:assert all(stats[k]==0 for k in ['overruns','underflows','drops','tx_overruns','tx_underruns','sio_errors','rejected_writes']),(name,stats)
         if name=='multi-warmboot':assert screen.rstrip().endswith('A>'),screen
         results.append(dict(case=name,status='passed',exit_status=code,commands=commands,media_mode=mode or 'writable',markers=markers,settings={k:v for k,v in settings.items() if k.startswith('PICO1715_')},stats=stats,input_sha256=sha(data),output_sha256=sha(output),screen=screen,stderr=stderr))
+        if events is not None:results[-1]['keyboard_events']=events
         print(name,'PASS',flush=True)
         return output
+    if a.suite in ('keyboard','all'):
+        from keyboard_cases import qualify
+        qualify(base,run,results,a.out,a.backend)
+    if a.suite in ('keyboard-rates','all'):
+        from keyboard_cases import characterize
+        characterize(base,run,results,a.out)
     if a.suite=='smoke':
+        from keyboard_cases import qualify
+        qualify(base,run,results,a.out,a.backend,only={'keyboard-phase-0'})
         run('boot-dir',base,'DIR\r',['CP/M Plus 3.1 - Robotron 1715','HELLO    TXT','A>'],unchanged=True)
         run('crc-fault',base,'',[],cycles=30000000,extra={'PICO1715_CORRUPT_CRC':'1'},unchanged=True,faults=True)
     if a.suite in ('boot','all'):

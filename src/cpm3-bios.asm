@@ -118,6 +118,7 @@ if native$services
         sta     0c640h
 endif
 load$ccp:
+        call    adapter+54 ; hide queued input from BDOS break polling
         call    set$jumps
         ; A transient may leave BDOS function 44's multi-sector count above
         ; one.  This loader advances its DMA destination by exactly one
@@ -203,11 +204,7 @@ seldsk:
         call    a$seldsk
         pop     d
         pop     b
-        mov     a,c
-        ora     a
         lxi     h,xdph0
-        rz
-        lxi     h,xdph1
         ret
 
 ready:  mvi     a,true
@@ -251,10 +248,6 @@ ccp$msg:        db      13,10,'1715 BIOS cannot load CCP.COM$'
                 db      0,0
 xdph0:          dw      trans,0,0,0,0,0,dpb0,csv0,alv0,bcb0,0ffffh,0
                 db      0
-                dw      a$write,a$read,return,return
-                db      1,0
-xdph1:          dw      trans,0,0,0,0,0,dpb1,csv1,alv1,bcb1,0ffffh,0
-                db      0
 
 ; Forty 128-byte logical records per physical side.
 trans: db 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
@@ -266,23 +259,16 @@ dpb0: dw 40
       db 0c0h,0
       dw 32,4
       db 0,0
-dpb1 equ dpb0
 
         dseg
 csv0:   ds      32
-csv1:   ds      32
 ; GENCPM enables double allocation vectors: two ceil(390/8) arrays.
 alv0:   ds      98
-alv1:   ds      0
 dirbuf0:ds      128
-dirbuf1:ds      128
 ; Non-banked directory BCB: drive FFh means no buffer currently assigned;
 ; bytes 10..11 are its 128-byte buffer address.
 bcb0:   db      0ffh,0,0,0,0,0,0,0,0,0
         dw      dirbuf0
-        db      0,0,0
-bcb1:   db      0ffh,0,0,0,0,0,0,0,0,0
-        dw      dirbuf1
         db      0,0,0
         ds      64
 stack$top equ   $

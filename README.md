@@ -17,6 +17,7 @@ Outputs:
 - `build/cpm3.sys`: generated nonbanked system.
 - `build/system-map.json`: resident map and system checksum.
 - `build/test.rom`: original CI fixture, **not a replacement hardware ROM**.
+- `build/keyboard-map.json`: resident queue and diagnostic addresses.
 
 The image includes CCP, DIR, TYPE, PIP, ERASE, RENAME, SHOW, SET, SUBMIT and a
 small text/batch demonstration. For example: `TYPE HELLO.TXT`,
@@ -52,7 +53,9 @@ controller and peripherals, but not the historical ROM descriptor or the
 
 A: only, fixed 800 KiB geometry, 2 KiB blocks, 128 directory entries and 20 KiB
 reserved boot area. The console is 80×24 with CR/LF, backspace, tab, clear and
-scrolling. The keyboard consumes E0/ASCII bytes through the motherboard SIO.
+scrolling. The keyboard consumes E0/ASCII bytes through the motherboard SIO, with a
+128-character queue serviced during disk activity. See [keyboard behavior and
+qualification limits](docs/keyboard.md).
 There is no bank switching, RTC, printer, auxiliary serial service or W-style
 controller emulation. Unsupported drives are rejected.
 

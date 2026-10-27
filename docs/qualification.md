@@ -1,6 +1,6 @@
 # Qualification boundaries
 
-The runtime suite defines 33 scenarios and records generated-image, build-output,
+The runtime suite defines 43 scenarios and records generated-image, build-output,
 source, dependency, ROM and runner fingerprints. It executes the guest on the
 unchanged Z80/bus seam and checks exported media; it does not intercept BDOS calls.
 The report's `rom_profile` distinguishes `public-fixture` from `stock-reference`.
@@ -56,7 +56,7 @@ all checks and stable-source/output checks pass. Incomplete runs retain diagnost
 without a success report. Old report files are not evidence for changed sources.
 
 CI runs the full native public-fixture suite, a fresh-tree build comparison of
-seven generated artifacts, and a separate firmware/RTL boot plus CRC-fault smoke.
+nine generated artifacts, and a separate firmware/RTL boot, CRC-fault and asynchronous-input smoke.
 Packaging accepts explicit reports only and checks fingerprints and the complete
 expected case set. The default CI package requires full native public-fixture and
 reproducibility reports. `--release` additionally requires full native and firmware
@@ -82,16 +82,19 @@ RTL with a host GPIO/SD HAL. It does not execute RP2350 instructions or measure
 SD latency, bus setup/hold, electrical levels or power-loss durability. The model
 rejects malformed writes atomically and does not model damaged physical tracks.
 
-Keyboard injection waits for modeled SIO FIFO space. It does not qualify physical
-baud timing or typing through interrupt-disabled disk operations. Long command
-sequences run through guest SUBMIT so the next command follows completion.
+The historical command injector waits for SIO FIFO space. The ten additional
+keyboard cases use one-shot timestamped arrivals, with phase/wrap/overflow/prefix,
+warm-boot/reset checks and faster-rate characterization. See [keyboard](keyboard.md)
+for the measured evidence and declared simulation envelope. Neither injector
+qualifies physical serial waveforms. Long application command sequences still
+use guest SUBMIT so the next command follows completion.
 
 Before physical deployment, verify mainboard revision, connector orientation,
 voltage translation and power gates, then measure CTC/SIO clocking, CRT output,
 sector timing, seek delays, protection, reset and cold persistence on disposable
 media. These remain physical qualification gates.
 
-## Verified milestone — 2026-10-27
+## Previous disk-tool milestone — 2026-10-27
 
 All 33 cases passed separately with the native/reference-ROM runner, native/public
 fixture, and shared firmware/RTL/reference-ROM runner (99 case executions).

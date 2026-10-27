@@ -53,9 +53,9 @@ def main():
         validate(reports,a.release)
         if len({path.name for path in a.report})!=len(a.report):raise ValueError('duplicate report names')
         out=ROOT/'out'
-        files={'cpm-plus-1715.img':out/'cpm-plus-1715.img','CPM3.SYS':ROOT/'build/cpm3.sys','platform.bin':ROOT/'build/platform.cim','memory-map.json':ROOT/'build/system-map.json','README.md':ROOT/'README.md','NOTICE.md':ROOT/'NOTICE.md','LICENSE':ROOT/'LICENSE','JUKU-LICENSE':ROOT/'third_party/JUKU-LICENSE','CPM-LICENSE.md':ROOT/'third_party/cpm3/LICENSE.md'}
+        files={'cpm-plus-1715.img':out/'cpm-plus-1715.img','CPM3.SYS':ROOT/'build/cpm3.sys','platform.bin':ROOT/'build/platform.cim','memory-map.json':ROOT/'build/system-map.json','keyboard-map.json':ROOT/'build/keyboard-map.json','README.md':ROOT/'README.md','NOTICE.md':ROOT/'NOTICE.md','LICENSE':ROOT/'LICENSE','JUKU-LICENSE':ROOT/'third_party/JUKU-LICENSE','CPM-LICENSE.md':ROOT/'third_party/cpm3/LICENSE.md'}
         for path in a.report:files['reports/'+path.name]=path
-        for name in ('design.md','qualification.md','disk-tools.md'):files['docs/'+name]=ROOT/'docs'/name
+        for name in ('design.md','qualification.md','disk-tools.md','keyboard.md'):files['docs/'+name]=ROOT/'docs'/name
         manifest={'schema':2,'hardware_executed':False,'status':'simulation qualification only',
                   'qualification':'release' if a.release else 'ci',
                   'dependencies':json.loads((ROOT/'dependencies.json').read_text()),

@@ -21,6 +21,8 @@
         jp unavailable
         jp sectrn
         jp loader
+        jp keypause
+        jp keyresume
 init:   di
         ld a,0efh
         out (20h),a
@@ -60,7 +62,14 @@ init:   di
         ld a,16
         out (8),a
         xor a
-        ld (key),a
+        ld (keyhold),a
+        ld (keyhead),a
+        ld (keytail),a
+        ld (keycount),a
+        ld hl,0
+        ld (keydrops),hl
+        ld (keydecoded),hl
+        ld (keycalls),hl
         ld (prefix),a
         ld (column),a
         ld hl,0f800h
@@ -72,42 +81,103 @@ init:   di
         jp home
 unavailable: xor a
         ret
-const:  ld a,(key)
-        or a
-        jr nz,keyready
-        in a,(0eh)
+ ; Bounded cooperative service; never invoked inside an active disk field.
+ ; Preserve all main registers and flags, including CRC and seek state.
+keyservice:
+        push af
+        push bc
+        push de
+        push hl
+        ld hl,(keycalls)
+        inc hl
+        ld (keycalls),hl
+        ld b,3
+keypoll: in a,(0eh)
         and 1
-        ret z
+        jr z,keydone
         in a,(0ch)
         cp 0e0h
         jr nz,keychar
         ld a,1
         ld (prefix),a
-        xor a
-        ret
-keychar: ld b,a
+        jr keynext
+keychar: ld c,a
         ld a,(prefix)
         or a
-        ret z
+        jr z,keynext
         xor a
         ld (prefix),a
-        ld a,b
+        ld a,c
         and 7fh
-        ld (key),a
-        or a
-        ret z
-keyready: ld a,0ffh
-        ret
-conin:  call const
-        or a
-        jr z,conin
-        ld a,(key)
-        push af
-        xor a
-        ld (key),a
+        jr z,keynext
+        ld c,a
+        ld hl,(keydecoded)
+        inc hl
+        ld (keydecoded),hl
+        ld a,(keycount)
+        cp 128
+        jr z,keyfull
+        inc a
+        ld (keycount),a
+        ld a,(keytail)
+        ld e,a
+        ld d,0
+        ld hl,keyqueue
+        add hl,de
+        ld (hl),c
+        inc a
+        and 127
+        ld (keytail),a
+        jr keynext
+keyfull: ld hl,(keydrops)
+        inc hl
+        ld (keydrops),hl
+keynext: djnz keypoll
+keydone: pop hl
+        pop de
+        pop bc
         pop af
         ret
-conout: push af
+keypause: ld a,1
+        ld (keyhold),a
+        ret
+keyresume: xor a
+        ld (keyhold),a
+        ret
+const:  call keyservice
+        ld a,(keyhold)
+        or a
+        jr z,keyavailable
+        xor a
+        ret
+keyavailable: ld a,(keycount)
+        or a
+        ret z
+        ld a,0ffh
+        ret
+conin:  call keyresume
+keywait: call const
+        or a
+        jr z,keywait
+        push hl
+        push de
+        ld a,(keycount)
+        dec a
+        ld (keycount),a
+        ld a,(keyhead)
+        ld e,a
+        ld d,0
+        ld hl,keyqueue
+        add hl,de
+        inc a
+        and 127
+        ld (keyhead),a
+        ld a,(hl)
+        pop de
+        pop hl
+        ret
+conout: call keyservice
+        push af
         push bc
         push de
         push hl
@@ -220,7 +290,8 @@ sectrn: ld h,b
 home:   xor a
         ld (valid),a
         ld b,81
-homelp: in a,(6)
+homelp: call keyservice
+        in a,(6)
         bit 7,a
         jr z,homed
         push bc
@@ -235,7 +306,8 @@ homed:  xor a
         ld hl,0
         ld (track),hl
         ret
-step:   out (4),a
+step:   call keyservice
+        out (4),a
         and 7fh
         out (4),a
         or 80h
@@ -245,7 +317,7 @@ stepwait: dec bc
         ld a,b
         or c
         jr nz,stepwait
-        ret
+        jp keyservice
 position:
         ld a,(drive)
         or a
@@ -302,7 +374,8 @@ seekdone: ld hl,(record)
         xor a
         ret
 ; Fetch a complete field first, CRC offline. /WAIT provides byte pacing.
-field:  ld hl,buffer
+field:  call keyservice
+        ld hl,buffer
         ld bc,0302h
         ld de,4000
         ld a,(head)
@@ -350,6 +423,7 @@ fieldend: ld a,(head)
         jr z,stopnow
         ld a,0a1h
 stopnow: out (4),a
+        call keyservice
         ld hl,buffer
         ld bc,0ffffh
         call crc
@@ -358,10 +432,14 @@ stopnow: out (4),a
         ret
 errorstop: ld a,0a5h
         out (4),a
-error:  ld a,1
+error:  call keyservice
+        ld a,1
         ret
 ; CRC CCITT, HL source, DE length, BC accumulator. Stream already stopped.
-crc:    ld a,(hl)
+crc:    ld a,e
+        and 31
+        call z,keyservice
+        ld a,(hl)
         xor b
         ld b,a
         push de
@@ -523,6 +601,7 @@ writegate: out (4),a
         otir
         ld a,0a5h
         out (4),a
+        call keyservice
         ld hl,writebuf
         ld de,buffer
         ld bc,1030
@@ -546,7 +625,8 @@ loader: di
         call setdma
         ld a,32
         ld (dirleft),a
-scanrecord: call read
+scanrecord: call keyservice
+        call read
         or a
         jp nz,booterror
         ld hl,dirrecord
@@ -743,7 +823,13 @@ cachedtrack: db 0
 cachedsector: db 0
 cursor: dw 0f800h
 column: db 0
-key: db 0
+keyhold: db 0
+keyhead: db 0
+keytail: db 0
+keycount: db 0
+keydrops: dw 0
+keydecoded: dw 0
+keycalls: dw 0
 prefix: db 0
 drive: db 0
 track: dw 0
@@ -761,5 +847,6 @@ sysentry: ds 32
 dirrecord: ds 128
 buffer: ds 1032
 writebuf: ds 1032
+keyqueue: ds 128
 platform_end:
         end

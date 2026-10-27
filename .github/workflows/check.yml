@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/Pico1715
-          ref: 5017b9db1e1131cc08c231bd68c4affad5b2c10a
+          ref: 91ada9b44b8557cc65ab48cfea9381b0c9af6ed5
           path: build/deps/Pico1715
       - uses: actions/checkout@v4
         with:
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/Pico1715
-          ref: 5017b9db1e1131cc08c231bd68c4affad5b2c10a
+          ref: 91ada9b44b8557cc65ab48cfea9381b0c9af6ed5
           path: build/deps/Pico1715
       - uses: actions/checkout@v4
         with:

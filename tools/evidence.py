@@ -8,7 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = ['build/cpm3.sys', 'build/platform.cim', 'build/test.rom',
            'out/cpm-plus-1715.img', 'build/system-map.json',
-           'build/reliability-test.cim', 'build/directory-test.cim']
+           'build/reliability-test.cim', 'build/directory-test.cim',
+           'build/keyboard-map.json', 'build/keyboard-test.cim']
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
