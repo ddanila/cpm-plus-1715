@@ -175,7 +175,7 @@ def main():
     assert fingerprint()==sources, 'sources changed during qualification'
     assert outputs()==built and sha(a.binary.read_bytes())==provenance['binary_sha256'] and sha(a.rom.read_bytes())==rom_hash
     report=dict(source_sha256=sources,output_sha256=built,dependencies=deps,schema=2,status='passed',run_id=run_id,
-        hardware_executed=False,backend=a.backend,suite=a.suite,rom_profile=rom_profile,rom_sha256=rom_hash,
+        hardware_executed=False,execution=provenance.get('execution','native'),backend=a.backend,suite=a.suite,rom_profile=rom_profile,rom_sha256=rom_hash,
         binary_sha256=provenance['binary_sha256'],image_sha256=sha(base),cases=results)
     atomic_json(a.out/'report.json',report)
     atomic_json(a.report,report)
