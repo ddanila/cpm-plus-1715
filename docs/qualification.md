@@ -90,3 +90,17 @@ Before physical deployment, verify mainboard revision, connector orientation,
 voltage translation and power gates, then measure CTC/SIO clocking, CRT output,
 sector timing, seek delays, protection, reset and cold persistence on disposable
 media. These remain physical qualification gates.
+
+## Verified milestone — 2026-10-27
+
+All 33 cases passed separately with the native/reference-ROM runner, native/public
+fixture, and shared firmware/RTL/reference-ROM runner (99 case executions).
+All 14 host tests passed, and a fresh source tree reproduced all seven generated
+artifacts. Explicit release packaging accepted the current four reports and
+produced identical ZIP bytes on repeat invocation.
+
+Implementation CI passed for both repositories:
+[CP/M checks](https://github.com/ddanila/cpm-plus-1715/actions/runs/40491963766)
+and [Pico1715 checks](https://github.com/ddanila/Pico1715/actions/runs/40491196444).
+The final report-only commit does not change the qualified sources or dependency
+pins. These results supersede the older firmware report's CRC-fault claim.
