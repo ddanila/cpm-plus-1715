@@ -41,3 +41,24 @@ voltage translation and board power gates independently. Then qualify CTC/SIO
 clocking, keyboard input, CRT output, sector timing, seek delays, protection,
 reset and cold persistence on disposable media. The simulator's controller
 rejects malformed writes atomically and does not model damaged physical tracks.
+
+The runner's legacy `rom_handoff_*` counters observe the reference ROM's 0204h
+exit. They are meaningful only in the external-reference-ROM suite; unrelated
+code can execute at that address in the public fixture. Public qualification
+uses screen, guest workload and independently parsed disk evidence instead.
+Keyboard injection is a paced completed-byte source that waits for modeled SIO
+FIFO space. It does not qualify a physical keyboard's baud timing or typing
+through long, interrupt-disabled disk operations.
+
+## Shared firmware/RTL result
+
+`firmware-runtime.json` passes the same 19 cases using the unchanged reference
+ROM, production `firmware/service.c` and `firmware/store.c`, the actual frontend
+RTL, and the host GPIO/SD HAL. It verifies the indexed 32768-byte file, 160-record
+disk-full boundary and cold persistence. Reset during an incomplete write
+preserves the model-owned image at reset and recovers to the CP/M boot path.
+
+This does not execute RP2350 instructions or qualify measured SD latency,
+physical bus setup/hold times, electrical levels or power-loss durability.
+The backend is pinned to Pico1715 aeb29a62f7c81a28da992b42f30fddbe25193028;
+the native motherboard is pinned to DAC 98f8f808c08ce21f6b98a00b95185f1e2226e70d.

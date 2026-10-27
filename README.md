@@ -68,3 +68,8 @@ on disposable media. No physical execution or production readiness is claimed.
 New sources are MIT; adapted Juku sources are BSD-2-Clause. CP/M and build tools
 retain their separate terms; see `NOTICE.md`. `python3 tools/package.py` produces
 a deterministic simulator package with hashes and qualification reports.
+
+The normal build assembles the 1715 BIOS and platform services and generates
+CPM3.SYS with DRI tools. It consumes pinned upstream `BDOS3.SPR` and `CCP.COM`
+inputs, as the Juku baseline does; the matching upstream source archive is
+included. It does not independently rebuild every DRI kernel/utility module.
