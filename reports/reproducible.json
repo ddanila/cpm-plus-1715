@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "fresh_source_build": true,
+  "equal_outputs": {
+    "build/cpm3.sys": "b2eb85d92afc9e808bc6ae8cd604b2d6232bae1281c6558219dd186f2065cb65",
+    "build/platform.cim": "2259f5884681d03a8309212cce64aa6952d8756d70abed2d2f4156461847f05b",
+    "build/test.rom": "d04f039985e6cfebefdfa9b4992fed74fc73e28aac88fe5e0f13cb27e130b9b1",
+    "out/cpm-plus-1715.img": "832750d41156838b2685a9c55376b51bfaed3fb023b4e713de681796215eac83",
+    "build/system-map.json": "1a732ef1c939740547e970e8cb69790fc399abad32faf8c05df143c84b11668a"
+  }
+}

@@ -1,0 +1,29 @@
+name: CP/M 3 source and runtime checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y build-essential bison python3-pexpect
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/Pico1715
+          ref: aeb29a62f7c81a28da992b42f30fddbe25193028
+          path: build/deps/Pico1715
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/dac-emulation
+          ref: 98f8f808c08ce21f6b98a00b95185f1e2226e70d
+          path: build/deps/dac-emulation
+      - run: make -j2 all test
+      - run: make probe PICO=build/deps/Pico1715 DAC=build/deps/dac-emulation
+      - run: python3 tools/check_runtime.py --binary build/classic-probe --rom build/test.rom --backend native --suite all --out local/ci --report reports/public-runtime.json
+      - run: python3 tools/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpm-plus-1715-simulator
+          path: out/cpm-plus-1715-simulator.zip

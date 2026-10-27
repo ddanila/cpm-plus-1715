@@ -1,0 +1,10 @@
+{
+  "third_party/cpm3/LICENSE.md": "4db276dbc6ee71ff1c9e4826ea52c1ac4f6eac6f64a11e517a660fe0ca14d1a3",
+  "third_party/cpm3/bdos3.spr": "d819e736ba4e4442b1e51dc8b98d3426592d2e125c5c052bceb191f63469fc75",
+  "third_party/cpm3/ccp.com": "f1837073d217075223d17dd81d068481819665273b59fbb3502c2f9068e8a671",
+  "third_party/cpm3/gencpm.dat": "4e416d6c6e1d36ee2689b803032b6a5507a8b2ca4f46d0d82e0d2a2e74851051",
+  "third_party/cpm3/releases/cpm3bin_unix-20260607.zip": "ec24f6e1fa173d33bcd2555dfae8296471fc8ea144c72e8cbe2166971451da82",
+  "third_party/cpm3/releases/cpm3src_unix-20260607.zip": "d90cda1f25112ace3b436c4054304ace423331caa1f034c44f26698728a9fdb7",
+  "third_party/cpm3/scb.asm": "b392ada66ba9c8ccd467b1483eea92b5439a38490feb485bc471ed864f914310",
+  "third_party/zxcc/releases/zxcc-0.5.7.tar.gz": "6095119a31a610de84ff8f049d17421dd912c6fd2df18373e5f0a3bc796eb4bf"
+}

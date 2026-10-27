@@ -1,0 +1,7 @@
+# Preserve pinned upstream inputs and their original whitespace byte-for-byte.
+third_party/** -text -whitespace
+*.bin binary
+*.spr binary
+*.com binary
+*.zip binary
+*.gz binary

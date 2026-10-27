@@ -1,0 +1,121 @@
+{
+  "schema": "cpm-plus-juku-upstream-release-v1",
+  "release": "Digital Research CP/M 3.1, John Elliott Unix build 2026-06-07",
+  "publisher": "John Elliott",
+  "release_page": "https://www.seasip.info/Cpm/software/dri.html",
+  "license": "../LICENSE.md",
+  "archives": {
+    "cpm3src_unix-20260607.zip": {
+      "source_url": "https://www.seasip.info/Cpm/software/cpm3src_unix.zip",
+      "bytes": 566619,
+      "sha256": "d90cda1f25112ace3b436c4054304ace423331caa1f034c44f26698728a9fdb7"
+    },
+    "cpm3bin_unix-20260607.zip": {
+      "source_url": "https://www.seasip.info/Cpm/software/cpm3bin_unix.zip",
+      "bytes": 133368,
+      "sha256": "ec24f6e1fa173d33bcd2555dfae8296471fc8ea144c72e8cbe2166971451da82"
+    }
+  },
+  "selected_distribution_files": {
+    "PIP.COM": {
+      "archive_member": "pip.com",
+      "source_members": ["pip.plm", "mcd80f.asm", "inpout.asm"],
+      "version": "CP/M 3 PIP 3.0",
+      "bytes": 8632,
+      "sha256": "b0b40eada6cebd512333989fdc65f8fa9e2321e2565a633063ae7cac9b02005d"
+    },
+    "SHOW.COM": {
+      "archive_member": "show.com",
+      "source_members": ["show.plm", "scan.plm", "search.plm", "disp.plm", "dpb80.plm", "util.plm", "timest.plm"],
+      "version": "Show 3.1, 2025-01-22",
+      "bytes": 8376,
+      "sha256": "17a8561c18d1b9dc4d747f0a1ecd36ceb98ade6be2c2133d5ec1774769a4bcee"
+    },
+    "SET.COM": {
+      "archive_member": "set.com",
+      "source_members": ["set.plm", "parse.asm", "dirlbl.asm"],
+      "version": "CP/M 3 SET",
+      "bytes": 10368,
+      "sha256": "213fa9a4617372d5b4518863a41adcbbca63ea535aae94632052ebb6ad026709"
+    },
+    "DEVICE.COM": {
+      "archive_member": "device.com",
+      "source_members": ["device.plm", "mcd80a.asm"],
+      "version": "CP/M 3 DEVICE",
+      "bytes": 7268,
+      "sha256": "1a8dd4c17523f36a297d13556948178e0672f2e67bb9b516771b27bf9722444c"
+    },
+    "DATE.COM": {
+      "archive_member": "date.com",
+      "source_members": ["date.plm", "mcd80a.asm", "makedate.lib"],
+      "version": "CP/M 3 DATE, Y2K-corrected",
+      "bytes": 3247,
+      "sha256": "a413859648e340a424de7e8a709aabcee502516122d157b25d5d663d4e771004"
+    },
+    "SUBMIT.COM": {
+      "archive_member": "submit.com",
+      "source_members": ["submit.plm", "subrsx.asm", "parse.asm", "getf.asm"],
+      "version": "CP/M 3 SUBMIT 3.0",
+      "bytes": 5376,
+      "sha256": "8c641d7383d48e14a60fe72df0f4af926a970b0aba40765770f3034da80a1f24"
+    },
+    "SETDEF.COM": {
+      "archive_member": "setdef.com",
+      "source_members": ["setdef.plm"],
+      "version": "CP/M 3 SETDEF",
+      "bytes": 4244,
+      "sha256": "03e5ef141bfc9da39dbde435f7ad7ab264ce7b22caa5b1d3297065abe437cf08"
+    },
+    "DUMP.COM": {
+      "archive_member": "dump.com",
+      "source_members": ["dump.asm"],
+      "version": "CP/M 3 DUMP",
+      "bytes": 960,
+      "sha256": "4acabe3feaaf03622adaaaaea3bb25d37cdc32e07901343b532974be2c783a64"
+    },
+    "HELP.COM": {
+      "archive_member": "help.com",
+      "source_members": ["help.plm", "minhlp.plm", "mcd80a.asm"],
+      "version": "HELP 1.1 pl5, 2026-06-07",
+      "bytes": 6967,
+      "sha256": "d47256286eb6b05d290ba33c539f8acf79ed0fb18893a4f25f7a588538f343f8"
+    },
+    "HELP.HLP": {
+      "archive_member": "help.hlp",
+      "source_members": ["help.dat", "commands.help", "date.help", "device.help", "dump.help", "ed.help", "help.help", "hexcom.help", "patch.help", "pip.help", "set.help", "setdef.help", "show.help", "sid.help", "submit.help"],
+      "version": "HELP database, 2026-06-07",
+      "bytes": 63616,
+      "sha256": "0ba002b32e659c19ccec18f13ab3231d403a41911c5b753d42853243b01ed8a6"
+    }
+  },
+  "selected_development_files": {
+    "ED.COM": {
+      "archive_member": "ed.com",
+      "source_members": ["ed.plm", "mcd80a.asm", "makedate.lib"],
+      "version": "Digital Research CP/M 3 ED",
+      "bytes": 9254,
+      "sha256": "043732665d295ed86f96007bb76fa319145df85d384385b30bd5605b6774f56d"
+    },
+    "HEXCOM.COM": {
+      "archive_member": "hexcom.com",
+      "source_members": ["hexcom.asm"],
+      "version": "CP/M 3 HEXCOM",
+      "bytes": 1131,
+      "sha256": "0f458585377284053fb3c8441cdcea75b62dd6a2a4594fe5097b8ca33691964c"
+    },
+    "PATCH.COM": {
+      "archive_member": "patch.com",
+      "source_members": ["patch.asm"],
+      "version": "CP/M 3 PATCH",
+      "bytes": 2369,
+      "sha256": "6259b16eee943ab5ca717477a9f473825be21aba8e535866aa6a1a550c7c14ac"
+    },
+    "SID.COM": {
+      "archive_member": "sid.com",
+      "source_members": ["prs0mov.asm", "prs1asm.asm", "prs2mon.asm", "makedate.lib"],
+      "version": "CP/M 3 SID symbolic debugger",
+      "bytes": 7936,
+      "sha256": "7c7419d95107bdba5ea1c537e1a316ed9a45229111a9fdd13267f3df65931af7"
+    }
+  }
+}
