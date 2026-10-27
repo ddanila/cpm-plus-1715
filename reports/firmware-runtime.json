@@ -1,7 +1,7 @@
 {
   "source_sha256": {
     "Makefile": "ed2d2e4afb49228c4bdc63e1c20659d26e5f7205aa0611bf2e9173660d416024",
-    "dependencies.json": "9b0d41fbb5be4ef53b12c4dcde35d1561492092e727cd6f37d2e06f5d36a6da9",
+    "dependencies.json": "4f41a3fef5921c199c5499ca2da9ea79638d4f0e7b3b1cff5d942a8bdf6c911a",
     "src/cpm3-bios.asm": "ccd952d3763a0b10e6c418f8f5fe848567fc091b71811b72649e604a0e26a1c9",
     "src/directory-test.asm": "24c4cda0e729b1e8b5fbec2699326cda54bf09919afeeb2ec90b0f8c8569c926",
     "src/keyboard-test.asm": "5598ed0b3b99a7488b3a8fd551c1e61c741fea9df48ca3a0dd215de29c02f97f",
@@ -46,8 +46,9 @@
     "tools/build_image.py": "57cd6cc4db0fd09156247590252a7492130fb2063386c177d35dd44cdd3c139f",
     "tools/build_probe.py": "17a85484d356ff2aa6c0397bbda724f73b252d90a0665c98f19d3bbca9a67e58",
     "tools/build_test_rom.py": "6176a78f0e7bc210bbced16931f9f5dac93ff354f3040785064b1689c0a9c11c",
+    "tools/build_wasm_probe.py": "99e916db289a3df2985c9e82b8fd771a5d3fef1a7546faeeacafb2c65fb0fe24",
     "tools/check_reproducible.py": "651467d2bb2aa17fca55984c797599129a36a5f9eab9164a0fa894e65fa0ac07",
-    "tools/check_runtime.py": "22013722504c3294e4a874b7c3e9fc1d2b55121e7ee846b324a333deb20a4775",
+    "tools/check_runtime.py": "3af7ccd39f3213ea11b6296d506661437fe94efe96c2f144ccfd911c2830b6a4",
     "tools/classic_workload.py": "cf930f08bd23b887809bb3438b55670d0319f1967c6132449d13f3653823f0ea",
     "tools/disk_image.py": "ccc15c82000e86d1f9d65c3588f4bff4f513cbafa338425083dabe3cb8c214e1",
     "tools/evidence.py": "89de8696c4f6dd0934c25709a70d3030f32ce5945097ad229ebe498112111c7b",
@@ -72,19 +73,20 @@
     "build/keyboard-test.cim": "3f000fbb334ee313dd1edcf0ec3f9955199794862202b784d261604904b61d54"
   },
   "dependencies": {
-    "pico": "91ada9b44b8557cc65ab48cfea9381b0c9af6ed5",
+    "pico": "ed8b6736fc102fe87112741b344852b80d5d426b",
     "dac": "98f8f808c08ce21f6b98a00b95185f1e2226e70d",
     "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8"
   },
   "schema": 2,
   "status": "passed",
-  "run_id": "20261027T121507Z-d14a658c",
+  "run_id": "20261027T135450Z-0d70cfac",
   "hardware_executed": false,
+  "execution": "native",
   "backend": "firmware",
   "suite": "all",
   "rom_profile": "stock-reference",
   "rom_sha256": "51cb80639b5667f2611da71ce7305061566cf3474bda7db6fc82709d08e46d01",
-  "binary_sha256": "9d65b6736a83ed5a557d5dbc8d90ec23a37d2314703caa72f5481968263e0c61",
+  "binary_sha256": "81cf8c974b0aeda982000b89ffdff5fe3985dca56543467a773b1eccbd152999",
   "image_sha256": "f1def6d636e6fe506d2b30ab62d7028c1d8b491ddfa15d245b155a46b8c51bbd",
   "cases": [
     {
@@ -105,7 +107,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "46465000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-phase-0/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-phase-0/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -759,7 +761,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "46475000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-phase-10000/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-phase-10000/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -1413,7 +1415,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "46545000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-phase-80000/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-phase-80000/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -2067,7 +2069,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "65857000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-wrap/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-wrap/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -4257,7 +4259,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "66617000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-overflow/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-overflow/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -5807,7 +5809,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "40601000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-prefix/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-prefix/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -5981,7 +5983,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "41516000",
         "PICO1715_STOP_TEXT": "Native CP/M Plus on Robotron 1715",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-warm-preserve/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-warm-preserve/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -6244,7 +6246,7 @@
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "46465000",
         "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-reset-clock/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-reset-clock/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -6899,7 +6901,7 @@
         "PICO1715_KEY_SERVICE_PC": "49337",
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "43252000",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-rate-50000/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-rate-50000/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,
@@ -7549,7 +7551,7 @@
         "PICO1715_KEY_SERVICE_PC": "49337",
         "PICO1715_KEY_SERVICE_START": "40000000",
         "PICO1715_KEY_SERVICE_END": "41362000",
-        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/keyboard-qualified-firmware/20261027T121507Z-d14a658c/keyboard-rate-20000/keyboard-events.txt"
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/interactive-firmware-runtime/20261027T135450Z-0d70cfac/keyboard-rate-20000/keyboard-events.txt"
       },
       "stats": {
         "key_scheduled": 1,

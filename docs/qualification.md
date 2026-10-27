@@ -131,3 +131,24 @@ and [Pico1715 checks](https://github.com/ddanila/Pico1715/actions/runs/405019754
 Release packaging accepted all four current reports and produced identical ZIP
 bytes on repeat invocation. The final report/documentation commit does not change the qualified sources or
 dependency pins. Physical timing and electrical qualification remain outstanding.
+
+## Browser-session milestone — 2026-10-27
+
+The shared classic-session revision passed all 43 cases in five configurations:
+three native runs (public/model, reference/model, reference/firmware) and two
+WebAssembly runs (public/model and public/firmware): **215 case executions**.
+The WASM CLI probes compile the same qualified source and preserve the existing
+one-shot keyboard schedules. Reports explicitly distinguish `execution: wasm`
+from native execution. Their launchers verify both JavaScript and WASM hashes.
+
+The 17 host tests passed and all nine generated artifacts reproduced from a fresh
+source tree. Release packaging accepted all six current reports. Pico1715 also
+compared interactive native/WASM session RAM, registers, disk bytes and diagnostics
+after boot/commands, export/resume, delayed storage and reset; its backend CI passed
+[here](https://github.com/ddanila/Pico1715/actions/runs/40516051826).
+
+Build Node probes with Pico1715's `tools/build_browser.py --probes`, then bind them
+with `python3 tools/build_wasm_probe.py` (add `--firmware` for the firmware backend).
+Pass the resulting launcher to `tools/check_runtime.py` exactly like a native
+probe. Browser UI workflow coverage belongs to DAC's classic-workstation guide;
+these reports qualify deterministic simulator execution, not physical hardware.
