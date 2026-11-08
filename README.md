@@ -5,10 +5,14 @@ classic PIO floppy-controller interface. This is a new OS port, not a patched
 1715W disk. The BIOS and bootstrap execute on the emulated Z80; no host service
 intercepts BDOS calls or injects disk records into guest RAM.
 
+A separate [serial build](https://github.com/ddanila/cpm-plus-1715/blob/main/docs/serial-console.md) adds stock-ROM V.24 boot,
+a mirrored N4 remote console and host-backed A: using shared Juku protocol code.
+
 ## Build
 
 On Debian/Ubuntu install `build-essential bison python3 python3-pexpect`.
-Run `make all test`. The pinned DRI tools run under a locally built ZXCC; zmac
+Run `git submodule update --init --recursive`, then `make all test`.
+The pinned DRI tools run under a locally built ZXCC; zmac
 is also built from source. No sibling Juku checkout is required.
 
 Outputs:

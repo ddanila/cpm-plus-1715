@@ -10,6 +10,8 @@ OUTPUTS = ['build/cpm3.sys', 'build/platform.cim', 'build/test.rom',
            'out/cpm-plus-1715.img', 'build/system-map.json',
            'build/reliability-test.cim', 'build/directory-test.cim',
            'build/keyboard-map.json', 'build/keyboard-test.cim', 'build/p1715test.cim']
+SERIAL_OUTPUTS = ['build/platform-serial.cim', 'build/serial-test.rom',
+                  'out/cpm-plus-1715-serial.img']
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -17,7 +19,7 @@ def sha(data):
 def sources():
     paths = [ROOT/'Makefile', ROOT/'dependencies.json', ROOT/'third_party/inputs.json']
     paths += [p for folder in ('src', 'tools', 'tests', 'third_party') for p in (ROOT/folder).rglob('*')
-              if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc']
+              if p.is_file() and '__pycache__' not in p.parts and '.git' not in p.parts and p.suffix != '.pyc']
     return {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in sorted(paths)}
 
 def outputs():

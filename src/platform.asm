@@ -24,6 +24,7 @@
         jp keypause
         jp keyresume
 init:   di
+.ifndef SERIAL_BOOT
         ld a,0efh
         out (20h),a
         ld a,0fh
@@ -42,6 +43,7 @@ init:   di
         out (6),a
         ld a,0a5h
         out (4),a
+.endif
         ; SIO A: reset, x16 asynchronous 8-bit receiver, no interrupts.
         ld a,18h
         out (0eh),a
@@ -78,6 +80,9 @@ init:   di
         ld de,0f801h
         ld bc,1919
         ldir
+.ifdef SERIAL_BOOT
+        call remote_init
+.endif
         jp home
 unavailable: xor a
         ret
@@ -152,13 +157,22 @@ const:  call keyservice
         ret
 keyavailable: ld a,(keycount)
         or a
+.ifdef SERIAL_BOOT
+        jp z,rh_status
+.else
         ret z
+.endif
         ld a,0ffh
         ret
 conin:  call keyresume
 keywait: call const
         or a
         jr z,keywait
+.ifdef SERIAL_BOOT
+        ld a,(keycount)
+        or a
+        jp z,rh_input
+.endif
         push hl
         push de
         ld a,(keycount)
@@ -176,7 +190,23 @@ keywait: call const
         pop de
         pop hl
         ret
-conout: call keyservice
+conout:
+.ifdef SERIAL_BOOT
+        call localout
+        push af
+        push bc
+        push de
+        push hl
+        ld a,c
+        ld (RHINPUT),a
+        call rh_output
+        pop hl
+        pop de
+        pop bc
+        pop af
+        ret
+.endif
+localout: call keyservice
         push af
         push bc
         push de
@@ -232,7 +262,7 @@ bs:     ld a,(column)
         ld (cursor),hl
         jr coutdone
 tab:    ld c,32
-        call conout
+        call localout
         ld a,(column)
         and 7
         jr nz,tab
@@ -287,6 +317,7 @@ sectrn: ld h,b
         ld l,c
         inc hl
         ret
+.ifndef SERIAL_BOOT
 home:   xor a
         ld (valid),a
         ld b,81
@@ -435,6 +466,11 @@ errorstop: ld a,0a5h
 error:  call keyservice
         ld a,1
         ret
+.else
+error:  call keyservice
+        ld a,1
+        ret
+.endif
 ; CRC CCITT, HL source, DE length, BC accumulator. Stream already stopped.
 crc:    ld a,e
         and 31
@@ -462,6 +498,7 @@ crcnox: dec e
         or e
         jr nz,crc
         ret
+.ifndef SERIAL_BOOT
 findid: ld a,1
         ld (idonly),a
         ld a,24
@@ -610,6 +647,9 @@ writegate: out (4),a
         ld (valid),a
         xor a
         ret
+.else
+        include "src/serial-platform.asm"
+.endif
 ; Bootstrap scans the user-0 directory for the single-extent CPM3.SYS.
 ; GENCPM's reverse 128-byte record order is retained on disk.
 loader: di
@@ -845,8 +885,13 @@ filerec: db 0
 destination: dw 0
 sysentry: ds 32
 dirrecord: ds 128
+.ifndef SERIAL_BOOT
 buffer: ds 1032
 writebuf: ds 1032
+.endif
 keyqueue: ds 128
+.ifdef SERIAL_BOOT
+        include "src/serial-common.asm"
+.endif
 platform_end:
         end

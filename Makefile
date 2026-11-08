@@ -111,3 +111,18 @@ $(BUILD)/p1715test.cim: src/p1715test.asm $(ZMAC)
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/p1715test.lst $<
 $(OUT)/cpm-plus-1715.img: $(BUILD)/p1715test.cim
 all: $(BUILD)/p1715test.cim
+
+.PHONY: serial
+serial: all $(OUT)/cpm-plus-1715-serial.img
+$(BUILD)/platform-serial.cim: src/platform-serial.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) third_party/juku-common/platform/rom-host-services.asm third_party/juku-common/platform/netdisk-v3.asm third_party/juku-common/platform/rom-abi.inc
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-serial.lst $<
+$(OUT)/cpm-plus-1715-serial.img: $(BUILD)/platform-serial.cim $(OUT)/cpm-plus-1715.img
+	$(PYTHON) tools/build_image.py --serial
+
+.PHONY: serial-probe
+serial-probe: serial
+	$(PYTHON) tools/build_probe.py --pico $(PICO) --dac $(DAC) --serial
+$(BUILD)/serial-test.rom: src/serial-test-rom.asm $(ZMAC)
+	$(ZMAC) --zmac -o $(BUILD)/serial-test.cim $<
+	cp $(BUILD)/serial-test.cim $@
+serial: $(BUILD)/serial-test.rom

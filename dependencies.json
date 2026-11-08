@@ -1,5 +1,8 @@
 {
   "pico": "dcfd610aa97edf097c2d8b33b4c7c0da11ea0c03",
-  "dac": "98f8f808c08ce21f6b98a00b95185f1e2226e70d",
-  "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8"
+  "dac": "4180d456a64f11d95363b4b19ab09ad12165de60",
+  "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8",
+  "juku_common": "34a9b0f5842b2ae8162f37c6037a9cfbedf050ed",
+  "ravi": "208a36540d8bee424e409564fd0de986675fbda2",
+  "host": "5c769339620547e034e0114cb493c997dfd5d22b"
 }

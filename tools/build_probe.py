@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: MIT
 import argparse,subprocess,json
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--pico',type=Path,default=Path('../Pico1715'));p.add_argument('--dac',type=Path,default=Path('../dac-emulation'));p.add_argument('--firmware',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--pico',type=Path,default=Path('../Pico1715'));p.add_argument('--dac',type=Path,default=Path('../dac-emulation'));p.add_argument('--firmware',action='store_true');p.add_argument('--serial',action='store_true');a=p.parse_args()
+if a.serial and a.firmware:p.error('choose serial or firmware')
 r=Path(__file__).resolve().parents[1];pico=a.pico.resolve();dac=a.dac.resolve()
 for name,path in [('pico',pico),('dac',dac)]:
  expected=json.loads((r/'dependencies.json').read_text())[name]
@@ -13,10 +14,10 @@ for name,path in [('pico',pico),('dac',dac)]:
 if a.firmware:
  subprocess.run(['python3',str(pico/'tools/build_cosim.py'),'--dac',str(dac),'--out',str(r/'build/firmware'),'--firmware'],check=True)
 else:
- sources=[pico/'tools/classic_probe.c',pico/'model/controller.c',dac/'machines/robotron1715/pc1715.c',dac/'common/cpu/z80.c',dac/'common/trace/trace.c']
- subprocess.run(['cc','-std=c11','-O2','-Wall','-Wextra','-Werror','-fsanitize=undefined','-fno-sanitize-recover=all','-I',str(dac),*map(str,sources),'-o',str(r/'build/classic-probe')],check=True)
+ sources=[r/'tools/serial_probe.c' if a.serial else pico/'tools/classic_probe.c',pico/'model/controller.c',dac/'machines/robotron1715/pc1715.c',dac/'common/cpu/z80.c',dac/'common/trace/trace.c']
+ subprocess.run(['cc','-std=c11','-O2','-Wall','-Wextra','-Werror','-fsanitize=undefined','-fno-sanitize-recover=all','-I',str(dac),'-I',str(pico),*map(str,sources),'-o',str(r/('build/serial-probe' if a.serial else 'build/classic-probe'))],check=True)
 
 from evidence import atomic_json, sha
-binary=r/'build/firmware/classic-probe' if a.firmware else r/'build/classic-probe'
-atomic_json(str(binary)+'.json', dict(schema=1, backend='firmware' if a.firmware else 'native',
+binary=r/('build/firmware/classic-probe' if a.firmware else 'build/serial-probe' if a.serial else 'build/classic-probe')
+atomic_json(str(binary)+'.json', dict(schema=1, backend='firmware' if a.firmware else 'serial' if a.serial else 'native',
     binary_sha256=sha(binary.read_bytes()), dependencies=json.loads((r/'dependencies.json').read_text())))

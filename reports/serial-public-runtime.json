@@ -1,0 +1,41 @@
+{
+  "complete": true,
+  "hardware_executed": false,
+  "suite": "full",
+  "rom_profile": "public-serial-fixture",
+  "rom_sha256": "33ad90a95b2cf10903280b556432ce14165a1e6dbbce96d33fda1833f1c677c0",
+  "image_sha256": "af7a7fab9ed629323916507a521985d355aaef4cafb3a5c209763cc0e4bfc475",
+  "platform_sha256": "dac055523ba929cac9fa6fc52ba32f1b9a84780dfc889b693a528ad7e9f65c4a",
+  "emulator_sha256": "08e89baf22e086d68e2fa6a8a4e13c686f3a1f5758adc7b9206760bae1f3de33",
+  "host_sha256": "366d7ef24fd8539ea53ab553fbb5a3b2b17c7aa9a7f315ed9db75c3c5a4bdae8",
+  "cases": [
+    "serial boot",
+    "DIR",
+    "TYPE HELLX\bO.TXT",
+    "PIP COPY.TXT=HELLO.TXT",
+    "corrupted disk reply recovered",
+    "RENAME NEW.TXT=COPY.TXT",
+    "SUBMIT TEST",
+    "P1715TST W",
+    "independent patterned-file verification",
+    "P1715TST W",
+    "",
+    "host restart without guest reset",
+    "warm boot",
+    "local keyboard with mirrored output",
+    "cold boot",
+    "P1715TST R",
+    "P1715TST C",
+    "ERASE NEW.TXT",
+    "cold persistence and verified cleanup",
+    "readonly boot",
+    "read-only rejection leaves image unchanged",
+    "full boot",
+    "P1715TST W",
+    "disk-full error"
+  ],
+  "session_host_hashes": [
+    "366d7ef24fd8539ea53ab553fbb5a3b2b17c7aa9a7f315ed9db75c3c5a4bdae8"
+  ],
+  "fault_injected": true
+}

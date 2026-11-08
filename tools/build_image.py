@@ -11,11 +11,12 @@ def put(disk,name,data,block):
     allocations=inspect(updated)[(0,name)].blocks
     return max(allocations,default=block-1)+1
 
-def image():
+def image(serial=False):
     disk=bytearray([0xe5])*819200
     for path,expected in json.loads((ROOT/'third_party/inputs.json').read_text()).items():
         assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==expected,path
-    platform=(ROOT/'build/platform.cim').read_bytes()
+    platform=(ROOT/('build/platform-serial.cim' if serial else 'build/platform.cim')).read_bytes()
+    assert len(platform)<0x3600
     assert len(platform)<0x3700
     # Original 4000h bootstrap copies the resident services, then enters loader.
     stage=bytes.fromhex('f331003f2117401100c0')+struct.pack('<BH',1,len(platform))+bytes.fromhex('edb0c333c0')
@@ -39,6 +40,9 @@ def image():
     block=put(disk,'HELLO.TXT',b'Native CP/M Plus on Robotron 1715\r\n\x1a',block)
     block=put(disk,'TEST.SUB',b'DIR HELLO.TXT\r\nTYPE HELLO.TXT\r\n\x1a',block)
     out=ROOT/'out';out.mkdir(exist_ok=True)
-    (out/'cpm-plus-1715.img').write_bytes(disk)
+    (out/('cpm-plus-1715-serial.img' if serial else 'cpm-plus-1715.img')).write_bytes(disk)
     print('built',len(disk),'bytes; bootstrap',len(payload),'bytes')
-if __name__=='__main__':image()
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--serial',action='store_true')
+    image(parser.parse_args().serial)
