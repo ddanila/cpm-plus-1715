@@ -13,6 +13,8 @@ import time
 import tty
 from pathlib import Path
 from media import inspect
+from serial_session import Console
+from serial_scenarios import basic_console, file_utilities, patterned_file
 
 ROOT = Path(__file__).resolve().parents[1]
 def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -71,28 +73,14 @@ def main():
             except ProcessLookupError: pass
             launcher.wait(timeout=10)
             launcher = None
-    def expect(token, timeout=180, start=None):
-        if start is None: start = len(output)
-        deadline = time.monotonic()+timeout
-        while time.monotonic()<deadline:
-            if token in output[start:]: return bytes(output[start:])
-            if b'CP/M 3 boot error:' in output[start:]: raise RuntimeError(bytes(output[start:]))
-            if launcher is not None and launcher.poll() is not None:
-                raise RuntimeError('launcher exited '+str(launcher.returncode))
-            if select.select([terminal], [], [], .05)[0]:
-                output.extend(os.read(terminal,4096))
-                (a.out/'console.bin').write_bytes(output)
-        raise RuntimeError('timeout waiting for '+repr(token)+'; tail='+repr(output[-400:]))
+    def check_host():
+        if launcher is not None and launcher.poll() is not None:
+            raise RuntimeError('launcher exited '+str(launcher.returncode))
+    console_io = Console(terminal, a.out/'console.bin', check_host)
+    output = console_io.output
+    expect = console_io.expect
     def command(text, marker=None, timeout=180):
-        start_at=len(output)
-        os.write(terminal,text.encode('ascii')+b'\r')
-        prompt_at=start_at
-        if marker:
-            expect(marker,timeout,start_at)
-            prompt_at=output.index(marker,start_at)+len(marker)
-        expect(b'A>',timeout,prompt_at)
-        data=bytes(output[start_at:])
-        if marker: assert marker in data
+        data = console_io.command(text, marker, timeout)
         case(text)
         return data
     def reset_boot(name, image, readonly=False):
@@ -109,19 +97,13 @@ def main():
         start('boot',session)
         expect(b'A>');case('serial boot')
         time.sleep(1)
-        command('DIR',b'P1715TST')
-        command('TYPE HELLX\bO.TXT',b'Native CP/M Plus on Robotron 1715')
+        basic_console(command)
         if a.suite=='full':
-            os.write(commands,b'F')
-            command('PIP COPY.TXT=HELLO.TXT')
-            case('corrupted disk reply recovered')
-            assert inspect((session/'disk.img').read_bytes())[(0,'COPY.TXT')].data==initial_files[(0,'HELLO.TXT')]
-            command('RENAME NEW.TXT=COPY.TXT')
-            command('SUBMIT TEST',b'Native CP/M Plus on Robotron 1715')
+            file_utilities(command, session/'disk.img', initial_files,
+                           lambda: os.write(commands,b'F'),
+                           lambda: case('corrupted disk reply recovered'))
             command('P1715TST W',b'P1715TEST WRITE PASS',300)
-            expected=b''.join(bytes(i^j for j in range(128)) for i in range(256))
-            expected=b'P1715TEST-v1\0\1\2\3'+expected[16:]
-            assert inspect((session/'disk.img').read_bytes())[(0,'P1715TST.DAT')].data==expected
+            patterned_file(session/'disk.img')
             case('independent patterned-file verification')
             command('P1715TST W',b'P1715TEST COLLISION FAIL')
             stop_host();time.sleep(2)

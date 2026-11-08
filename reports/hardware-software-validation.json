@@ -1,0 +1,77 @@
+{
+  "hardware_executed": false,
+  "dependencies": {
+    "pico": "dcfd610aa97edf097c2d8b33b4c7c0da11ea0c03",
+    "dac": "4180d456a64f11d95363b4b19ab09ad12165de60",
+    "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8",
+    "juku_common": "34a9b0f5842b2ae8162f37c6037a9cfbedf050ed",
+    "ravi": "2491ec9559abaafe00a294f33ef97b7ec0d1e645",
+    "host": "e468b87d1006833a13f17303e5a49517e4c6298b"
+  },
+  "classic_and_serial_outputs_unchanged": true,
+  "output_count": 13,
+  "juku_compatibility": [
+    {
+      "profile": "legacy",
+      "bytes": 1324,
+      "sha256": "6696e3c30d01fcd33ca27d2e4d75c59a36e337a0e5d2590e53cb5cbc11700c33",
+      "unchanged": true
+    },
+    {
+      "profile": "c9",
+      "bytes": 1482,
+      "sha256": "5a6e7855e9e94310d13144b899fa9a3bdef0df788f5a411b4a8198226672152c",
+      "unchanged": true
+    }
+  ],
+  "software_validation": {
+    "host_linux": {
+      "sha256": "bdc36d84a50606a075c4a24a607d17f32bf8e40e19a385587ef47407816b948c",
+      "tail": [
+        "tests/fixtures/jukuhost-v15/cpm-plus-juku.img: OK",
+        "tests/fixtures/jukuhost-v15/cpm-plus-juku-system.bin: OK",
+        "jukuhost 0.4.0-m8",
+        "ROBOTRON-FAULT-TEST: PASS (one bad CRC, valid cached retry, raw 800 KiB A:)",
+        "JUKUHOST-CONFIG-TEST: PASS (SHA-256 + fallback + safe snapshot)",
+        "JUKUHOST-LINUX-PTY-TEST: PASS (N3/N4 + B: + duplicate + journal recovery + capture events + console/serial diagnostics and recovery)",
+        "JUKUHOST-V15-DELAYED-PTY-TEST: PASS (5-second core delay)",
+        "JUKUHOST-STOCK-V15-COSIM-TEST: PASS",
+        "JUKUHOST-SERIAL-RECONNECT-TEST: PASS (named PTY loss + reopen)",
+        "PYTHON-HOST-RETIREMENT-TEST: PASS (one executable host; frozen non-runnable fixtures)"
+      ]
+    },
+    "ravi_transport": {
+      "sha256": "0fa6e9196f096183c02cc2acc9c66c1dc944647981973bb5cc84a89647a36d1e",
+      "tail": [
+        "..............",
+        "----------------------------------------------------------------------",
+        "Ran 14 tests in 0.006s",
+        "",
+        "OK"
+      ]
+    },
+    "ravi_robotron": {
+      "sha256": "b3ed44c4ca4e75725dcb4c2341443316c7b64691217d4c33b351a74b2121abca",
+      "tail": [
+        ".usage: python3 -m unittest [-h] --port PORT [--baud BAUD] [--stop-bits {1,2}]",
+        "                           [--timeout TIMEOUT] [--byte-delay BYTE_DELAY]",
+        "                           --log-dir LOG_DIR",
+        "                           {probe,smoke,upload} ...",
+        "python3 -m unittest: error: nonempty payload must fit entirely in 4000h..BFFFh",
+        "..............sssssssssssssssssssssssss......",
+        "----------------------------------------------------------------------",
+        "Ran 46 tests in 14.736s",
+        "",
+        "OK (skipped=25)"
+      ]
+    },
+    "host_dos_build": {
+      "sha256": "bbf9e66d677de02a3c034f2aecb8dbc4032b011a5ee7834dfd1e9692cb7192e8",
+      "tail": [
+        "Open Watcom V2: PASS (f83c158176f740ec656394a1ec531e2e6d8b78ebdfa4496460f9a0e457475e85, source cf43271464fdd57065d3d72de8ca917c55c6a887)",
+        "0464b4ed8824cd74743194fa189c26aab029e07ebefe7588529f6c2742184168  /home/ddanila/fun/8080-cosim/build/dos/JUKUHOST.EXE",
+        "JUKUHOST-DOS-BUILD: PASS (90262 bytes)"
+      ]
+    }
+  }
+}

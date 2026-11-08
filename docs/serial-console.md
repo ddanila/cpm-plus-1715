@@ -38,6 +38,8 @@ Pico1715 revisions listed in `dependencies.json`. Build the host with
 `../8080-cosim/sync/jukuhost_linux_build.sh` (that script changes to its own
 repository). Install Ravi's Python dependencies or use its configured venv.
 
+For the single-power-on hardware campaign, see [unattended serial testing](unattended-serial.md).
+
 ## Boot and attach (Linux)
 
 The terminal endpoint is a raw PTY supplied by your terminal frontend. With

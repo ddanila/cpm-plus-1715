@@ -3,7 +3,7 @@
   "status": "passed",
   "source_sha256": {
     "Makefile": "03f0596f7f262e50665e58b3016d9e40c97aa4db4fa3c5e38d7370e2f04017de",
-    "dependencies.json": "df4813678f5d69f8f3d62bf14d2fc218ca66a52c122615fba6fffc494c9debc0",
+    "dependencies.json": "ee2a362541562aa7948b0f2a48859ff654355c248f7181443543b425bf5837d3",
     "src/cpm3-bios.asm": "ccd952d3763a0b10e6c418f8f5fe848567fc091b71811b72649e604a0e26a1c9",
     "src/directory-test.asm": "24c4cda0e729b1e8b5fbec2699326cda54bf09919afeeb2ec90b0f8c8569c926",
     "src/keyboard-test.asm": "5598ed0b3b99a7488b3a8fd551c1e61c741fea9df48ca3a0dd215de29c02f97f",
@@ -21,6 +21,7 @@
     "tests/media_test.py": "bf37d2bf91872d470482fdb72ad4988424cf28ec0c3e874c25bfadbdfd183629",
     "tests/runtime_contract_test.py": "67277001f836aec870f4cc2cab47620eee0124470bb88c176805f673be5ccc78",
     "tests/serial_crc_test.py": "405c80122841c1d0eba4c5e71971ad6bbae4f1c8795b2a094635d469b5816255",
+    "tests/serial_session_test.py": "fbb44ca6edbe5e5edb9afc21dc6ca048b84efc38bb2d53ff06f2f17213dfacba",
     "third_party/JUKU-LICENSE": "dc74ca17f83a020b3fec5b966e1f26188f1f16b800be6b093fc676bc43e0947c",
     "third_party/cpm3/LICENSE.md": "4db276dbc6ee71ff1c9e4826ea52c1ac4f6eac6f64a11e517a660fe0ca14d1a3",
     "third_party/cpm3/bdos3.spr": "d819e736ba4e4442b1e51dc8b98d3426592d2e125c5c052bceb191f63469fc75",
@@ -105,9 +106,11 @@
     "tools/build_test_rom.py": "6176a78f0e7bc210bbced16931f9f5dac93ff354f3040785064b1689c0a9c11c",
     "tools/build_wasm_probe.py": "99e916db289a3df2985c9e82b8fd771a5d3fef1a7546faeeacafb2c65fb0fe24",
     "tools/check_diagnostics.py": "1bed54719d6d699f2bbf96ff16cc0f458c1e0d5a8e1053c467bf3ae091f4f6f4",
+    "tools/check_hardware_runner.py": "73c2731eac68ed0ab79f900e84d5ea7f7954a0682ac509a718f41382f447358e",
     "tools/check_reproducible.py": "9dca02870ef16e1b56c9a25ad2df7d32044725071df02b3a24938262d7018393",
     "tools/check_runtime.py": "3af7ccd39f3213ea11b6296d506661437fe94efe96c2f144ccfd911c2830b6a4",
-    "tools/check_serial_runtime.py": "dba0cbfb3f3e2499bcf4a8f18764746fb8eb2196e4057b82eb8930ed21d8d538",
+    "tools/check_serial_hardware.py": "a4302d90fc29bf838fe6855a121a9e79d3fc0926c85d521b3d7fc097cdb7b8c2",
+    "tools/check_serial_runtime.py": "bc9c4b964b2f6493d1a1c0f5e88d8bbe56388b107d0be126ed27f2780b4f541d",
     "tools/classic_workload.py": "cf930f08bd23b887809bb3438b55670d0319f1967c6132449d13f3653823f0ea",
     "tools/disk_image.py": "ccc15c82000e86d1f9d65c3588f4bff4f513cbafa338425083dabe3cb8c214e1",
     "tools/evidence.py": "f6440109932faf41ef009061b9a57a4b946bda5e88366ccc68059731456068aa",
@@ -118,8 +121,10 @@
     "tools/pattern_workload.py": "c54fe70155b653bffcf09098ce58bb023ab2c993e6d1ff55586db7b13289609d",
     "tools/regenerate_cpm3.py": "7fbef83a753a6b0c1dfe80c5e1a89bd2186446d46904f91a4d61dea748145d6f",
     "tools/runtime_cases.py": "fdbdcfbc8659ebcff0fc6a58c9f3191d00b5568743a22d990d409e3f74bb58cd",
-    "tools/serial_boot.py": "bc6d49cb8465008b834508cf7158b8b5b5afb66e77676059d534afbabf7b52bd",
+    "tools/serial_boot.py": "8f67645b1f40195d5d1a311d81b23b491f4058910a7205ef9d7b61152f822fd4",
     "tools/serial_probe.c": "8e277182d142ce22e332baa80086d46d37e684324cc234d3f84ef658057beb4d",
+    "tools/serial_scenarios.py": "012652c20ec59f0489e48a4ccc4bf557e80451a38a685f99901cd397c22deea1",
+    "tools/serial_session.py": "917d4afc0b2e289b1fddaacd03845411a1ff5249f2c38b12911123498201f999",
     "tools/system_contract.py": "907393cdc44b14b80ddd64d8d325d2c97f9f0add45fcbf9fb25153927dd73668"
   },
   "dependencies": {
@@ -127,8 +132,8 @@
     "dac": "4180d456a64f11d95363b4b19ab09ad12165de60",
     "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8",
     "juku_common": "34a9b0f5842b2ae8162f37c6037a9cfbedf050ed",
-    "ravi": "208a36540d8bee424e409564fd0de986675fbda2",
-    "host": "5c769339620547e034e0114cb493c997dfd5d22b"
+    "ravi": "2491ec9559abaafe00a294f33ef97b7ec0d1e645",
+    "host": "e468b87d1006833a13f17303e5a49517e4c6298b"
   },
   "fresh_source_build": true,
   "equal_outputs": {

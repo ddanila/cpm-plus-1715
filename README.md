@@ -7,6 +7,8 @@ intercepts BDOS calls or injects disk records into guest RAM.
 
 A separate [serial build](https://github.com/ddanila/cpm-plus-1715/blob/main/docs/serial-console.md) adds stock-ROM V.24 boot,
 a mirrored N4 remote console and host-backed A: using shared Juku protocol code.
+The [unattended hardware runner](https://github.com/ddanila/cpm-plus-1715/blob/main/docs/unattended-serial.md)
+executes one serial-only campaign after one manual power-on.
 
 ## Build
 

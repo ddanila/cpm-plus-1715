@@ -62,7 +62,11 @@ jobs:
 
   serial:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [emulator, hardware]
     defaults:
       run:
         working-directory: cpm-plus-1715
@@ -84,19 +88,26 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/ravi
-          ref: 208a36540d8bee424e409564fd0de986675fbda2
+          ref: 2491ec9559abaafe00a294f33ef97b7ec0d1e645
           path: ravi
       - uses: actions/checkout@v4
         with:
           repository: ddanila/8080-cosim
-          ref: 5c769339620547e034e0114cb493c997dfd5d22b
+          ref: e468b87d1006833a13f17303e5a49517e4c6298b
           path: 8080-cosim
       - run: sudo apt-get update && sudo apt-get install -y build-essential bison python3-pexpect
       - run: ../8080-cosim/sync/jukuhost_linux_build.sh
       - run: make serial-probe test
-      - run: python3 tools/check_serial_runtime.py --rom build/serial-test.rom --out local/serial-ci
+      - if: matrix.runner == 'emulator'
+        run: python3 tools/check_serial_runtime.py --rom build/serial-test.rom --out local/serial-ci
+      - if: matrix.runner == 'hardware'
+        run: |
+          python3 tools/check_hardware_runner.py --rom build/serial-test.rom --out local/serial-ci
+          for scenario in boot-timeout disconnect interrupt; do
+            python3 tools/check_hardware_runner.py --rom build/serial-test.rom --scenario "$scenario" --out "local/serial-$scenario"
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: serial-evidence
-          path: cpm-plus-1715/local/serial-ci/
+          name: serial-${{ matrix.runner }}-evidence
+          path: cpm-plus-1715/local/serial-*/
