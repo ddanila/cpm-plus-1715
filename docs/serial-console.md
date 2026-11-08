@@ -93,7 +93,9 @@ The reference-ROM fixture models four unreadable scratch drives so its disk
 probes fall through to V.24. This does not qualify every diskless board wiring
 configuration. SIO byte timing and finite buffering are modeled, but PTYs do
 not validate electrical levels, parity waveforms, physical clock accuracy, or
-MB003. No physical execution was performed for this implementation.
+MB003. These reports describe emulator execution. A subsequent real MB003
+campaign passed all 11 supported serial hardware groups; see
+[hardware results and limits](unattended-serial.md).
 
 ## Recorded checks
 
@@ -110,8 +112,8 @@ host integration gate and DOS host checks also passed.
 
 The optional Windows packaging check reached an existing recovery-payload hash
 mismatch in the sibling Juku checkout after its configuration/platform tests
-passed. No Windows Robotron profile or physical hardware qualification is
-claimed. The Robotron launcher and runtime profile are qualified on Linux.
+passed. No Windows Robotron profile is claimed. The Robotron launcher and runtime
+profile are qualified on Linux; the later MB003 hardware results are linked above.
 
 The earlier extended firmware run passed all 43 runtime cases, including reset
 recovery, but its source-change guard refused manifest publication because

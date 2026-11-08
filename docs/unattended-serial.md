@@ -6,9 +6,15 @@ odd parity and 2 stop bits. There are no physical floppy operations, formatting,
 or controller tests. Leave physical drives empty: the stock ROM may probe their
 interface before falling through to its V.24 loader.
 
-The firmware and host are emulator-qualified; this guide does not claim that
-CP/M has already been run on MB003. The previous MB003 diagnostics established
-serial bootstrap and RAM operation, not CP/M hardware qualification.
+PC002/MB003 passed all 11 supported groups on real hardware on 2026-11-08 in
+17m 14s, using implementation commit `f003c87`. The campaign verified serial boot,
+console/file operations, host restart, warm boot, deliberate CRC-fault recovery,
+disk-full recovery and read-only protection. All five host sessions reported zero
+UART errors; the only retry was the injected fault. The source image was unchanged.
+[Raw captures, result and pinned provenance](https://github.com/ddanila/vintage-computer-inventory/tree/ccf6bb314391355b701e130e13161664eda866ec/items/MB003-robotron-pc1715/evidence/20261108-cpm-serial)
+record the run, including its 300-second boot timeout. Local keyboard/video,
+physical floppy operation and physical reset/power-loss recovery remain unqualified.
+The host stopped after testing; the board was left powered at the CP/M prompt.
 
 ## Prepare and start
 
