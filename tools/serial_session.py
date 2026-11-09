@@ -1,10 +1,13 @@
 """Shared bootstrap, native host ownership and console transactions for serial tests."""
 import hashlib
+import fcntl
+import stat
 import math
 import os
 import select
 import signal
 import subprocess
+import sys
 import time
 from pathlib import Path
 from importlib.resources import files
@@ -79,10 +82,11 @@ def host_command(host, serial, image, console, log, capture, readonly=False, fd=
 
 class HostService:
     """One child at a time; the supervisor retains the original serial descriptor."""
-    def __init__(self, host, serial, fd, image, console, out, deadline):
+    def __init__(self, host, serial, fd, image, console, out, deadline, guard_parent=False):
         self.host, self.serial, self.fd = host, serial, fd
         self.image, self.console, self.out = image, console, out
         self.deadline = deadline
+        self.guard_parent = guard_parent
         self.process = None
         self.epochs = []
         self.stream = None
@@ -106,6 +110,8 @@ class HostService:
         self.stream = (self.out/f'host-{index}-process.log').open('wb')
         args = host_command(self.host, self.serial, self.image, self.console, log, capture,
                             readonly, self.fd, corrupt)
+        if self.guard_parent:
+            args = [sys.executable, str(ROOT/'tools/serial_host_guard.py'), str(os.getpid())]+args
         self.process = subprocess.Popen(args, pass_fds=(self.fd,), stdout=self.stream,
                                         stderr=subprocess.STDOUT, start_new_session=True)
         until = min(self.deadline, time.monotonic()+15)
@@ -175,3 +181,34 @@ class Console:
         at = len(self.output)
         os.write(self.fd, b'\x03')
         self.expect(b'A>', start=at)
+
+
+def lock_session(path):
+    stream = path.open('a+b')
+    try:
+        fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BaseException:
+        stream.close()
+        raise
+    return stream
+
+
+def assert_device_unused(path):
+    """Reject visible existing owners before changing termios; TIOCEXCL guards new opens."""
+    device = os.stat(path)
+    if not stat.S_ISCHR(device.st_mode):
+        raise ValueError('serial endpoint must be a character device')
+    for process in Path('/proc').iterdir():
+        if not process.name.isdigit():
+            continue
+        try:
+            descriptors = list((process/'fd').iterdir())
+        except (PermissionError, FileNotFoundError):
+            continue
+        for descriptor in descriptors:
+            try:
+                opened = descriptor.stat()
+            except (PermissionError, FileNotFoundError):
+                continue
+            if stat.S_ISCHR(opened.st_mode) and opened.st_rdev == device.st_rdev:
+                raise RuntimeError(f'serial device already open by PID {process.name}')

@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 """One power-on, one unattended campaign; all CP/M disk I/O uses serial A:."""
 import argparse
-import fcntl
 import os
 import pty
 import re
 import signal
-import stat
 import subprocess
 import sys
 import time
@@ -17,7 +15,7 @@ from pathlib import Path
 from evidence import atomic_json
 from media import inspect
 from pattern_workload import fixture, nearly_full, record
-from serial_session import ROOT, Console, HostService, bootstrap, digest, positive, validate_artifacts
+from serial_session import lock_session, assert_device_unused, ROOT, Console, HostService, bootstrap, digest, positive, validate_artifacts
 from serial_scenarios import basic_console, file_utilities, patterned_file, baseline_unchanged
 
 UNSUPPORTED = {
@@ -26,37 +24,6 @@ UNSUPPORTED = {
     'physical floppy and controller': 'excluded; A: is host-backed serial media only',
     'alternate system-image boot rejection': 'requires another fresh loader session',
 }
-
-
-def lock_session(path):
-    stream = path.open('a+b')
-    try:
-        fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except BaseException:
-        stream.close()
-        raise
-    return stream
-
-
-def assert_device_unused(path):
-    """Reject visible existing owners before changing termios; TIOCEXCL guards new opens."""
-    device = os.stat(path)
-    if not stat.S_ISCHR(device.st_mode):
-        raise ValueError('serial endpoint must be a character device')
-    for process in Path('/proc').iterdir():
-        if not process.name.isdigit():
-            continue
-        try:
-            descriptors = list((process/'fd').iterdir())
-        except (PermissionError, FileNotFoundError):
-            continue
-        for descriptor in descriptors:
-            try:
-                opened = descriptor.stat()
-            except (PermissionError, FileNotFoundError):
-                continue
-            if stat.S_ISCHR(opened.st_mode) and opened.st_rdev == device.st_rdev:
-                raise RuntimeError(f'serial device already open by PID {process.name}')
 
 
 def parser():

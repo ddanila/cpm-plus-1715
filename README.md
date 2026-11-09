@@ -105,3 +105,6 @@ included. It does not independently rebuild every DRI kernel/utility module.
 
 The image also includes [P1715TST guest diagnostics](docs/diagnostics.md) for
 patterned storage checks and cold-boot verification, using portable CP/M BDOS.
+
+For persistent daily use, see [managed serial sessions](docs/managed-session.md):
+one-command boot, detachable console and offline snapshots.
