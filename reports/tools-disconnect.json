@@ -1,0 +1,56 @@
+{
+  "scenario": "disconnect",
+  "passed": true,
+  "hardware_executed": false,
+  "rom_sha256": "33ad90a95b2cf10903280b556432ce14165a1e6dbbce96d33fda1833f1c677c0",
+  "emulator_sha256": "08e89baf22e086d68e2fa6a8a4e13c686f3a1f5758adc7b9206760bae1f3de33",
+  "exit_code": 1,
+  "campaign": {
+    "status": "failed",
+    "complete": false,
+    "supported_suite_passed": false,
+    "hardware_executed": false,
+    "board": "emulator-no-reset",
+    "serial": "/dev/pts/11",
+    "framing": "9600 8O2",
+    "mode": "emulator",
+    "source_sha256": "6a7ed562308874ab641e342d6f34fb04f75129bf7a2b4e982bc2a821d339a9cb",
+    "prepared_sha256": "1d0df4583b60cbcedbdd7d1b21c0f08eededc5c39f4549244f2ea509140a395b",
+    "platform_sha256": "dac055523ba929cac9fa6fc52ba32f1b9a84780dfc889b693a528ad7e9f65c4a",
+    "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+    "cases": [
+      {
+        "name": "verified serial boot",
+        "status": "passed"
+      },
+      {
+        "name": "console, editing, DIR and TYPE",
+        "status": "failed",
+        "error": "OSError(5, 'Input/output error')"
+      }
+    ],
+    "unsupported": {
+      "physical cold reset and power-loss recovery": "no external power/reset controller",
+      "local keyboard and CRT/video": "serial-only observation; no input injection",
+      "physical floppy and controller": "excluded; A: is host-backed serial media only",
+      "alternate system-image boot rejection": "requires another fresh loader session"
+    },
+    "host_epochs": [
+      {
+        "index": 0,
+        "read_only": false,
+        "corrupt_read_once": false,
+        "image_sha256": "1d0df4583b60cbcedbdd7d1b21c0f08eededc5c39f4549244f2ea509140a395b",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 4
+      }
+    ],
+    "phase": "console, editing, DIR and TYPE",
+    "elapsed_seconds": 103.377,
+    "monitor_sha256": "45cf5d16f3aff43982cf4275eda9193e7ca6d5a521656147dc78d1951ef64467",
+    "error": "OSError(5, 'Input/output error')",
+    "manual_power_cycle_required": true,
+    "working_sha256": "1d0df4583b60cbcedbdd7d1b21c0f08eededc5c39f4549244f2ea509140a395b",
+    "source_unchanged": true
+  }
+}

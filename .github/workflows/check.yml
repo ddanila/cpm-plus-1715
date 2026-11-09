@@ -62,11 +62,11 @@ jobs:
 
   serial:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
-        runner: [emulator, hardware, managed, managed-failures]
+        runner: [emulator, hardware, managed, managed-failures, tools-utilities, tools-streams, tools-binary, tools-large, tools-failures, tools-upgrade]
     defaults:
       run:
         working-directory: cpm-plus-1715
@@ -108,6 +108,20 @@ jobs:
           done
       - if: matrix.runner == 'managed'
         run: python3 tools/check_managed_session.py --rom build/serial-test.rom --out local/serial-managed
+      - if: matrix.runner == 'tools-utilities'
+        run: python3 tools/check_tools_runtime.py --rom build/serial-test.rom --suite utilities --out local/serial-tools
+      - if: matrix.runner == 'tools-streams'
+        run: python3 tools/check_tools_runtime.py --rom build/serial-test.rom --suite streams --out local/serial-streams
+      - if: matrix.runner == 'tools-binary'
+        run: python3 tools/check_tools_runtime.py --rom build/serial-test.rom --suite binary --sizes 0,1,127,128,129,16385 --out local/serial-bin
+      - if: matrix.runner == 'tools-large'
+        run: python3 tools/check_tools_runtime.py --rom build/serial-test.rom --suite binary --sizes 49153 --out local/serial-big
+      - if: matrix.runner == 'tools-failures'
+        run: |
+          python3 tools/check_tools_runtime.py --rom build/serial-test.rom --failure full --out local/serial-full
+          python3 tools/check_tools_runtime.py --rom build/serial-test.rom --failure readonly --out local/serial-ro
+      - if: matrix.runner == 'tools-upgrade'
+        run: python3 tools/check_tools_runtime.py --rom build/serial-test.rom --upgrade --out local/serial-up
       - if: matrix.runner == 'managed-failures'
         run: python3 tools/check_managed_session.py --rom build/serial-test.rom --suite failures --out local/serial-mf
       - uses: actions/upload-artifact@v4

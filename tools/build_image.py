@@ -11,7 +11,7 @@ def put(disk,name,data,block):
     allocations=inspect(updated)[(0,name)].blocks
     return max(allocations,default=block-1)+1
 
-def image(serial=False):
+def image(serial=False, base=False):
     disk=bytearray([0xe5])*819200
     for path,expected in json.loads((ROOT/'third_party/inputs.json').read_text()).items():
         assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==expected,path
@@ -40,9 +40,17 @@ def image(serial=False):
     block=put(disk,'HELLO.TXT',b'Native CP/M Plus on Robotron 1715\r\n\x1a',block)
     block=put(disk,'TEST.SUB',b'DIR HELLO.TXT\r\nTYPE HELLO.TXT\r\n\x1a',block)
     out=ROOT/'out';out.mkdir(exist_ok=True)
-    (out/('cpm-plus-1715-serial.img' if serial else 'cpm-plus-1715.img')).write_bytes(disk)
+    if serial:
+        (out/'cpm-plus-1715-serial-base.img').write_bytes(disk)
+        if not base:
+            from tool_bundle import install
+            disk, _ = install(disk)
+    if not base:
+        (out/('cpm-plus-1715-serial.img' if serial else 'cpm-plus-1715.img')).write_bytes(disk)
     print('built',len(disk),'bytes; bootstrap',len(payload),'bytes')
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser();parser.add_argument('--serial',action='store_true')
-    image(parser.parse_args().serial)
+    parser.add_argument('--base', action='store_true')
+    args = parser.parse_args()
+    image(args.serial, args.base)

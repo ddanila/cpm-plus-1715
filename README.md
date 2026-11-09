@@ -76,8 +76,9 @@ handshake/seek timing, verify keyboard clocking and video setup on the actual
 mainboard, then repeat boot, utilities, protection, reset and persistence tests
 on disposable media. No physical execution or production readiness is claimed.
 
-New sources are MIT; adapted Juku sources are BSD-2-Clause. CP/M and build tools
-retain their separate terms; see `NOTICE.md`.
+Core new sources are MIT; adapted Juku sources are BSD-2-Clause. The cpmbox
+adaptations use GPLv3-or-later. CP/M and build tools retain their separate
+terms; see `NOTICE.md`.
 
 ## Disk tools and packages
 
@@ -108,3 +109,6 @@ patterned storage checks and cold-boot verification, using portable CP/M BDOS.
 
 For persistent daily use, see [managed serial sessions](docs/managed-session.md):
 one-command boot, detachable console and offline snapshots.
+
+The default serial image includes [PIPEMGR and nine cpmbox utilities](docs/pipes-and-tools.md),
+with text/binary pipelines and an explicit offline upgrade for existing sessions.

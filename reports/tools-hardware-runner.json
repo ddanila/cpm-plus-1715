@@ -1,0 +1,122 @@
+{
+  "scenario": "normal",
+  "passed": true,
+  "hardware_executed": false,
+  "rom_sha256": "33ad90a95b2cf10903280b556432ce14165a1e6dbbce96d33fda1833f1c677c0",
+  "emulator_sha256": "08e89baf22e086d68e2fa6a8a4e13c686f3a1f5758adc7b9206760bae1f3de33",
+  "exit_code": 0,
+  "campaign": {
+    "status": "passed",
+    "complete": true,
+    "supported_suite_passed": true,
+    "hardware_executed": false,
+    "board": "emulator-no-reset",
+    "serial": "/dev/pts/15",
+    "framing": "9600 8O2",
+    "mode": "emulator",
+    "source_sha256": "6a7ed562308874ab641e342d6f34fb04f75129bf7a2b4e982bc2a821d339a9cb",
+    "prepared_sha256": "1d0df4583b60cbcedbdd7d1b21c0f08eededc5c39f4549244f2ea509140a395b",
+    "platform_sha256": "dac055523ba929cac9fa6fc52ba32f1b9a84780dfc889b693a528ad7e9f65c4a",
+    "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+    "cases": [
+      {
+        "name": "verified serial boot",
+        "status": "passed"
+      },
+      {
+        "name": "console, editing, DIR and TYPE",
+        "status": "passed"
+      },
+      {
+        "name": "copy, rename and SUBMIT",
+        "status": "passed"
+      },
+      {
+        "name": "pattern write and independent integrity",
+        "status": "passed"
+      },
+      {
+        "name": "existing-file collision",
+        "status": "passed"
+      },
+      {
+        "name": "host restart without guest reset",
+        "status": "passed"
+      },
+      {
+        "name": "warm boot and persistence",
+        "status": "passed"
+      },
+      {
+        "name": "one corrupt read reply and verified retry",
+        "status": "passed"
+      },
+      {
+        "name": "cleanup and baseline integrity",
+        "status": "passed"
+      },
+      {
+        "name": "disk-full, recovery and preserved baseline",
+        "status": "passed"
+      },
+      {
+        "name": "read-only host rejection and unchanged image",
+        "status": "passed"
+      }
+    ],
+    "unsupported": {
+      "physical cold reset and power-loss recovery": "no external power/reset controller",
+      "local keyboard and CRT/video": "serial-only observation; no input injection",
+      "physical floppy and controller": "excluded; A: is host-backed serial media only",
+      "alternate system-image boot rejection": "requires another fresh loader session"
+    },
+    "host_epochs": [
+      {
+        "index": 0,
+        "read_only": false,
+        "corrupt_read_once": false,
+        "image_sha256": "1d0df4583b60cbcedbdd7d1b21c0f08eededc5c39f4549244f2ea509140a395b",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 0
+      },
+      {
+        "index": 1,
+        "read_only": false,
+        "corrupt_read_once": false,
+        "image_sha256": "80337584cf5bd35e063343e3cd2c3accfa544c7017680541d980a6c2d05d684a",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 0
+      },
+      {
+        "index": 2,
+        "read_only": false,
+        "corrupt_read_once": true,
+        "image_sha256": "80337584cf5bd35e063343e3cd2c3accfa544c7017680541d980a6c2d05d684a",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 0
+      },
+      {
+        "index": 3,
+        "read_only": false,
+        "corrupt_read_once": false,
+        "image_sha256": "7459d162435745b9d9d2f49c0ba014ec91b9def25446821fa6c9d621938936c0",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 0
+      },
+      {
+        "index": 4,
+        "read_only": true,
+        "corrupt_read_once": false,
+        "image_sha256": "2dbac40ccbccdaf988244e87abba94cc2a75637177942177b67f5db75a7628b7",
+        "host_sha256": "e54121eb63f36bfbed16628d3d28b79f0d8aa6bb9a493ec43f4a6c7a66027470",
+        "exit_code": 0
+      }
+    ],
+    "phase": "finished",
+    "elapsed_seconds": 1289.191,
+    "monitor_sha256": "45cf5d16f3aff43982cf4275eda9193e7ca6d5a521656147dc78d1951ef64467",
+    "manual_power_cycle_required": false,
+    "working_sha256": "2dbac40ccbccdaf988244e87abba94cc2a75637177942177b67f5db75a7628b7",
+    "source_unchanged": true
+  }
+}

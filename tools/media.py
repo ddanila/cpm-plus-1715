@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: MIT
 """Checked CP/M 3 media for the nonbanked classic 1715 profile.
 
-Lengths are logical records, not exact original byte counts. CP/M 3 label and
+File.data retains padded logical records; exact_data uses the DOS Plus
+used-byte count in directory S1 (zero means a full final record). CP/M 3 label and
 password entries are retained but deliberately rejected by this v1 writer.
 """
 from dataclasses import dataclass
@@ -38,6 +39,15 @@ class File:
     blocks: tuple
     records: int
     data: bytes
+    last_record_used: int = 0
+
+    @property
+    def exact_data(self):
+        return self.data[:self.exact_size]
+
+    @property
+    def exact_size(self):
+        return len(self.data) - (128 - self.last_record_used if self.data and self.last_record_used else 0)
 
 
 def inspect(image):
@@ -77,7 +87,7 @@ def inspect(image):
         attrs = ''.join(c for i, c in [(9, 'R'), (10, 'S'), (11, 'A')] if e[i] & 128)
         data = b''.join(image[DIRECTORY + b * BLOCK:DIRECTORY + (b + 1) * BLOCK]
                         for b in blocks[:needed])[:e[15] * 128]
-        groups.setdefault((e[0], name), []).append((extent, off, blocks, e[15], attrs, data))
+        groups.setdefault((e[0], name), []).append((extent, off, blocks, e[15], attrs, data, e[13]))
     result = {}
     for key, rows in groups.items():
         rows.sort()
@@ -89,11 +99,11 @@ def inspect(image):
             raise ValueError(f'inconsistent attributes for {key}')
         result[key] = File(*key, rows[0][4], tuple(r[1] for r in rows),
                           tuple(b for r in rows for b in r[2] if b),
-                          sum(r[3] for r in rows), b''.join(r[5] for r in rows))
+                          sum(r[3] for r in rows), b''.join(r[5] for r in rows), rows[0][6] if rows[0][6] < 128 else 0)
     return result
 
 
-def add(image, name, data, *, user=0, replace=False, attributes='', system=False, start_block=None):
+def add(image, name, data, *, user=0, replace=False, attributes='', system=False, start_block=None, exact=False):
     """Return a new validated image; never mutate caller-owned input."""
     if not 0 <= user <= 15:
         raise ValueError('user must be 0..15')
@@ -133,6 +143,8 @@ def add(image, name, data, *, user=0, replace=False, attributes='', system=False
             if c in attributes:
                 e[i] |= 128
         e[12], e[14], e[15] = extent & 31, extent >> 5, len(chunk) // 128
+        if exact:
+            e[13] = len(data) % 128
         for j in range((len(chunk) + BLOCK - 1) // BLOCK):
             b = free[next_block]
             next_block += 1

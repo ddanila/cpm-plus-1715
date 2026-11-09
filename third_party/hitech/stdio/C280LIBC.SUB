@@ -1,0 +1,183 @@
+era c280libc.log
+put console output to file c280libc.log [system]
+date
+; Compile all LIB280C.LIB modules from sources for Z280
+;
+; Sources are on drive E:
+; Z280 object files are created on drive M:
+;
+m:
+pip m:=e:stdio.i
+c280
+<-v -o2 -c e:abort.c \
+<e:abs.as \
+<e:allsh.as \
+<e:alrsh.as \
+<e:asallsh.as \
+<e:asalrsh.as \
+<e:asar.as \
+<e:asdiv.as \
+<e:asladd.as \
+<e:asland.as \
+<e:asll.as \
+<e:asllrsh.as \
+<e:aslmul.as \
+<e:aslor.as \
+<e:aslr.as \
+<e:aslsub.as \
+<e:aslxor.as \
+<e:asmod.as \
+<e:asmul.as \
+<e:assert.c \
+<e:atoi.as \
+<e:atol.c \
+<e:bdos.as \
+<e:bios.as \
+<e:bitfield.as \
+<e:blkclr.as \
+<e:blkcpy.c \
+<e:bmove.as \
+<e:brelop.as \
+<e:buf.c \
+<e:calloc.c \
+<e:cgets.c \
+<e:chmod.c \
+<e:cleanup.c \
+<e:close.c \
+<e:convtime.c \
+<e:cputs.c \
+<e:creat.c \
+<e:csv.as \
+<e:ctime.c \
+<e:ctype_.c \
+<e:ctype.c \
+<e:doprnt.c \
+<e:doscan.c \
+<e:dup.c \
+<e:exec.as \
+<e:execl.as \
+<e:_exit.as \
+<e:exit.c \
+<e:fakeclea.c \
+<e:fakecpcl.as \
+<e:fcbname.c \
+<e:fclose.c \
+<e:fflush.c \
+<e:fgetc.c \
+<e:filbuf.c \
+<e:flsbuf.c \
+<e:fopen.c \
+<e:fprintf.c \
+<e:fputc.c \
+<e:fread.c \
+<e:frelop.as \
+<e:freopen.c \
+<e:fscanf.c \
+<e:fseek.c \
+<e:fwrite.c \
+<e:getargs.c \
+<e:getch.c \
+<e:getenv.c \
+<e:getfcb.c \
+<e:gets.c \
+<e:getsp.as \
+<e:getuid.as \
+<e:getw.c \
+<e:idiv.as \
+<e:imul.as \
+<e:index.as \
+<e:inout.as \
+<e:iregset.as \
+<e:isalpha.as \
+<e:isatty.c \
+<e:isdigit.as
+c280
+<-v -o2 -c e:islower.as \
+<e:isspace.as \
+<e:isupper.as \
+<e:ladd.as \
+<e:land.as \
+<e:ldiv.as \
+<e:linc.as \
+<e:llrsh.as \
+<e:lmul.as \
+<e:longjmp.as \
+<e:lor.as \
+<e:lrelop.as \
+<e:lsub.as \
+<e:lxor.as \
+<e:malloc.c \
+<e:max.as \
+<e:memcmp.c \
+<e:memcpy.c \
+<e:memset.c \
+<e:mktime.c \
+<e:open.c \
+<e:perror.c \
+<e:pnum.c \
+<e:printf.c \
+<e:putchar.c
+c280
+<-v -o2 -c e:puts.c \
+<e:putw.c \
+<e:qsort.c \
+<e:rand.c \
+<e:rcsv.as \
+<e:read.c \
+<e:remove.c \
+<e:rename.c \
+<e:rewind.c \
+<e:rindex.as \
+<e:sbrk.as \
+<e:scanf.c \
+<e:seek.c \
+<e:setbuf.c \
+<e:shar.as \
+<e:shll.as \
+<e:shlr.as \
+<e:signal.c \
+<e:sprintf.c \
+<e:srand1.c \
+<e:srand.as \
+<e:sscanf.c \
+<e:start1.as \
+<e:start2.as \
+<e:stat.c \
+<e:stdclean.c \
+<e:strcat.as \
+<e:strchr.as \
+<e:strcmp.as \
+<e:strcpy.as \
+<e:strdup.c \
+<e:strftime.c \
+<e:stricmp.as \
+<e:stristr.c \
+<e:strlen.as \
+<e:strncat.as \
+<e:strncmp.as \
+<e:strncpy.as \
+<e:strnicmp.as \
+<e:strnistr.c \
+<e:strnstr.c \
+<e:strrchr.as \
+<e:strstr.c \
+<e:strtok.c \
+<e:swap.as \
+<e:sys_err.c \
+<e:time.c \
+<e:timezone.c \
+<e:tolower.as \
+<e:toupper.as \
+<e:ungetc.c \
+<e:unlink.c \
+<e:wrelop.as \
+<e:write.c \
+<e:xtoi.as \
+<e:zc280cpm.as \
+<e:zd280cpm.as \
+<e:zn280cpm.as \
+<e:zr280cpm.as \
+<e:libcver.c
+; All modules compiled.
+put console to console
+e:

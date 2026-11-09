@@ -133,3 +133,5 @@ remain under the recorded run paths; CI uploads its public-ROM captures as
 artifacts. This qualifies the new managed launcher in the emulator only. The
 older physical MB003 results in unattended-serial.md do not constitute hardware
 execution of this new launcher.
+
+For PIPEMGR/cpmbox installation and rollback, see [pipes and tools](pipes-and-tools.md#existing-managed-sessions). New sessions retain source inputs by hash; rebuilding the default image does not change existing session disks.

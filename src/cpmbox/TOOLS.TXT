@@ -1,0 +1,27 @@
+CPMBOX + PIPEMGR 1.03 - Robotron CP/M Plus serial A: profile
+
+CAT, CAL, CP, DU, FIND, HEXDUMP, LS, MV, UNTAR: use COMMAND /H for help.
+CAL needs month and year. FIND searches A: only. No physical floppy access.
+
+Examples:
+  LS *.COM | CAT
+  CAT HELLO.TXT > COPY.TXT
+  CAT HELLO.TXT >> COPY.TXT
+  CAT /B ARCHIVE.TAR | UNTAR - A:
+  CAT /B DATA.BIN | HEXDUMP
+  CAL 11 2026 | CAT
+
+CAT defaults to text. /B preserves all bytes (including 00, 1A and FF).
+HEXDUMP and UNTAR read binary. UNTAR accepts only flat regular 8.3 members,
+checks checksums and sizes, and refuses existing destination names.
+Paging is disabled for redirected/piped streams. Errors cancel later stages.
+
+Pipes run sequentially using temporary files on A:, user 0. Reserve the
+names PIPEIN.$$$ and PIPEOUT.$$$. Keep enough free space for stage output.
+Do not interrupt power during a pipeline. PIPEMGR is not a multitasking shell.
+GENCOM and SETDEF are included for CP/M RSX administration.
+
+cpmbox: Copyright Kevin Boone, GPLv3. Local adaptations GPLv3-or-later.
+PIPEMGR: John Elliott and Jon Saxton, LGPLv2.
+HI-TECH C runtime: Copyright HI-TECH Software, used under its free-use grant.
+Source, licenses and pinned build inputs are in the host repository.

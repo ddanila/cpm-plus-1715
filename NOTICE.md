@@ -22,3 +22,19 @@ the interfaces documented by the local ROM investigation and Pico1715 project.
 The indexed-record guest workload and independent file parser in
 `tools/pattern_workload.py` and its `classic_workload.py` helper are reused
 under MIT from Pico1715 commit 048954ec200a4024e6b3ae182f62f380a863f5cf.
+
+
+## cpmbox, PIPEMGR and HI-TECH C
+
+The default serial image includes cpmbox (Kevin Boone, GPLv3), built from the
+pinned source under `third_party/cpmbox/upstream`. The local C compatibility layer and cpmbox patch in
+`src/cpmbox` are GPLv3-or-later. The original license is included with the source.
+PIPEMGR (John Elliott, Jon Saxton and Tony Nicholson) uses GNU Library GPLv2;
+its source and original binary are under `third_party/hitech/pipemgr`.
+The full GNU Library GPLv2 text is in `LICENSES/PIPEMGR-LGPL-2.txt`.
+The build verifies source reproduction before applying the documented fixes.
+PIPEMGR modifications, including `src/cpmbox/pipemgr-error.inc`, remain under
+the GNU Library GPLv2.
+HI-TECH C and its runtime are Copyright HI-TECH Software, used under the
+free-use grant reproduced in `third_party/hitech/LICENSE`. Compiler binaries
+are build dependencies and are not installed in the CP/M image.

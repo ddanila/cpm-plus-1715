@@ -1,0 +1,1273 @@
+{
+  "source_sha256": {
+    "Makefile": "821e64d1b51695e8eb5b5f5ca5f6feb2ae6272531e329b3e6564cdfc689f9ec1",
+    "dependencies.json": "185e996efb8f4bb9f38bc1aefcd7297ca7bf6159587ec099107351b4ff6ae701",
+    "src/cpm3-bios.asm": "ccd952d3763a0b10e6c418f8f5fe848567fc091b71811b72649e604a0e26a1c9",
+    "src/cpmbox/TOOLS.TXT": "79bb43f13bb04a509ef6234000275bd51bcc8030554def3c03d328a3608c8649",
+    "src/cpmbox/errno.h": "a8ffa42fd4e866ed55a620dc58d98e41585be8134401bb33d4dfc74277004a32",
+    "src/cpmbox/fcntl.h": "d12653a362fbb8a7f82cc2f76522b74a26ce684162df374cabb3686fd8643c35",
+    "src/cpmbox/hitech.patch": "ee4be4382437aa9dda858635e6346ba1f367d57021b8b108f6b4afa3eab78989",
+    "src/cpmbox/io.h": "19ffee59cbe92c59819645033cafd4502ded5378b3ad28535889dfa924b72c78",
+    "src/cpmbox/pipemgr-error.inc": "685afcb6c60db698fd6caba7d83c5d088fcf12f78ee804b76c9ceb0a715886fc",
+    "src/cpmbox/port.c": "8ec77fcf43d10ea6f82f22e863afebe26e9b1ab1cc24529fc567a5d40c65cb82",
+    "src/cpmbox/port.h": "dcdd7401444cacec5b0087e9bcccc476fbe3f65a6a56f1a6a2eb84c04183cec0",
+    "src/cpmbox/probe.c": "19e2cf5292f8bc2a49c8c54c7cc4ea09809bd6a52c34b75be0af4fc740f125b2",
+    "src/cpmbox/tpa.asm": "00972a88b68b69a2e3491de0d2900068c9b531e77df3818fa92508d90d58d485",
+    "src/directory-test.asm": "24c4cda0e729b1e8b5fbec2699326cda54bf09919afeeb2ec90b0f8c8569c926",
+    "src/keyboard-test.asm": "5598ed0b3b99a7488b3a8fd551c1e61c741fea9df48ca3a0dd215de29c02f97f",
+    "src/p1715test.asm": "76c8c003a4ab0ad99f61c775589bc6c5a827494a47d1cb2b2292b9848794b8e9",
+    "src/platform-serial.asm": "e45c36b765660e1fdba239f7a650c7ad3d9e6bd4e4fc960f33b6a1e7526251ad",
+    "src/platform.asm": "750b9aefc9fdfbce4ad91fda9efd981b3e658d338c76b8b764dce8b4f3f631c0",
+    "src/reliability-test.asm": "74972c00d395ad5012cabf6875f085a1d5b35811e49a0069facf661193795b0a",
+    "src/serial-common.asm": "31df4c3b628302695edd55fc5c6c57ca28b572cac7541628d1d2361d687ebf81",
+    "src/serial-platform.asm": "12ce314d22b7a825638a42ec1100de4b99de22a61134d0d4e59a6b7c25fcd408",
+    "src/serial-test-rom.asm": "3a1743f12fac993d19a49986289224ec988a871e8557157735d15574541177c4",
+    "tests/build_test.py": "36985ff10c27c3ebe6d2b7dcc2d0fb0a916fbd37181837353c9e220c5caac964",
+    "tests/diagnostics_test.py": "a51a8333c41d7963794657225de5a855b4b504f747bf02313e1fa6a64944508c",
+    "tests/evidence_test.py": "c1c937487e6dd76c42b88397ca395c5c311578cdf04b4d8a8a9c1f3d23c2bea5",
+    "tests/keyboard_test.py": "94b4661b0d1cb996e3971849b123e446bd7f80c54cae90908a7a1d5db2980191",
+    "tests/managed_session_test.py": "aa89ec107be73e7f7f1eed93228b06985766eae7baf76796bd8b733e6baccc03",
+    "tests/media_test.py": "bf37d2bf91872d470482fdb72ad4988424cf28ec0c3e874c25bfadbdfd183629",
+    "tests/runtime_contract_test.py": "67277001f836aec870f4cc2cab47620eee0124470bb88c176805f673be5ccc78",
+    "tests/serial_crc_test.py": "405c80122841c1d0eba4c5e71971ad6bbae4f1c8795b2a094635d469b5816255",
+    "tests/serial_session_test.py": "fbb44ca6edbe5e5edb9afc21dc6ca048b84efc38bb2d53ff06f2f17213dfacba",
+    "tests/tools_test.py": "d17e0443e338585ccee4c978b881d18e9060cf8eb76b186cdfe83bcdee0e5853",
+    "third_party/JUKU-LICENSE": "dc74ca17f83a020b3fec5b966e1f26188f1f16b800be6b093fc676bc43e0947c",
+    "third_party/cpm3/LICENSE.md": "4db276dbc6ee71ff1c9e4826ea52c1ac4f6eac6f64a11e517a660fe0ca14d1a3",
+    "third_party/cpm3/bdos3.spr": "d819e736ba4e4442b1e51dc8b98d3426592d2e125c5c052bceb191f63469fc75",
+    "third_party/cpm3/ccp.com": "f1837073d217075223d17dd81d068481819665273b59fbb3502c2f9068e8a671",
+    "third_party/cpm3/gencpm.dat": "4e416d6c6e1d36ee2689b803032b6a5507a8b2ca4f46d0d82e0d2a2e74851051",
+    "third_party/cpm3/releases/cpm3bin_unix-20260607.zip": "ec24f6e1fa173d33bcd2555dfae8296471fc8ea144c72e8cbe2166971451da82",
+    "third_party/cpm3/releases/cpm3src_unix-20260607.zip": "d90cda1f25112ace3b436c4054304ace423331caa1f034c44f26698728a9fdb7",
+    "third_party/cpm3/releases/provenance.json": "78df1dee91229e483526d8cd0d616db3f2ee37ceab7e03a2955bd4d130ecde35",
+    "third_party/cpm3/scb.asm": "b392ada66ba9c8ccd467b1483eea92b5439a38490feb485bc471ed864f914310",
+    "third_party/cpmbox/upstream/LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "third_party/cpmbox/upstream/Makefile": "89b5d62557fd2a818727378cb542492333f614a5af33924e5b312da092581549",
+    "third_party/cpmbox/upstream/PROVENANCE.json": "f5526d0a2ca04b1405167156fb477c51942a8399d6839e152f2ba801e8e8f126",
+    "third_party/cpmbox/upstream/README.md": "08e0c8ae4c15956caf15aae7dd32e1c9b71e0399b9f6a490144eed682346aa3d",
+    "third_party/cpmbox/upstream/bdos.c": "f9aee780a8402d85af0c7fba3c96c869a6b17b1b27fe95416df86400a3901c7d",
+    "third_party/cpmbox/upstream/bdos.h": "9cffa6869c945ecc51fd44ed17fccf3cd912c631df07576ce577ec2d40f278a1",
+    "third_party/cpmbox/upstream/cal.c": "aa90eed46e7b4121af3d9d4297240068ad7cc4ce8a7cbeaebf21d17bc3010510",
+    "third_party/cpmbox/upstream/cat.c": "40160fb99f1aa4325454d6855ebb6203162182d04d5a235c261de93d19f44720",
+    "third_party/cpmbox/upstream/compat.c": "5cae0c402568c384a77abe1fd38c5ce1e8cab0dbda4d3de8df92372577e4f6e5",
+    "third_party/cpmbox/upstream/compat.h": "73e8e86340a8a1acb9cb0c3229c922ddba7f0518b38b98266ca33644a204514a",
+    "third_party/cpmbox/upstream/config.h": "8f96d8e6744ceca963b2978bb5cd2b9100b8fe1b765fbbffcf288482d1ab03b6",
+    "third_party/cpmbox/upstream/cp.c": "a0225660f85ffccbf294279a967b70b96b2082f3d3dfdbfa3e74097780b561e3",
+    "third_party/cpmbox/upstream/date.c": "e99cd5bf6c86af28bdb3ea630c37cd57d704c966963c2840bd35e8688850d245",
+    "third_party/cpmbox/upstream/date.h": "604d3434d42a5936f0458c2ec0c06a84d18ebf2767a73b7baa1f6c436a9fa569",
+    "third_party/cpmbox/upstream/defs.h": "dbfbfcd0914fa6cba25290f3dae966db9f31b1c3ed0c9ab6c351baff50922c8a",
+    "third_party/cpmbox/upstream/dirs.c": "41ae4660251ffbb5c6625cce010c5238997f3c5647776bfbd8ce9d4a01a5f0d7",
+    "third_party/cpmbox/upstream/dirs.h": "2725342f348635e3ed2c9cfafd8f74fa2e60a62531e1009dd2caac38d1a7de9f",
+    "third_party/cpmbox/upstream/du.c": "fce639203895af7af66b5be6f94b5d2bfda78b2cdf92c7f20e4fab6f2fe75440",
+    "third_party/cpmbox/upstream/error.c": "09a6d58a0b78c2f4f3b3d05599dac8c660b53a5ecfd624ec188a54a8b491d758",
+    "third_party/cpmbox/upstream/error.h": "eef6667d182297819bc9bc624850d63e349e35afe3e63a8ace88dbac2e03ba79",
+    "third_party/cpmbox/upstream/find.c": "af670532da5c5b786b57e877251b7c8155231da1f83840368c321f979734c6f6",
+    "third_party/cpmbox/upstream/getopt.c": "542c3812baf01d363c3f4ef9cad7c8994fad1045f0e6a54375fe5d1caf976fb8",
+    "third_party/cpmbox/upstream/getopt.h": "092c5bd2413f1e1bb1d17c879083aaa8f13f977c330eb0e5649fb82f79cecd46",
+    "third_party/cpmbox/upstream/hexdump.c": "acde1fd755c2007dbbe960a784ed2a1dbc9ded5d5e395ade665d415d14f0401f",
+    "third_party/cpmbox/upstream/ls.c": "ef228d9fabb13a03a0a23a8a51682a31b8e7e484f152bef317ff62c722b5a7c6",
+    "third_party/cpmbox/upstream/mv.c": "c06912b4676a9ba7e52fa1aee32731877830561339e7c72293d1fb5e12bd4d87",
+    "third_party/cpmbox/upstream/term.c": "38617562f1b0c9bcdfa070941cfd56b58d2fc00d26589b0988d974d5431d774c",
+    "third_party/cpmbox/upstream/term.h": "14833f37cedc901c4297f6ea544d3f44838233e47180865391a0e42d6a684937",
+    "third_party/cpmbox/upstream/untar.c": "92fb2bb007406bd680f83b9c7e747364ea8beeeb75a12413875e841c66115848",
+    "third_party/hitech/LICENSE": "a096e61028a258d734dbc2eb8f3325d4e5a02ac833ecf69d0e023e47d9145512",
+    "third_party/hitech/PROVENANCE.json": "d3654462dfce9439ddf582f0f698cfc7a5b05e7c6a4eac30d75e7fcaf2b0c362",
+    "third_party/hitech/README.md": "f6baa67ae7be6896f3a6c41447b1dc8fcd60b16d9ac57cef14a741363996eb67",
+    "third_party/hitech/cpm/ABORT.C": "930a1f807b1eb37fc941a22b25078c5289394d85ab76d4ac45c18e5185a1f8f2",
+    "third_party/hitech/cpm/BDOS.AS": "79cbb024849c27c9287bd128533f93666c560c60e60358af290cfba49204906c",
+    "third_party/hitech/cpm/BIOS.AS": "f8c49eae1e732b13a4d91cf9497e2013a258a351d3972dd3e46c397b9fe46ce6",
+    "third_party/hitech/cpm/BUILD-C.LOG": "ff0439e577a4fc6d57b3f1bf23a546d63c79ecd54695cbf769053966f9a0b2ac",
+    "third_party/hitech/cpm/BUILD-C.SUB": "881b1bf6021a47ca2fe74338049855c46198f03b6c33761931665ca20fd50e93",
+    "third_party/hitech/cpm/BUILDCPM.SUB": "54ae87e2deea3c8e96507a61d5945aafcb24a6d112b63665190c19b1ad12fd81",
+    "third_party/hitech/cpm/BUILDCRT.SUB": "219f8d452841251dcdb2803c074fdff610a1fc0f543ae141e4031d6393de757f",
+    "third_party/hitech/cpm/C-ORIG.C": "0fb1d205568f5a289cfa56f139666fedc432e7da8b5bcd3765c1a2bd52dfc57d",
+    "third_party/hitech/cpm/C309-21.C": "df8f14dc67aeead9879c103391bc83ae8c73e8c737531fc10aa3dc81d9dfbc77",
+    "third_party/hitech/cpm/CHMOD.C": "c37d1c0e6098f663511676ea88b99ed96b63e51c6cc9eda06b442abac529a5d3",
+    "third_party/hitech/cpm/CLEANUP.C": "ab7e2af5ce8f6dac4387e8bda289b1de8168a87fab52550c4c73e48c42dd4dce",
+    "third_party/hitech/cpm/CLOSE.C": "1236872e0a5f08905c0fb409d1143754304e9108a683db439ebde788a72e3987",
+    "third_party/hitech/cpm/CONVTIME.C": "585ed6b2cf548a7c2978168f145abb3fca89db819352103b521681e36d72d8b3",
+    "third_party/hitech/cpm/CREAT.C": "bd8c8f7dd27e9f923902d6d78a73af2dde5c05649379d96d7f0b0e3d41c2ca82",
+    "third_party/hitech/cpm/CSV.AS": "ca0014b4404d34c2f0a4a0d9a06b9705940907f0efe6dcfc940ed83180a3972f",
+    "third_party/hitech/cpm/DUP.C": "6038fb21c7422aad568fb7bdc934c49858a666e92cea0f76c61764f365898ac2",
+    "third_party/hitech/cpm/EXEC-BLD.SUB": "7d2adf16989561978d926bc4b98adb007c1f3876367a6b2212e4bb880ee3366c",
+    "third_party/hitech/cpm/EXEC.AS": "e45f54eab8c2f0113dd9a4728e8c47452f3694624dbd88981438930f866c6d0f",
+    "third_party/hitech/cpm/EXECL.AS": "a6e5ab3668399993533c07ddd4bec5aa4d4f5c1232555b00e3c4ff28c6823fdf",
+    "third_party/hitech/cpm/EXIT.AS": "17e4def0e65bd5b1de40b3c551488653443cda93b913cd049636e2a0c31f9c1e",
+    "third_party/hitech/cpm/FAKECLEA.AS": "396cdcc5e5473a53bb1ef643b8277fca74edced8ff682d4829419a6abebd283c",
+    "third_party/hitech/cpm/FAKECPCL.AS": "482356a428c373ddca3cb81c1d62b0dcfd3589113499da85c4b14abe7a18af3b",
+    "third_party/hitech/cpm/FCBNAME.C": "e872f6fffa6897f249dc85bd48e9403515de2220061ae4b971f250276c47c0c1",
+    "third_party/hitech/cpm/GETCH.C": "d7e21681369d266b557cf0cc8403f08ac3a2dd5fd3e79ad8e47eba783f0ef59d",
+    "third_party/hitech/cpm/GETFCB.C": "35914417bb7641994e060b1968bc5a3cd4581c4585ec053add08d10118d582d3",
+    "third_party/hitech/cpm/GETUID.AS": "4b0f548a2430778248a2e2987272eced94ac9955f62eb5915e02f4af40c70d96",
+    "third_party/hitech/cpm/ISATTY.C": "49394889633cb95fbe5c7729508cc3adaff84721b7afc97bf6c0ada39da33e39",
+    "third_party/hitech/cpm/MAKEFILE": "f4e81fe06120022bd2353abb056c847223fbaaf472a9f6ba00edcc62d3a383e2",
+    "third_party/hitech/cpm/MKTIME.C": "3db5d8519c4ec9913f0dacaed89c014597f6d96d5326c5dab4251dd4119631a7",
+    "third_party/hitech/cpm/OPEN.C": "041c1f19cf42c25206e8bfb99606ec729d92132912eebe2b96a13362de46acf2",
+    "third_party/hitech/cpm/READ.C": "719060b9a84136df3dd4b1f5fee2139fd9a248c90eb8a22cdec419a918689128",
+    "third_party/hitech/cpm/RELIBCPM.SUB": "7a241897ec617eed20c55524b3f4795f5f8e5bd53409a2ec1cef29fe8ef0dde0",
+    "third_party/hitech/cpm/RENAME.C": "4ebcd670881becb235eb114b9447a217a97128ba7f2b523b2215cb194541066d",
+    "third_party/hitech/cpm/SEEK.C": "1dbf4c6179c6dd3e33985b5b067f5d8e18c4c1ced552e006fab9fe275167d1df",
+    "third_party/hitech/cpm/SIGNAL.C": "fb4f3d6138c96db1e78a0bb002bb571984a7ae08c329fb9a12c749b2505387d7",
+    "third_party/hitech/cpm/SRAND.AS": "e39fade94293a7b08c79d50b44769ff6566572e8b7613a99062eabf0d19828aa",
+    "third_party/hitech/cpm/SRAND1.C": "3621cd22c08f96fca2ef2912dca03989f4e8c10071ea821e0898581bbc615be0",
+    "third_party/hitech/cpm/START1.AS": "af9d3f31d2475ab7556989eee62af6871e855f8fba2cb9196c3279cae13b7b7c",
+    "third_party/hitech/cpm/START2.AS": "4d1d1c50d33056b5392adb323d46871af05dddbc58f8e06edf9d0495f22c5693",
+    "third_party/hitech/cpm/STAT.C": "1896c9b1166fe4a97ad653eeb5aac36f6c99080f8c7f2df9ad4a3647fee7a792",
+    "third_party/hitech/cpm/SYS_ERR.C": "69bdf5cd27a084af0b8b3635bf8139ad643beea6b46fde10638836f02030886d",
+    "third_party/hitech/cpm/TIME.C": "25bfbc914950c50fe5872cbb72f46e0e18dc3cf73a4888e164757cb67636e034",
+    "third_party/hitech/cpm/TIMEZONE.C": "6dca80dc340ff35b33d74f1a03785840aa097b94111bd75291184c4c390d63a3",
+    "third_party/hitech/cpm/UNLINK.C": "05bd0ee73e245bfa15aa79ad0fec9649cf3e9f3ad176db74bc431c3385499a4e",
+    "third_party/hitech/cpm/WRITE.C": "c34cd2d28bf3f9ee606fbdca3df394cfc9987111fcca4445d8b2bdc904eac406",
+    "third_party/hitech/cpm/ZC280CPM.AS": "70df389b96e1e10ab7d804161acf239dc5c66c0bacf5fb1edeea80109f579f28",
+    "third_party/hitech/cpm/ZCRTCPM.AS": "07a1b93a482a113f36e14fa4511f8f58a1b5f361b06b1a78e1a952d9eddb2505",
+    "third_party/hitech/cpm/ZD280CPM.AS": "5a15011208e1809525655ed6713362ca0e060c9d369301a08bf4cce5ae8ca097",
+    "third_party/hitech/cpm/ZDRTCPM.AS": "5bf3e12426522022f833b1fc9a1379f39da63a881fcd3ade68ca2ab68c2cf6db",
+    "third_party/hitech/cpm/ZN280CPM.AS": "48b748fe960d242ca58f87539e22a77ad270ce1b4468528096200c78fd1bec61",
+    "third_party/hitech/cpm/ZNRTCPM.AS": "d3b5fd892a1211b6492ccd5d797949c567d98c0445655a1d5f3ab3113f214002",
+    "third_party/hitech/cpm/ZR280CPM.AS": "6e8ec0eae6535d1a41487b80914f41455a8d6488373b2e8b32f72e140c6fb4fc",
+    "third_party/hitech/cpm/ZRRTCPM.AS": "61d35182bc9dd2f74131615737506bf1ee60b4c97586733ace48e89f8f203c25",
+    "third_party/hitech/cpm/_EXIT.AS": "9ffdbbd3988e48c18672092f2a46e878ebdb24146a56459134f357af8e737978",
+    "third_party/hitech/dist/$EXEC.COM": "a6e97b01a4d335402924ac78a315bf829e0444d062253bc136efece398e53962",
+    "third_party/hitech/dist/AM9511.H": "5b86e9a1fde694dc6547d9a9d5a0793c610ad5516f6071b323f8be71e75facc5",
+    "third_party/hitech/dist/ASSERT.H": "4fb83c146ded1dbe6003828dcbaf3336cabf91a2abbb8abf09b91787ac9c394e",
+    "third_party/hitech/dist/C-ORIG.COM": "4524db8e8b2ffaccc5078e4837b1790ec96d86a936fe8d807477a4a661e8b65a",
+    "third_party/hitech/dist/C309-21.COM": "ccdf409accdd7fe39066da11bbffb2535e323c27eb1c61a6d0ac8e39e304f9bd",
+    "third_party/hitech/dist/C309.COM": "ffe51eda1122c3e6d651074201ab6e6a86acdd7122c932fcfca3317b69cdebc9",
+    "third_party/hitech/dist/CGEN.COM": "17b81739257b46d7965ac184ced55bdfc4bf20fba24965c1d739fc24e59649e0",
+    "third_party/hitech/dist/CONIO.H": "0861e6ec581ee7ffe74b47f9537fb5682d429e53a02bf32ee7f5190633fb32ec",
+    "third_party/hitech/dist/CPM.H": "246214c56c82fdce4e977b1014074da2e3dca14ab7efaff719950d5b1bc1b00f",
+    "third_party/hitech/dist/CPM.HUF": "4b42d313f6271853429ef1112b4d32a6e4e18c666d3ad93676b871a65395aaed",
+    "third_party/hitech/dist/CPP.COM": "9433e4ca897ba04be02b6347e8edf12dac2ecce2e81950e3cc72bc99eaa5b298",
+    "third_party/hitech/dist/CREF.COM": "733d44124eb58290e744cf789e89691e0cabeb78302504e5db9aa8e4a38fdd29",
+    "third_party/hitech/dist/CRTCPM.OBJ": "b4c0996a5950e3ebcea6bdb7d78c3b7b0b2ff2cc44108cc3bd14ca27d5007b04",
+    "third_party/hitech/dist/CTYPE.H": "256a36b13b3d1f7f714638b364f1135110f0f01fb18b9e4bed62b23c824e768d",
+    "third_party/hitech/dist/DEBUG.COM": "0660dfad0ddfd71868679d1b6fff4d31a2e88a88f8b7a934ea072fd2173fee46",
+    "third_party/hitech/dist/DEHUFF.COM": "54b107d37e9a12a9198ed23b28cd1d29bfb743aefd31ab3e9b34ff3a049a9d34",
+    "third_party/hitech/dist/DRTCPM.OBJ": "650c38f15e14520fcfc33a02fd013fb3b6a380a6fd76dc4d1a9797be31e33072",
+    "third_party/hitech/dist/EXEC.H": "d05297e5599cbfa7b0bf13a120ab7698e8d741907f5b2d55e58f814e6dffb073",
+    "third_party/hitech/dist/FLOAT.H": "92809167e68e8d8c8efc5730025be1863fb47d60692b2a6296a6a5ff30f0910d",
+    "third_party/hitech/dist/FLOAT.HUF": "1e29d19f95df977bd5ca82bb78c3e14c5cc8cddcd15d26323de30a737ef2ef02",
+    "third_party/hitech/dist/GEN.HUF": "e6fc4a9d0a19aa29c258810caed24eb27343853b42483a54f9916d7a5e415b19",
+    "third_party/hitech/dist/HITECH.H": "8fc7ec13d8f7c65d6a0aa0a0b08363656a9b28e35dcfa447c77ed83b34c8809d",
+    "third_party/hitech/dist/HTC-INS.SUB": "4d5108dad9895a72b947bd229c260ca5362ed244e614778cf8fc8c7dc7bf294e",
+    "third_party/hitech/dist/HUFF.HUF": "02a31350191ffeec6cd09ad37b21d80b31f40251da5278e20fbb36682cedf891",
+    "third_party/hitech/dist/HUFFORIG.HUF": "0e2f5d322cb2548f11ac46716a2498ffbec08830f7dd38ad841c73fbbc8bd017",
+    "third_party/hitech/dist/LIB9511.LIB": "544fff11c2a709897e2b66ac9abb9d4509f386260b5a213a10975de147cc3050",
+    "third_party/hitech/dist/LIBC.LIB": "2c8d9c82e8d80092d0c4abe3e53c324c27cba3e0ec3f82fdcecccc68247ad4ee",
+    "third_party/hitech/dist/LIBCORIG.LIB": "f5c1858b11cda267bb3224cf2faa056d4dcda751b5519332ce60a2dd00c3084f",
+    "third_party/hitech/dist/LIBF.LIB": "43c9b8e687afec961f8ae4d3668d6c8e0a8beae83f721589abb1a57c43caf188",
+    "third_party/hitech/dist/LIBFORIG.LIB": "f33a0d85f8dfde9571ae5506cd4954ea3c68d7096896e76c62868eb16475fdd1",
+    "third_party/hitech/dist/LIBOVR.LIB": "1e4dfb58f87e0f5753227c6368b8fd99dc0ef1966ff5ef70edc8b2a4592e7f49",
+    "third_party/hitech/dist/LIBR.COM": "aef1a8b76a5baf9b51c461ad04c0c59be8f9a5b191685d3652037a6da4023a7d",
+    "third_party/hitech/dist/LIMITS.H": "0e0ab6ade45a35933131288de3f51bd29bb0f3d7aade29350f3a0adb69fb3411",
+    "third_party/hitech/dist/LINQ.COM": "a36c604f480977bf8001a6bab2c2571072fac0fa01d905ce98f72840fd79ab65",
+    "third_party/hitech/dist/MATH.H": "4f06836eff11c50cc4ef74990a045319b12dce3ddafddad6b526fdd194a7c2a0",
+    "third_party/hitech/dist/NRTCPM.OBJ": "8e4837d65ec7d84ea87685cdf16a5e297e4c6f6583d003766543e736f4e78275",
+    "third_party/hitech/dist/OBJTOHEX.COM": "9b8bfe0ed6c947999fe61253b273614279e5afabbce644d0c6b02c752b2cb7fc",
+    "third_party/hitech/dist/OPTIM.COM": "833645161461db9d938e13683ec773be4d9590f238d08e458999950adc78576e",
+    "third_party/hitech/dist/OPTIONS": "2e324920a3afce86826f218c680c55fb43b438d221274e9ed61ab766a213817a",
+    "third_party/hitech/dist/OVERLAY.H": "93251aae76881a9b959a953e7d3c0b123a6f986d5418235b4e2c6a56d3098a81",
+    "third_party/hitech/dist/P1.COM": "b54312b3547945781b0582b20ecb676b01742cbbaef2f9b0561d1419cf14b8b8",
+    "third_party/hitech/dist/RRTCPM.OBJ": "3cd8b33870922053d0082fe7cac16fba2eea7e3992ed91a2902aeee4a7eab58d",
+    "third_party/hitech/dist/SETJMP.H": "e3467905b0018ce807932387f6b5c8c95922f2c90ad2cdf69b253be44ae3e525",
+    "third_party/hitech/dist/SIGNAL.H": "2b1b530ecd3d4120fc15cf9677178271a5249256ecc56087fc4295d4856febeb",
+    "third_party/hitech/dist/STAT.H": "47c013288199f1b70dd6ebc5b76c16504d1f960b94c16878fb101b0bc805c57d",
+    "third_party/hitech/dist/STDARG.H": "494b24512a1844402d2a67dca1afc79b704531d50d1b71e339e306bd3c7b8ee1",
+    "third_party/hitech/dist/STDDEF.H": "15f763062c1253d303732d5b10f849a186276687c2dba68f7c8010dfbd16e3ad",
+    "third_party/hitech/dist/STDINT.H": "544ad8ff41b3b564c15808e409b4fd0d95148a98dad13f2b84953e1413f54f6a",
+    "third_party/hitech/dist/STDIO.H": "cc4d29a02a90e9662122c01e7603819bde9eb42f74129509bf51bbb491111f0b",
+    "third_party/hitech/dist/STDIO.HUF": "e614dcd379fef385c68c876240d9718bc82aa8b0b2580c86719bce83ac4cc75e",
+    "third_party/hitech/dist/STDLIB.H": "0c616d9fed2695c2592b613bb10dfd90d5f41d74dafe752aade919258a567de4",
+    "third_party/hitech/dist/STRING.H": "156ceb6903aaaf7154c7f0f6b776950640d6e0044ced62a12d104960cc312f5d",
+    "third_party/hitech/dist/SYMTOAS.COM": "85d8437c0d37da51d4c29563c4e38514c2f7923c22d692751aa4c95e827f9568",
+    "third_party/hitech/dist/SYS.H": "ce123600d2e0635d1e223031de0c674a1d5410fbd9bfd372ac3d1832817b78f1",
+    "third_party/hitech/dist/TIME.H": "02e4730861127887eb34774a99b1f15a2575eebb651b26cedaf2a96630df9736",
+    "third_party/hitech/dist/UNIXIO.H": "da483483528ec1722918e8f5c4627f1793951dce6f136940c17f107c8f7c2d7e",
+    "third_party/hitech/dist/ZAS.COM": "fa0a6ababf05d9320ca01d6ca4797bca49168e0c8b38c96c0f33ec80f6a62585",
+    "third_party/hitech/gen/ABS.AS": "80910e90bde2842ba686afbc61f4e603837ba5830691a1b1261df57d960c37b6",
+    "third_party/hitech/gen/ALLSH.AS": "466de5d885a89c5fb6103b8c90e6946b5aa92fcb496315a67547a1bd85cc0889",
+    "third_party/hitech/gen/ALRSH.AS": "8c97d8483d6ca9f6f1a96f07588023c6bc92e7d9e11c8b8a33237cd9677cc968",
+    "third_party/hitech/gen/ASALLSH.AS": "ac1644261ded499ec891efd0ee8d4cde162e4fc8807cf249fc55440bb47d8464",
+    "third_party/hitech/gen/ASALRSH.AS": "10d329572007c1be60af6496d5cd36add33e6a7164dcfc0d214bcd533b18e116",
+    "third_party/hitech/gen/ASAR.AS": "e4e13c08e746dcb5774ee7ed3f9905fd9d402d515cd07ee37f4b178da1a7fc5b",
+    "third_party/hitech/gen/ASDIV.AS": "f550c707b446881f0decc0ca4ef72e60d91a2dd82eba35b1765f6cfbabd30249",
+    "third_party/hitech/gen/ASLADD.AS": "5f6db70f7af0177d4c6f584ccd69e664133a6deb081b24752f707a45cb4e9e5f",
+    "third_party/hitech/gen/ASLAND.AS": "51c01cea65ab07d8feedb9ddc3f9aa146ebced4d542d03a3eede79c4248344f5",
+    "third_party/hitech/gen/ASLL.AS": "e765ea54732d4500bb3825e3780486fe8e528e7fba03d774320297dc2d604831",
+    "third_party/hitech/gen/ASLLRSH.AS": "95235e0b9dd1d0b1476bb96f787773f875b03f71b07b92993878abafd2df5635",
+    "third_party/hitech/gen/ASLMUL.AS": "0bbb4c1d333ce222be426e90d7adb0263e6bdc4791306552458a6485944ca88f",
+    "third_party/hitech/gen/ASLOR.AS": "78d8f31dd93657d98d0ba5a0b1fe1777930a6dad571c839728c4bbdd08e7a875",
+    "third_party/hitech/gen/ASLR.AS": "ba645476428979882f36b6bade94250fb59fe08da80205faf5a1688b43fc0204",
+    "third_party/hitech/gen/ASLSUB.AS": "2453c5cc2ade3206ab91cbed0032582f132c49c555c31b88e61794e5e716b8fb",
+    "third_party/hitech/gen/ASLXOR.AS": "c166925993bd91aa62c46da62cb7db5b78f3b018a582143dfc582476a3aba809",
+    "third_party/hitech/gen/ASMOD.AS": "3ba0035e77b4d4529fe95d2ce18a428d3465c4b7d22a80328d0145ef7dda5243",
+    "third_party/hitech/gen/ASMUL.AS": "29a76d969b652ff39bf7db25ee14dcd31b13cb16ad85791895b2c3f33f4e8270",
+    "third_party/hitech/gen/ATOI.AS": "5023650828f9e7aa4cb9b0c2b1efe26015c7c84827f0aed7e344b752aed5d946",
+    "third_party/hitech/gen/ATOL.C": "84b08c39a97702f88d147fab20111f964c11b5ba5c525fad66324658087d4f7d",
+    "third_party/hitech/gen/BITFIELD.AS": "bc737808d0b76fc9735bd88f9b5ccc23aae5c92047d2189e9460b14208bf56c0",
+    "third_party/hitech/gen/BLKCLR.AS": "65afc18a2e315ca0a99a6492e269f7df9f2316bac9b7876beeacf6b1ecbb7ada",
+    "third_party/hitech/gen/BLKCPY.C": "21919b1a824a50e366a10b4164dc51a4a8193202ebc0240aa125c6cb6cc4bc08",
+    "third_party/hitech/gen/BMOVE.AS": "f2dd956ab031744e0e51fc80cbf899823c8e609c9e460f5ee0c51fcc499d37f5",
+    "third_party/hitech/gen/BRELOP.AS": "9808d183cb0d6a26dcada69c5cf67a3ad93790204cbd77d41fd36bf3fc63c78d",
+    "third_party/hitech/gen/BUILDGEN.SUB": "0255cfebdda0096a31a04a00ddc009aef6da4f4a3e22fdab1f19d0e160f3cd86",
+    "third_party/hitech/gen/CALLOC.C": "8c5718447a7d9b588a8cdaf784fcd7a7fe89da2fb262ce43a96dfbb62d094fcc",
+    "third_party/hitech/gen/CSV.AS": "0339b624267dda5aff8bddc5dd934745f536fe26d9938b289a89767989a5f5d4",
+    "third_party/hitech/gen/CTYPE.C": "0088c5137fa228f2a666d63729a62b61ef50d2e26e3cc57b20773f7f987df927",
+    "third_party/hitech/gen/CTYPE_.C": "bda2d8053098ee69564f8376088313bd98ae6bc3df443096c5e562d4a2edaea6",
+    "third_party/hitech/gen/FRELOP.AS": "1810e15fdaf983b2c4c5c6380fd4fd2f1a9f02d823292811373d8d688a5aa2e5",
+    "third_party/hitech/gen/GETSP.AS": "6cd7b0e007e0133ce7f7f8d6d0b868d5a3b243a156904e92b594d1afb946fba5",
+    "third_party/hitech/gen/IDIV.AS": "d163db670551287f849b6a9be28091d712ba8d29a177b8555d5128ad09806c2e",
+    "third_party/hitech/gen/IMUL.AS": "7ed190a19adff0cffa2cc1d36d546c78546be446de4d74eb574e65b029691a05",
+    "third_party/hitech/gen/INDEX.AS": "2eb4006c3870ef9040b89e9c87f0a6c850e0134db6eddc083599048ae18a6006",
+    "third_party/hitech/gen/INOUT.AS": "22c8693e5de44e5b4dc14243287ce6b7af239111dc1348f1334095bd7446e385",
+    "third_party/hitech/gen/IREGSET.AS": "6d4824181a7cc9786cb0638022e19d5cd330735e9f7836cd7f52a54d94baae2a",
+    "third_party/hitech/gen/ISALPHA.AS": "4b0ac558c939fdeba7eaf8227ad652e7ee1867fc15d267c07849639c13fac012",
+    "third_party/hitech/gen/ISDIGIT.AS": "8cc7b986cddd4844c00054ed634ed8f513972948c7c7b27290ad3861321c1a02",
+    "third_party/hitech/gen/ISLOWER.AS": "65c1d23736f7cd947c8252670dd48ed8cceec801ae972893f07a3ab94ea562a0",
+    "third_party/hitech/gen/ISSPACE.AS": "6ca088337f3216d28bc708ac803b8c7c91cee53f844b53a5e14facc8f4797dc1",
+    "third_party/hitech/gen/ISUPPER.AS": "94e3ff0791620def2583c01b957d518e73240def0c69b8023e26678244005e69",
+    "third_party/hitech/gen/LADD.AS": "63a6424b40adeb76345574ed294da6ffec7f18ba6645d7ad43badf3e2f2c812f",
+    "third_party/hitech/gen/LAND.AS": "e3da71ae7b08ad699a83bd904681baa822bedb8e65398e7beb74791d281ca561",
+    "third_party/hitech/gen/LDIV.AS": "507ff06483140b19f573c4d6db0d409b9f0edfcc68a04b2725ede9ade786a366",
+    "third_party/hitech/gen/LIBCVER.C": "890efe0dfa1a676932cb0cde0758649b778ef40cbc3dbd2921155f13b84e3399",
+    "third_party/hitech/gen/LINC.AS": "423ae2fd6f4711b92f30bbed5f6569399d9a47eace788d1a6d482ad09c7847f1",
+    "third_party/hitech/gen/LLRSH.AS": "53cfab67bb199a1bbf0002deacd795d4d9bf1ab1f5222f8d64cce53475fb3976",
+    "third_party/hitech/gen/LMUL.AS": "6cbcb1e62dd3e4142869e4e0b51843d9c57ebfd0ba1300ab67c7b20aa8f7c61f",
+    "third_party/hitech/gen/LONGJMP.AS": "39e67ce50f2fba6ce19f88bf8ed7dd8b187e1036fba5351d7ffab3b71846dba3",
+    "third_party/hitech/gen/LOR.AS": "45523f627dc5bc287030eae41e7d5613d24d68976e80e66c9ae29340481261cd",
+    "third_party/hitech/gen/LRELOP.AS": "a04680ddd9458afaa9c3063822b2c460416e0547a02d2ede1c2cdea0cffb6abb",
+    "third_party/hitech/gen/LSUB.AS": "72695ab9131d09e794b7e12a9a37844b9d11c838163de220cf426b19936e1519",
+    "third_party/hitech/gen/LXOR.AS": "cd241895d799796d6844c157f3e8edfd25da72acdc76f18835cd17238985bf2c",
+    "third_party/hitech/gen/MAKEFILE": "bc7d8f40162c1eec20514221b6ce98cfc802fa97683b5555ca17eec1ab640e78",
+    "third_party/hitech/gen/MALLOC.C": "250a149092937dfad2991f9fb8ddd4b809cf0c8cf0f327f7b546c4550f275d4d",
+    "third_party/hitech/gen/MAX.AS": "9e7118d0334af182f38baf2bc693bb072622673e609a736b77f34a6ced6597d8",
+    "third_party/hitech/gen/MEMCMP.C": "42d1aba3e19bb430dc8a19d2fd5f82121b5957ea13d46973660380c4725ef86b",
+    "third_party/hitech/gen/MEMCPY.C": "24575c7400c082d230cdb161334128aa097041c2ded0eba8a2921b5ad2dfd823",
+    "third_party/hitech/gen/MEMSET.C": "198d9e7a0b620415592fd5221f512e5ad1defce870fae2b91e9edbbe98b6ada2",
+    "third_party/hitech/gen/PNUM.C": "abcc6c47c9601992ab150b71753df667955ba728bd6137896f5ab638dcbc8151",
+    "third_party/hitech/gen/QSORT.C": "145654cfee5a7485a9ea2430d1e7e7eff8513433d7bbce00b6179c41005fc367",
+    "third_party/hitech/gen/RAND.C": "70f9e2e0e043a16a1c41d90059ef7689f1be4434d07a3321df9ad76a6ee49dd5",
+    "third_party/hitech/gen/RCSV.AS": "b9b0b8e83e8b26e1a9364fc4077f2c578816de7e22a9d3b6fe2921eb1cfe1ace",
+    "third_party/hitech/gen/RINDEX.AS": "723acaaf547f66dd8867ce1c7cee1191823f555fbeb1a5c9e93b243fd4a4e401",
+    "third_party/hitech/gen/SBRK.AS": "a5ff804631674f6582b995682c82dda7a04b8b0a18a57ea332de7a7e6e5a7e86",
+    "third_party/hitech/gen/SHAR.AS": "d4035d66626a5f5711d603c153efe0cf495087c1ac2da26f6ce4a4ad5d209e7b",
+    "third_party/hitech/gen/SHLL.AS": "4d23404efe06ad1c60fd5e13e242e7648f06beb075c0eb6341cf26f586b9f4c7",
+    "third_party/hitech/gen/SHLR.AS": "0bbbedc29717a48e0b0e0313ecec3a3562f3d646a865fe6c376bdf91820df0ad",
+    "third_party/hitech/gen/STRCAT.AS": "f39ff4d364108d92b2d62a08d1d3ab8eef27e6c73b249f787ed1b826bb9213df",
+    "third_party/hitech/gen/STRCHR.AS": "d0c675940139a91caee969545518354bc98609256ae66b871cfafb95fce16326",
+    "third_party/hitech/gen/STRCMP.AS": "104723f17f4e53ef39fdcb2d310beb80a46a2b0e7cf121d0dae9ade98ed7af1b",
+    "third_party/hitech/gen/STRCPY.AS": "ae83b75e3b16452113b3516e2099f84e4d9adc2f5ccc0ccf738374e7a542becf",
+    "third_party/hitech/gen/STRDUP.C": "ac5a88dfa27e3ca1f3c8386a1a62463a0a3b8de834c069f98a1e3e0f3dfbf512",
+    "third_party/hitech/gen/STRFTIME.C": "44f4271c85d028e66d35e555edc91f1c288e5187c9923a0cd1b05c0ee98d3d91",
+    "third_party/hitech/gen/STRICMP.AS": "ebce7d9904d9a06c461ce39175df4d332fb595d834b93f5135efa4e7aee87bbd",
+    "third_party/hitech/gen/STRISTR.C": "df89b13f364f50caf754fd06a2fb948ed208b4a26586517ad25b2841e5cfdd5a",
+    "third_party/hitech/gen/STRLEN.AS": "270400bc8920b2bba5076098576590a9f67ee9194cedf0bb4c579ef4c4ddddd1",
+    "third_party/hitech/gen/STRNCAT.AS": "fbf02dfe2f52ccf98e2c22e82d478a348717e334196209cacfa99d678d0d5b3d",
+    "third_party/hitech/gen/STRNCMP.AS": "b04e2a3b1503d383cc17aaa9caef7601b742a7ae3065c93892a038c7bce8fdc9",
+    "third_party/hitech/gen/STRNCPY.AS": "8e3449da79a353aef321f14cdbd1175c0f2d386c0f9cc40bb6d534adb960cdd6",
+    "third_party/hitech/gen/STRNICMP.AS": "46f64e53091964d9ed35a2742b63854a9f63f3f58687cf0bb11a7180284cfb0a",
+    "third_party/hitech/gen/STRNISTR.C": "1499c79ce0ed2d65c3b0dca1c6f10e69b8b00d2278094cd5de1ce35021ae9319",
+    "third_party/hitech/gen/STRNSTR.C": "3eb00f0633c1260dd561dc9311402eae3b05f7999dcbb0501224802b3f417db2",
+    "third_party/hitech/gen/STRRCHR.AS": "6c8a62d1b4fa563849b570afc509849b6ddf2e28aa8908da7e217ca0ceb7f2be",
+    "third_party/hitech/gen/STRSTR.C": "48ab50430db942ae6efedeb75ea38a08e4f83f9e6dfa2fa6050a46ab1c115e89",
+    "third_party/hitech/gen/STRTOK.C": "86393330478edcaed79d210a38e22f1e7f6d25a995372ad56eeb8407029531ef",
+    "third_party/hitech/gen/SWAP.AS": "2506a47a48fffd3f8b2f133ffac84abae51c3946f96dd301b624e1b165491c35",
+    "third_party/hitech/gen/TOLOWER.AS": "311017723d18f965c5c4dd04f480f788d607c18db5f76a4c9c1d32bd7e74e592",
+    "third_party/hitech/gen/TOUPPER.AS": "8c80386f0b732e4ba725093476b9f3e9c54898bb4c2aa48dff71a5bcec047cf2",
+    "third_party/hitech/gen/WRELOP.AS": "808cc7a33865ad3d5d94b5e8b13e970667371182d280d358e3c27c27f79d1f45",
+    "third_party/hitech/gen/XTOI.AS": "06235f534a08bdd6c6d95cc7a9b96dde15b4b5194f2d3521c249f6689c92cc3a",
+    "third_party/hitech/pipemgr/MKRSX.SUB": "770c40c9c464ac7c22f9287094518590f2aa685d395a5648337dd8133f29871e",
+    "third_party/hitech/pipemgr/PIPEMGR.ARC": "fe0f56e7748a436410f1d874669cdbf67d84cf4242ef66a16ad335976d032370",
+    "third_party/hitech/pipemgr/PIPEMGR.C": "82217d1141688f7dfd172dfbcf589ef0433ecfdf6f4401950560fe5c2c58915d",
+    "third_party/hitech/pipemgr/PIPEMGR.DOC": "223428222b7159dcdf57a6bd457ca280025fd47e80d1cf13fb5db800e9063ebf",
+    "third_party/hitech/pipemgr/PIPEMGR.H": "a6016bf56bd9abcae8b217230bfb3ed0b5ec07b2ca8b95bfbbbd355455cbe707",
+    "third_party/hitech/pipemgr/PIPEMGR.LBR": "e6923e11a52eccd2598df5eb45b05df3f9fae87b516253dc94b40a293b38bbfa",
+    "third_party/hitech/pipemgr/PIPEMGR.RSX": "80466709afee76aaead8e3427753b18124504460fdeff665e4b40a3fbad96b6b",
+    "third_party/hitech/pipemgr/PIPEMGR.TXT": "b65ca2340514aa3fb6d4407327855bebcca0fe2f8b14819ae740ea3998d3b79f",
+    "third_party/hitech/pipemgr/PIPEMGR.Z80": "9ff8ab4f5f781b0e689e0834e889208c95adc5ba0fd40a5fa658a52eb36d8c95",
+    "third_party/hitech/pipemgr/TEE.C": "dc43cc70563ee7393e79f6e3af55241d9ad933a38a44546867c4162ee798ba70",
+    "third_party/hitech/pipemgr/TEE.COM": "19b4cff180aa6d315d35dd7f1a828042b049e59103e5c9d92b267cd0c19cd11a",
+    "third_party/hitech/stdio/ASSERT.C": "784811499692686a52648f1740cc749a0dbc48f6134b2d17e89d1793cb638311",
+    "third_party/hitech/stdio/BUF.C": "992555ac13c35f03dcebeded3ba8a4a261a2fd4d7691e9c1c30bc9871ce44e45",
+    "third_party/hitech/stdio/BUILDSTD.SUB": "49167ea0f58f93e0d8d003918a8fb4b82b7c8457bb193c00f81ad41891541df3",
+    "third_party/hitech/stdio/C280LIBC.LOG": "125b58207877f725f48ee66cc19b3f89b856bffe644b88224f45a381bdc0db3a",
+    "third_party/hitech/stdio/C280LIBC.SUB": "974fed0bc4086390b680084f7e9f227415b7988db72b0adac108df85a68f8acc",
+    "third_party/hitech/stdio/CGETS.C": "d1e0f2b37538d6e402ee1fe8f31c75ca520a46bbe2b23de48de3d0ef4351ecc5",
+    "third_party/hitech/stdio/COMPLIBC.LOG": "e79dd0bac5b65596b090dbf3e46c08f975ec9ac9a4933d834480e86028bb967c",
+    "third_party/hitech/stdio/COMPLIBC.SUB": "5dfa2498394c81121cf52c1ed7bec8a06ec89bea01e5a019b5377d26d100348f",
+    "third_party/hitech/stdio/CPUTS.C": "fc3c74955e71326d2e87fe0868a3fec0c614cda1238c792ce55f20ae6e2e7aed",
+    "third_party/hitech/stdio/CTIME.C": "e7acba01bedd2dbd3f3247c1df2f40273bdc3d68673d326552c38c417deb8818",
+    "third_party/hitech/stdio/DOPRNT.C": "9b0164638c7d4142a1cf3a7143a8897952695868a1b90b543fd4e8381f41a7d7",
+    "third_party/hitech/stdio/DOSCAN.C": "9b499cc6e3ded09c2eb4517ea63aea28fe8f35965a27adde262c92df88582f1b",
+    "third_party/hitech/stdio/EXIT.C": "d46906b11a64fe9e2eb9b08e61934f54e41d067fd2a9e791e4320afd3d1946d1",
+    "third_party/hitech/stdio/FAKECLEA.C": "cc261809d43325efe41dc436636adad5ecd88efa9e4da1c9a5eeb336cc733b18",
+    "third_party/hitech/stdio/FCLOSE.C": "3064bf2e12028d441f7bdabed6b5dd9795f8f2b9fbf8247f9269e14216681ca5",
+    "third_party/hitech/stdio/FFLUSH.C": "dd65beee76fae0ec6faa35407f690a752adf0deaae747f73ba503ab10eade53b",
+    "third_party/hitech/stdio/FGETC.C": "df7a42e94ba078bc6f3db0bcd2f81bd0cb7c28ed74bf25ac5de268cfac0d7ca5",
+    "third_party/hitech/stdio/FILBUF.C": "1f056aca7e2c186cde911e5fbb9510d1f26bcf87a1fa67b1cf4c47770698ca45",
+    "third_party/hitech/stdio/FLSBUF.C": "1a7fb8f6c8bdbd74d4a55dc0f585a40cbd1addcf16fe89f7404df93a4f1c69d7",
+    "third_party/hitech/stdio/FOPEN.C": "11a3bc2015f84f6f6a6e26aa6a2463de9f874c3410212ed5742bec3a99a19812",
+    "third_party/hitech/stdio/FPRINTF.C": "f7cb1a17ac98e31d8a510650b687586d719dadd43dd41634819e92aa9a8867ed",
+    "third_party/hitech/stdio/FPUTC.C": "223316dbd8c8f36c557247ae3fb617e935a1090b249c8050fff4779d7fa2c9a5",
+    "third_party/hitech/stdio/FREAD.C": "e834ea417da38aa112e359c262c428b3e05b7bd629ebb2e838f475e0334e7917",
+    "third_party/hitech/stdio/FREOPEN.C": "aee3e9e6df9629ddd73d10d2750f127e60f7b087e6af2b2eb3a18bc5f00d9bec",
+    "third_party/hitech/stdio/FSCANF.C": "5a96c6c378db0d322403a20eacbba525cd234088c8d07db912eef559be8d52a2",
+    "third_party/hitech/stdio/FSEEK.C": "1778283181f3575cec1d0105d05b071b6e5e71da38bc6f605913615b42e08fee",
+    "third_party/hitech/stdio/FWRITE.C": "94f6c2f4c1a8a276ce228e0fae83343f8d11dacf0833b873da527d7db6606505",
+    "third_party/hitech/stdio/GETARGS.C": "a42a58bebd1f37839cc0cd4f48efc6e25095193c8177dd8c926d3c3b2b640810",
+    "third_party/hitech/stdio/GETENV.C": "e792159d51a5c66c8d6ae5c573555eed00ea0b60b57fedfe8fe210c863a6dc50",
+    "third_party/hitech/stdio/GETS.C": "1f2b00fa8b479107ba2c15e4115a4744f4b032316b29d52d81514c6fa67bb038",
+    "third_party/hitech/stdio/GETW.C": "9183b456fd24e269c38d8619aa8e2ac1df8dd14bb939f5bcde866c9228472c12",
+    "third_party/hitech/stdio/LISTMODC.SUB": "d7f41a9a749943232457630368ed8b97995bdbcd4f59df535ceae314220b4891",
+    "third_party/hitech/stdio/M280LIBC.LOG": "cdf4da6bb4baf571865a2ba2705e71957fbdf2ff69ed4f470e18d25173aed9bf",
+    "third_party/hitech/stdio/M280LIBC.SUB": "50a91919aedc45a3927a0e66b52daab45c040c9173ad45e4443c5cc77eeab07b",
+    "third_party/hitech/stdio/M280LIBV.SUB": "852889c9beccd2507ce5f40366a103c07cf3abf361b4609683b4a85c2f48ac72",
+    "third_party/hitech/stdio/MAKEFILE": "385a77fbba6c6553ad1609a6a3914a66836336b7cb80e1d54271559466e68746",
+    "third_party/hitech/stdio/MAKELIBC.LOG": "d47d47e1f76b0ca03be05aa9cd7708c22815be40bb0ac70ca1fe41c21e60c179",
+    "third_party/hitech/stdio/MAKELIBC.SUB": "32d95cf8e5409a4af65148161f64ff84db5753c0f45e6f84a6cd84a5f13166cc",
+    "third_party/hitech/stdio/PERROR.C": "b052214296c30edeb09ec82ccd6ad611f6ecad9ab3863f12ca37f7db902c2907",
+    "third_party/hitech/stdio/PRINTF.C": "ef4a6aa47865f581833c5dce5042116e879475d7ec41e3f349e77fdc550f032c",
+    "third_party/hitech/stdio/PUTCHAR.C": "82546013c5b0379321192f7a0338476b39a4386db0f57558ac661b70af3eb4b3",
+    "third_party/hitech/stdio/PUTS.C": "d704e0b601135fe9111741339276e040a1b00370129b8c1b6569e06b78dac770",
+    "third_party/hitech/stdio/PUTW.C": "0129a0d5714b34c828ad5cf46a72991a73ad047e47b4de28c3949bad450e6bcb",
+    "third_party/hitech/stdio/RELIBCPM.SUB": "7a241897ec617eed20c55524b3f4795f5f8e5bd53409a2ec1cef29fe8ef0dde0",
+    "third_party/hitech/stdio/RELIBGEN.SUB": "04e9334a619a2c40cea8b054b4021b4b1aac485dfa11d9ca50d15b0148950a34",
+    "third_party/hitech/stdio/RELIBSTD.SUB": "32962887ead88c9a1c4dd02a47a3f1a007d99db6990e625d1bfaac6e1e4377fe",
+    "third_party/hitech/stdio/REMOVE.C": "f0015abce8b6fad7afb1822e00c41501cc5a2d0019d270546654a25b1aeb2ef8",
+    "third_party/hitech/stdio/REWIND.C": "0feab9f2d2699eaee5de5a9763ad290a553da8b3729a9ad9158a74149ab17881",
+    "third_party/hitech/stdio/SCANF.C": "c87f268c40bda90a78056afce1f132ea7a1b91e0e3b85ce34e9b7e8b1ea48adf",
+    "third_party/hitech/stdio/SETBUF.C": "a73dfb4db9c2bcf27ec7de90459dd7f4049e4a200e20df7b3e10a25ac9f2656c",
+    "third_party/hitech/stdio/SPRINTF.C": "d45584d206e59f4e9c63139022ffe377b010134d1b067d604c96ba0bf8b409ad",
+    "third_party/hitech/stdio/SSCANF.C": "10283afdb329c26b3c3c345b1e215bb3883662875a75d4574872e4f039233ac0",
+    "third_party/hitech/stdio/STDCLEAN.C": "b61d21a8c17726a43f9b407c6e8514fac915e61f960ba4328128cdb452f3f9a8",
+    "third_party/hitech/stdio/STDIO.I": "cb3158b31eece477c31e9024a72a0d572fad7bedb77f0bdf17eb2490b308fd15",
+    "third_party/hitech/stdio/UNGETC.C": "0280d236e65b43eb41b2c2b56c8cebbdf127a814264f1d9375be9df2adb63e17",
+    "third_party/inputs.json": "b883f7b43f4ea953d7eebd2e3179c798daba69de9b5c53afceac7dbd6d340f41",
+    "third_party/juku-common/.gitignore": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+    "third_party/juku-common/LICENSE": "5f37b6aa73439398b45f8b972c02bfbd07418c4e00d374adb68695a6edb38e5f",
+    "third_party/juku-common/LICENSE-BSD-2-Clause": "dc74ca17f83a020b3fec5b966e1f26188f1f16b800be6b093fc676bc43e0947c",
+    "third_party/juku-common/README.md": "6739df6297995596b11c84ad80532629506819738b035737f2e1f1fab32faccb",
+    "third_party/juku-common/diag/README.md": "62de639862dc065d42fb56f9225f3d9bd3e8f7df2bf3abd78f510dc0d07cea8b",
+    "third_party/juku-common/diag/checksum.asm": "9767cc85c84c5cdf7c5ead896d4d804c5dc6d135856c99b508ad5d3665e22572",
+    "third_party/juku-common/diag/cpu.asm": "627b2a842a9a17ccb20d4fe8ffda87051b2cb551ee48505c5ee0828f43ca2393",
+    "third_party/juku-common/diag/memory-address.asm": "185cb8fb41fb1a41926722ba4fd4f70a907804d6ee88ceba22cb09c367fa4490",
+    "third_party/juku-common/diag/memory-retention.asm": "05aa7333515105add2f03d3c3c22c59b1d862a8c2131a1e17a7280f3f4e1a230",
+    "third_party/juku-common/diag/memory.asm": "bfc50843125e5908a449c91ff056c03085cab68717be144cb7d1072c84f229ed",
+    "third_party/juku-common/diag/pit-d57.asm": "8e36d1c9c537c72dbe13cf053fff2936b9b52ab43a0cc0e51432826758070d23",
+    "third_party/juku-common/diag/s21-config.asm": "8f1740a5bf4c692055d1eb49ddf0866ec23109302e34df9a920b10de9f4d6931",
+    "third_party/juku-common/diag/signature.asm": "a0646fc3c92544d519231e4d639c9ed4d135de43693d788f4c6710c6d4acc11b",
+    "third_party/juku-common/diag/usart-status.asm": "7605898bdbefc2d91617276f9e31542579e6ff3220654a85c43bb3af2bf69ccb",
+    "third_party/juku-common/music/README.md": "e528faf23627dba7c99f41bc7ffe5eedc7e045cbee6659d2e273466eeeeb5d15",
+    "third_party/juku-common/music/smoke-player.asm": "e4ce3df6fa62d78879757c2c4bc987a0e3067f0481eb0e53d478c4a4c6047833",
+    "third_party/juku-common/music/smoke-table.asm": "ca97884c6c027cbcf2d089aea97f4f84f29c92d4f247127d3476de7050c64294",
+    "third_party/juku-common/platform/LICENSE-CREEP": "e4449809571caef0326f8fc621b9735e072c42422df2093e65289e442845e68e",
+    "third_party/juku-common/platform/LICENSE-U8G2-4X6": "bd331a8e5e1656aa7a8365d75110ebf4de9a778642f976aab9b1120d306a4aec",
+    "third_party/juku-common/platform/README.md": "d44acb39720f18ee6e8d0721554c9e4f1c54ddf6256517b161c0e17a787ea927",
+    "third_party/juku-common/platform/ROM-ABI.md": "b759197465f6effe4783c39ba83579823b8149005485b6b84a49e02902856df9",
+    "third_party/juku-common/platform/creep-console-font-reference.txt": "e78485a00086319e3f8ecf6edfd27743a603c55356f7ac75e95bb33c771bddc2",
+    "third_party/juku-common/platform/creep-console-font.asm": "d4042f7e2e46903f5384a3a9c95c1a390bc1f5561c1bac9dbacdc2fa33e5e68a",
+    "third_party/juku-common/platform/locale-console-fonts-reference.txt": "cd0fbe18e9f5f070792c76052001d435ac11be2bd7c182feb3c056425f769d6f",
+    "third_party/juku-common/platform/locale-console-fonts.asm": "8f97cde978a87df5e936abdad27003ed47be82eaca5c796ede9b920236d62b1a",
+    "third_party/juku-common/platform/netconsole.asm": "f810cf3a807c5fd50597d88de26d414a039e3f460ea03d5dc4398def44d59454",
+    "third_party/juku-common/platform/netdisk-v3.asm": "3088b16c20ec5e37ac6b8b4cdb8a6e671f099b524707b52f5140e32df63523d0",
+    "third_party/juku-common/platform/ram-console-font-reference.txt": "f1e05b448b5aff888a9985296371b94f76dd0f64de79fe897a5fcf332cde7e92",
+    "third_party/juku-common/platform/ram-console-font.asm": "83d784b659ef58c0abff8eac5c9af28992a1dc8f59ef55e61621409c40e6cc5c",
+    "third_party/juku-common/platform/ram-console.asm": "bbd51322a6321ff2c3579251c0685aff9254a56bd764b5fbad1af770b3e787b9",
+    "third_party/juku-common/platform/ram-keyboard.asm": "3e93021a8256d32ebec77bac2b58dd5a5455e58d54e315fe6b597e1184632d57",
+    "third_party/juku-common/platform/rom-abi.inc": "858cd5cf2913ce87196600b9ae2c71704e2b7614082c25fc9a1dca5a6358bfa1",
+    "third_party/juku-common/platform/rom-call-gate.asm": "3571cb6603e569fa770eaa2f8a4b5580eb61a8a4895e20ecb7435bddcf3605d6",
+    "third_party/juku-common/platform/rom-console-helper.asm": "5265ed8378993fb305ef5bdbb7e26ea65c82e88f24e638528012896e2571020d",
+    "third_party/juku-common/platform/rom-console-state.inc": "c6b00dac73371ff9e863ede3a04aee7f90a2338c46d09ed368cc5ee2fd042fc8",
+    "third_party/juku-common/platform/rom-console.asm": "17e84f481d2430d323a51e34b7e0442fcc5dca56e1e82607fb35451413670fc3",
+    "third_party/juku-common/platform/rom-host-services.asm": "aca1aba27e3c22c9d699e3b746281898eaab31da408f2a38f87415a7832e8184",
+    "third_party/juku-common/tools/check_serial_hooks.py": "cc5681caf1d1f9524cfc82f50b6c218bb74750dc3b26ce499ffbcde2bc90e51c",
+    "third_party/juku-common/tools/creep_console_oracle.py": "252df1f7ed7d567915c9757af4f5f29081b89e3ef39d3678709cbc8892b5cf54",
+    "third_party/juku-common/tools/generate_creep_console_font.py": "31b7c3a59bcef57fb028624be9c1a6ed942004fe8f0887f69c602be321cd278f",
+    "third_party/juku-common/tools/generate_locale_console_fonts.py": "aae1c3bdd7a7177f5faa2360563a0044f9850201dbf532140dd4974df5b20b88",
+    "third_party/juku-common/tools/generate_ram_console_font.py": "d540079970eb05cd7d34c201725a2f29017271af9fe0e5f2973b570b04b6ff5f",
+    "third_party/juku-common/tools/locale_console_oracle.py": "8d2a25885ec0d4ac20e538f90ac982b8fb9d5de22868557d5f2517103d6bf1ae",
+    "third_party/juku-common/tools/ram_console_oracle.py": "4f7293feb6cffac4ea8cec6fdfa43d9fc6ddf3c1fd20a9de6c6a0b741bed366f",
+    "third_party/juku-common/transport/LICENSE.ZX0": "1c4474030e6090708b35f3dce1569709744a800312ae367194b3b079bf458ecf",
+    "third_party/juku-common/transport/README.md": "a52779c7ce02762d406b2505518aa10f9ab52e7c494ac8332c92d7212ba3dfa1",
+    "third_party/juku-common/transport/fastboot-core.asm": "0b95f28c7e426993186a607babdf2dc99a2fe9ceff14f8eca3948be18d4cb8a5",
+    "third_party/juku-common/transport/fastboot-extension.asm": "76ac83bfd7bebc84f39af3a2f6eb2d86f8e4cbe1153e6ffd83974589dcbda865",
+    "third_party/ld80/COPYING": "9149b174295d04dbd47d10e1f6510e94b481444b87bae53d1448ea672d297f99",
+    "third_party/ld80/do_out.c": "ed04a461f4702c46e580d4cb04f4449ecd3779e176ea024f5cae32ee3e83544f",
+    "third_party/ld80/fixup.c": "f153fd559ef8a345b3f18d5eac373c76f61408f0c2a8eb5ccae9062238cc8b62",
+    "third_party/ld80/ld80.h": "6834437f00e4d81b5c0f55b675a1f26a20501c496496819886cbc001b897fd88",
+    "third_party/ld80/main.c": "4b0f627f5fab723b5f067ee4f70ed72466146fb5e673c7e9ec7ba850834e9ec4",
+    "third_party/ld80/optget.c": "5a1813230cd92ccafbbcaf2a737d20de4b924d38a0d0b8405769e6c2bf5989ca",
+    "third_party/ld80/readobj.c": "8c036b6b365d86168c256576ec75799bf3d9c9d2e899934f7f365dc3404596f6",
+    "third_party/ld80/section.c": "6a6f3af4307bf7040ec935bc3e9984eee573f2adc0f6c2810fea61928c947075",
+    "third_party/ld80/symbol.c": "a4f6d2a2de23c23ddf6f0e4c7834218c1916c609b89e5b1fbe8fecd29dcba274",
+    "third_party/tools-inputs.json": "b9883fa0903212d65729e6592363e977464e6aa9624ea86f54597f1731c13acf",
+    "third_party/zmac/COPYING": "2e73327e66ece1e415c8ed497771de5c27d1de6bc57135cbf48f459b1616c4bd",
+    "third_party/zmac/COPYING.publicdomain": "cca74d13baef37e94533c23dbd973f41f5ca52e6b422fc1f7ede7a7012d098ad",
+    "third_party/zmac/README.upstream": "3be3525668ab5bdeb3a512fb94fdb3cdd011ce87cb87bdd745f1b2b02d47bc96",
+    "third_party/zmac/doc.c": "77cce7d99af8a5e8f42ebbc32282eb2b085e98f8662333f0891c7f4aeeaf3f62",
+    "third_party/zmac/doc.txt": "4d918cda6a60dc7cb5cbd7613b208b29312273569ecccb58ad31a90629e534e6",
+    "third_party/zmac/mio.c": "5565b80154336f3b6728916778a5afddb13e51dcd92c86103a705d2154efbaba",
+    "third_party/zmac/mio.h": "c78b3509d6266b7409f226457af67d3b79182ff8614230dc2b88c64de518bb18",
+    "third_party/zmac/zi80dis.cpp": "18444ff0f3091fab9cb8b1ae13fcfc817fba26b572bbc78393c2d57c7de97f74",
+    "third_party/zmac/zi80dis.h": "225f40ca549c1feab9c8ae975259b736600a578cd81f21b1cf867d91a25123ea",
+    "third_party/zmac/zmac.y": "efa769626c959098e425eef02169ce090613e88190377fc1e56153b7ff99fdd4",
+    "third_party/zxcc/releases/zxcc-0.5.7.tar.gz": "6095119a31a610de84ff8f049d17421dd912c6fd2df18373e5f0a3bc796eb4bf",
+    "tools/boot_cases.py": "d998be8a7063c2ee0558460e6660adac85140cf3cc38bbaaf6672a6cad45c70d",
+    "tools/build_image.py": "b87c7b26dfb641037598d54699c199f4308226ffe9a1310715bf7f3218d9809e",
+    "tools/build_pipemgr.py": "4cb65738fb573bb9500c081621995b485807ec3bff142df237e1a186a7fbc3c9",
+    "tools/build_probe.py": "de8331b65003afc9118b33a7bcf7b2617c8364d4e7f2effe75ae3da0b89e27e8",
+    "tools/build_test_rom.py": "6176a78f0e7bc210bbced16931f9f5dac93ff354f3040785064b1689c0a9c11c",
+    "tools/build_tools.py": "fadddea9f8ddf0993451be8141c1ca1a87a1a8498396922e1cda3437d709b070",
+    "tools/build_wasm_probe.py": "99e916db289a3df2985c9e82b8fd771a5d3fef1a7546faeeacafb2c65fb0fe24",
+    "tools/check_diagnostics.py": "1bed54719d6d699f2bbf96ff16cc0f458c1e0d5a8e1053c467bf3ae091f4f6f4",
+    "tools/check_hardware_runner.py": "73c2731eac68ed0ab79f900e84d5ea7f7954a0682ac509a718f41382f447358e",
+    "tools/check_managed_session.py": "d616f2f59feddd4b84a34622c1c82ccad7a86b99999a8b07c86955ae6f495445",
+    "tools/check_reproducible.py": "9dca02870ef16e1b56c9a25ad2df7d32044725071df02b3a24938262d7018393",
+    "tools/check_runtime.py": "3af7ccd39f3213ea11b6296d506661437fe94efe96c2f144ccfd911c2830b6a4",
+    "tools/check_serial_hardware.py": "227244742e454c48e0cc3f694ca5940a9b6fa31a29fca5e219605480447a8961",
+    "tools/check_serial_runtime.py": "bc9c4b964b2f6493d1a1c0f5e88d8bbe56388b107d0be126ed27f2780b4f541d",
+    "tools/check_tools_runtime.py": "fff1035fdc2eaa320fba295569db11460ed97e45099d149c86f4467ec906eeaf",
+    "tools/classic_workload.py": "cf930f08bd23b887809bb3438b55670d0319f1967c6132449d13f3653823f0ea",
+    "tools/cpm_session.py": "efe81d613faf75a23df1ea8e085a95ee55d5f8cfe7740393d9407540ec72ae11",
+    "tools/disk_image.py": "ccc15c82000e86d1f9d65c3588f4bff4f513cbafa338425083dabe3cb8c214e1",
+    "tools/evidence.py": "07b9f1750ea37303d3629bd238c65f114e2c3ff7da150042040e0cd27856f866",
+    "tools/keyboard_cases.py": "f01497578873d7cbc216f0dd6d704b2ae30e902c991f44d7b0309029d6707b91",
+    "tools/keyboard_map.py": "78ba5855b08187238ed69ba8a2ad7646b62fafba22bbaa024f8610fa8b087419",
+    "tools/media.py": "e8dbe21a523e278aea8837a70b6db4a49540e0f54096a0a04d1067700905fbb1",
+    "tools/package.py": "2169f098719cf1f246e8cf703027d00c7d631ac5367a1151422ce2e45ff26b16",
+    "tools/pattern_workload.py": "c54fe70155b653bffcf09098ce58bb023ab2c993e6d1ff55586db7b13289609d",
+    "tools/regenerate_cpm3.py": "7fbef83a753a6b0c1dfe80c5e1a89bd2186446d46904f91a4d61dea748145d6f",
+    "tools/runtime_cases.py": "fdbdcfbc8659ebcff0fc6a58c9f3191d00b5568743a22d990d409e3f74bb58cd",
+    "tools/serial_boot.py": "8f67645b1f40195d5d1a311d81b23b491f4058910a7205ef9d7b61152f822fd4",
+    "tools/serial_host_guard.py": "8fd2a6aab4149e04689623f0382f08dd8205f637d49271ca4ec11edc4217d1cb",
+    "tools/serial_probe.c": "8e277182d142ce22e332baa80086d46d37e684324cc234d3f84ef658057beb4d",
+    "tools/serial_scenarios.py": "012652c20ec59f0489e48a4ccc4bf557e80451a38a685f99901cd397c22deea1",
+    "tools/serial_session.py": "900599d872b5692a9a69cea20eb7f2c78302509bbe07bc8696cd71d5d9ce5114",
+    "tools/session_tools.py": "9b1a84e31e60f75116967bf7b5f867a9922596e61862ad2e3d9278abc90608b6",
+    "tools/system_contract.py": "907393cdc44b14b80ddd64d8d325d2c97f9f0add45fcbf9fb25153927dd73668",
+    "tools/tool_bundle.py": "111120dfe4dc8e895aa1fa306099c44dc72699a0ce85a846250ccddb0dc75f94"
+  },
+  "output_sha256": {
+    "build/cpm3.sys": "1b83a48fef7b5d05f3ee6227f056c2a1d73c01ab771a0efab73f25fcd29bf51e",
+    "build/platform.cim": "b42f77854d910e106a4927f992e725df7fbb2077a90d8e7b3315798a095ed645",
+    "build/test.rom": "639db4e6c4bea3042bfc7ea2ab83ee475e9391766bd5cffc370e0b59affdeac2",
+    "out/cpm-plus-1715.img": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+    "build/system-map.json": "9ee55750be8c06bb34ccca709b086aa6dc191a1b4918564cf30f599a1f75715d",
+    "build/reliability-test.cim": "52c66c17a06b61d62a4c3755c64e458d36fa07b3152b225ba6c6513d0b824b02",
+    "build/directory-test.cim": "b06e82401d8aefbc8d6f20cad21e1fdc4a1aba2ee8bde0b80f510813c4eac300",
+    "build/keyboard-map.json": "bde15f8f9a8c05bf9fe36b1661080cd0141e0cd48eaac28678600af2f2712fd3",
+    "build/keyboard-test.cim": "3f000fbb334ee313dd1edcf0ec3f9955199794862202b784d261604904b61d54",
+    "build/p1715test.cim": "258890fbb8612d894e8e92b69bb914244fd5cc5ea7a637be99e24772fc9273be"
+  },
+  "dependencies": {
+    "pico": "dcfd610aa97edf097c2d8b33b4c7c0da11ea0c03",
+    "dac": "4180d456a64f11d95363b4b19ab09ad12165de60",
+    "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8",
+    "juku_common": "34a9b0f5842b2ae8162f37c6037a9cfbedf050ed",
+    "ravi": "2491ec9559abaafe00a294f33ef97b7ec0d1e645",
+    "host": "e468b87d1006833a13f17303e5a49517e4c6298b",
+    "cpmbox": "27c502b23a06bb7190ffe9cb389d7a5052823113",
+    "hitech": "bd1bd7326d789535c8aa557fd3f7c01283cce6fe"
+  },
+  "schema": 2,
+  "status": "passed",
+  "run_id": "20261109T104627Z-5dded065",
+  "hardware_executed": false,
+  "execution": "native",
+  "backend": "firmware",
+  "suite": "smoke",
+  "rom_profile": "stock-reference",
+  "rom_sha256": "51cb80639b5667f2611da71ce7305061566cf3474bda7db6fc82709d08e46d01",
+  "binary_sha256": "faddc822fd846f69f5b4d29e5e2917b80c10044fbbaa8882598379efb9ebe15c",
+  "image_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+  "cases": [
+    {
+      "case": "keyboard-phase-0",
+      "status": "passed",
+      "exit_status": 0,
+      "commands": "",
+      "media_mode": "writable",
+      "markers": [
+        "CPM1715 ASYNC KEYBOARD OK"
+      ],
+      "settings": {
+        "PICO1715_TIMED": "0",
+        "PICO1715_KEY_START": "30000000",
+        "PICO1715_COMMAND_GAP": "100000000",
+        "PICO1715_CYCLES": "120000000",
+        "PICO1715_KEY_SERVICE_PC": "49337",
+        "PICO1715_KEY_SERVICE_START": "40000000",
+        "PICO1715_KEY_SERVICE_END": "46465000",
+        "PICO1715_STOP_TEXT": "CPM1715 ASYNC KEYBOARD OK",
+        "PICO1715_KEY_SCHEDULE": "/home/ddanila/fun/cpm-plus-1715/local/tools-firmware-ref/20261109T104627Z-5dded065/keyboard-phase-0/keyboard-events.txt"
+      },
+      "stats": {
+        "key_scheduled": 1,
+        "key_attempted": 144,
+        "key_accepted": 144,
+        "key_rejected": 0,
+        "key_late": 0,
+        "key_disabled": 0,
+        "key_full": 0,
+        "key_pending": 0,
+        "key_service_visits": 479,
+        "key_service_max_gap": 86910,
+        "cycles": 69872897,
+        "pc": 49340,
+        "rom_handoff_cycle": 7401359,
+        "rom_handoff_target": 16384,
+        "fields": 296,
+        "bytes": 48550,
+        "index_interrupts": 3,
+        "steps": 197,
+        "cylinder": 3,
+        "sector": 4,
+        "format": 4,
+        "control": 161,
+        "writes": 12,
+        "rejected_writes": 0,
+        "rx_capacity": 2,
+        "timed": 1,
+        "wait_ticks": 3216250,
+        "arrivals": 48668,
+        "overruns": 0,
+        "underflows": 0,
+        "drops": 0,
+        "tx_overruns": 0,
+        "tx_underruns": 0,
+        "max_read_age": 78,
+        "max_tx_interval": 81,
+        "resets": 0,
+        "reset_at": 0,
+        "reset_image_unchanged": 0,
+        "onboard": 1,
+        "keyboard_bytes": 0,
+        "sio_reads": 144,
+        "sio_writes": 7,
+        "ctc_writes": 2,
+        "sio_errors": 0
+      },
+      "input_sha256": "831ecf505a8137c214e9b3b0284e2f9f8b31534777c77b6ba6c681e7dc9c313d",
+      "output_sha256": "917c7143f32339db59c4695b17ff8202dfe3cb0e39a52d8358d3fa623b8e2e4c",
+      "screen": "                                                                                \nCP/M Plus 3.1 - Robotron 1715                                                   \nA>KBDTEST                                                                       \nCPM1715 ASYNC KEYBOARD OK                                                       \n                                                                                \nA>                                                                              \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n",
+      "stderr": "Stress {\"config\":{\"period\":257,\"width\":0,\"phase\":0,\"index_phase_us\":0,\"extra_us\":[0,0,0,0,0,0],\"sd_delays_us\":[]},\"hits\":[0,0,0,0,0,0],\"sd_calls\":96,\"sd_min_us\":0,\"sd_max_us\":0,\"index_resets\":1,\"index_start_tick\":491600,\"fault_iacks\":0}\nCosts config=[0,0,0,0,0,0] calls=[28426729,296,48662,12384,12,24] yields=0 lock_wait_us=0 faults=0 first_fault_us=0\nStorage delay_us=0 yields=0 resets_while_busy=0\nFirmware state=2 requests=63658 sd_reads=1602 sd_writes=96 dirty=0 error=0\nRTL requests=63658 acks=3 reti=3\n",
+      "keyboard_events": [
+        [
+          30000000,
+          224
+        ],
+        [
+          30001000,
+          75
+        ],
+        [
+          30101000,
+          224
+        ],
+        [
+          30102000,
+          66
+        ],
+        [
+          30202000,
+          224
+        ],
+        [
+          30203000,
+          68
+        ],
+        [
+          30303000,
+          224
+        ],
+        [
+          30304000,
+          84
+        ],
+        [
+          30404000,
+          224
+        ],
+        [
+          30405000,
+          69
+        ],
+        [
+          30505000,
+          224
+        ],
+        [
+          30506000,
+          83
+        ],
+        [
+          30606000,
+          224
+        ],
+        [
+          30607000,
+          84
+        ],
+        [
+          30707000,
+          224
+        ],
+        [
+          30708000,
+          13
+        ],
+        [
+          40000000,
+          224
+        ],
+        [
+          40001000,
+          65
+        ],
+        [
+          40101000,
+          224
+        ],
+        [
+          40102000,
+          66
+        ],
+        [
+          40202000,
+          224
+        ],
+        [
+          40203000,
+          67
+        ],
+        [
+          40303000,
+          224
+        ],
+        [
+          40304000,
+          68
+        ],
+        [
+          40404000,
+          224
+        ],
+        [
+          40405000,
+          69
+        ],
+        [
+          40505000,
+          224
+        ],
+        [
+          40506000,
+          70
+        ],
+        [
+          40606000,
+          224
+        ],
+        [
+          40607000,
+          71
+        ],
+        [
+          40707000,
+          224
+        ],
+        [
+          40708000,
+          72
+        ],
+        [
+          40808000,
+          224
+        ],
+        [
+          40809000,
+          73
+        ],
+        [
+          40909000,
+          224
+        ],
+        [
+          40910000,
+          74
+        ],
+        [
+          41010000,
+          224
+        ],
+        [
+          41011000,
+          75
+        ],
+        [
+          41111000,
+          224
+        ],
+        [
+          41112000,
+          76
+        ],
+        [
+          41212000,
+          224
+        ],
+        [
+          41213000,
+          77
+        ],
+        [
+          41313000,
+          224
+        ],
+        [
+          41314000,
+          78
+        ],
+        [
+          41414000,
+          224
+        ],
+        [
+          41415000,
+          79
+        ],
+        [
+          41515000,
+          224
+        ],
+        [
+          41516000,
+          80
+        ],
+        [
+          41616000,
+          224
+        ],
+        [
+          41617000,
+          81
+        ],
+        [
+          41717000,
+          224
+        ],
+        [
+          41718000,
+          82
+        ],
+        [
+          41818000,
+          224
+        ],
+        [
+          41819000,
+          83
+        ],
+        [
+          41919000,
+          224
+        ],
+        [
+          41920000,
+          84
+        ],
+        [
+          42020000,
+          224
+        ],
+        [
+          42021000,
+          85
+        ],
+        [
+          42121000,
+          224
+        ],
+        [
+          42122000,
+          86
+        ],
+        [
+          42222000,
+          224
+        ],
+        [
+          42223000,
+          87
+        ],
+        [
+          42323000,
+          224
+        ],
+        [
+          42324000,
+          88
+        ],
+        [
+          42424000,
+          224
+        ],
+        [
+          42425000,
+          89
+        ],
+        [
+          42525000,
+          224
+        ],
+        [
+          42526000,
+          90
+        ],
+        [
+          42626000,
+          224
+        ],
+        [
+          42627000,
+          65
+        ],
+        [
+          42727000,
+          224
+        ],
+        [
+          42728000,
+          66
+        ],
+        [
+          42828000,
+          224
+        ],
+        [
+          42829000,
+          67
+        ],
+        [
+          42929000,
+          224
+        ],
+        [
+          42930000,
+          68
+        ],
+        [
+          43030000,
+          224
+        ],
+        [
+          43031000,
+          69
+        ],
+        [
+          43131000,
+          224
+        ],
+        [
+          43132000,
+          70
+        ],
+        [
+          43232000,
+          224
+        ],
+        [
+          43233000,
+          71
+        ],
+        [
+          43333000,
+          224
+        ],
+        [
+          43334000,
+          72
+        ],
+        [
+          43434000,
+          224
+        ],
+        [
+          43435000,
+          73
+        ],
+        [
+          43535000,
+          224
+        ],
+        [
+          43536000,
+          74
+        ],
+        [
+          43636000,
+          224
+        ],
+        [
+          43637000,
+          75
+        ],
+        [
+          43737000,
+          224
+        ],
+        [
+          43738000,
+          76
+        ],
+        [
+          43838000,
+          224
+        ],
+        [
+          43839000,
+          77
+        ],
+        [
+          43939000,
+          224
+        ],
+        [
+          43940000,
+          78
+        ],
+        [
+          44040000,
+          224
+        ],
+        [
+          44041000,
+          79
+        ],
+        [
+          44141000,
+          224
+        ],
+        [
+          44142000,
+          80
+        ],
+        [
+          44242000,
+          224
+        ],
+        [
+          44243000,
+          81
+        ],
+        [
+          44343000,
+          224
+        ],
+        [
+          44344000,
+          82
+        ],
+        [
+          44444000,
+          224
+        ],
+        [
+          44445000,
+          83
+        ],
+        [
+          44545000,
+          224
+        ],
+        [
+          44546000,
+          84
+        ],
+        [
+          44646000,
+          224
+        ],
+        [
+          44647000,
+          85
+        ],
+        [
+          44747000,
+          224
+        ],
+        [
+          44748000,
+          86
+        ],
+        [
+          44848000,
+          224
+        ],
+        [
+          44849000,
+          87
+        ],
+        [
+          44949000,
+          224
+        ],
+        [
+          44950000,
+          88
+        ],
+        [
+          45050000,
+          224
+        ],
+        [
+          45051000,
+          89
+        ],
+        [
+          45151000,
+          224
+        ],
+        [
+          45152000,
+          90
+        ],
+        [
+          45252000,
+          224
+        ],
+        [
+          45253000,
+          65
+        ],
+        [
+          45353000,
+          224
+        ],
+        [
+          45354000,
+          66
+        ],
+        [
+          45454000,
+          224
+        ],
+        [
+          45455000,
+          67
+        ],
+        [
+          45555000,
+          224
+        ],
+        [
+          45556000,
+          68
+        ],
+        [
+          45656000,
+          224
+        ],
+        [
+          45657000,
+          69
+        ],
+        [
+          45757000,
+          224
+        ],
+        [
+          45758000,
+          70
+        ],
+        [
+          45858000,
+          224
+        ],
+        [
+          45859000,
+          71
+        ],
+        [
+          45959000,
+          224
+        ],
+        [
+          45960000,
+          72
+        ],
+        [
+          46060000,
+          224
+        ],
+        [
+          46061000,
+          13
+        ],
+        [
+          46161000,
+          224
+        ],
+        [
+          46162000,
+          8
+        ],
+        [
+          46262000,
+          224
+        ],
+        [
+          46263000,
+          3
+        ],
+        [
+          46363000,
+          224
+        ],
+        [
+          46364000,
+          9
+        ]
+      ],
+      "keyboard_diagnostics": {
+        "keycalls": 4418,
+        "keydecoded": 72,
+        "keydrops": 0
+      }
+    },
+    {
+      "case": "boot-dir",
+      "status": "passed",
+      "exit_status": 0,
+      "commands": "DIR\r",
+      "media_mode": "writable",
+      "markers": [
+        "CP/M Plus 3.1 - Robotron 1715",
+        "HELLO    TXT",
+        "A>"
+      ],
+      "settings": {
+        "PICO1715_TIMED": "0",
+        "PICO1715_KEY_START": "30000000",
+        "PICO1715_COMMAND_GAP": "100000000",
+        "PICO1715_CYCLES": "160000000",
+        "PICO1715_STOP_TEXT": "HELLO    TXT"
+      },
+      "stats": {
+        "key_scheduled": 0,
+        "key_attempted": 0,
+        "key_accepted": 0,
+        "key_rejected": 0,
+        "key_late": 0,
+        "key_disabled": 0,
+        "key_full": 0,
+        "key_pending": 0,
+        "key_service_visits": 0,
+        "key_service_max_gap": 0,
+        "cycles": 51604737,
+        "pc": 49338,
+        "rom_handoff_cycle": 7401359,
+        "rom_handoff_target": 16384,
+        "fields": 72,
+        "bytes": 29504,
+        "index_interrupts": 3,
+        "steps": 38,
+        "cylinder": 2,
+        "sector": 2,
+        "format": 4,
+        "control": 165,
+        "writes": 0,
+        "rejected_writes": 0,
+        "rx_capacity": 2,
+        "timed": 1,
+        "wait_ticks": 1431929,
+        "arrivals": 29533,
+        "overruns": 0,
+        "underflows": 0,
+        "drops": 0,
+        "tx_overruns": 0,
+        "tx_underruns": 0,
+        "max_read_age": 78,
+        "max_tx_interval": 0,
+        "resets": 0,
+        "reset_at": 0,
+        "reset_image_unchanged": 0,
+        "onboard": 1,
+        "keyboard_bytes": 8,
+        "sio_reads": 8,
+        "sio_writes": 7,
+        "ctc_writes": 2,
+        "sio_errors": 0
+      },
+      "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+      "output_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+      "screen": "                                                                                \nCP/M Plus 3.1 - Robotron 1715                                                   \nA>DIR                                                                           \nA: CPM3     SYS : CCP      COM : DIR      COM : TYPE     COM : PIP      COM     \nA: ERASE    COM : RENAME   COM : SHOW     COM : SET      COM : SUBMIT   COM     \nA: P1715TST COM : HELLO    TXT : TEST     SUB                                   \nA>                                                                              \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n                                                                                \n",
+      "stderr": "Stress {\"config\":{\"period\":257,\"width\":0,\"phase\":0,\"index_phase_us\":0,\"extra_us\":[0,0,0,0,0,0],\"sd_delays_us\":[]},\"hits\":[0,0,0,0,0,0],\"sd_calls\":0,\"sd_min_us\":0,\"sd_max_us\":0,\"index_resets\":1,\"index_start_tick\":491600,\"fault_iacks\":0}\nCosts config=[0,0,0,0,0,0] calls=[20994605,72,29527,0,0,0] yields=0 lock_wait_us=0 faults=0 first_fault_us=0\nStorage delay_us=0 yields=0 resets_while_busy=0\nFirmware state=2 requests=30236 sd_reads=1602 sd_writes=0 dirty=0 error=0\nRTL requests=30236 acks=3 reti=3\n"
+    },
+    {
+      "case": "crc-fault",
+      "status": "passed",
+      "exit_status": 1,
+      "commands": "",
+      "media_mode": "writable",
+      "markers": [],
+      "settings": {
+        "PICO1715_TIMED": "0",
+        "PICO1715_KEY_START": "30000000",
+        "PICO1715_COMMAND_GAP": "100000000",
+        "PICO1715_CYCLES": "30000000",
+        "PICO1715_CORRUPT_CRC": "1"
+      },
+      "stats": {
+        "key_scheduled": 0,
+        "key_attempted": 0,
+        "key_accepted": 0,
+        "key_rejected": 0,
+        "key_late": 0,
+        "key_disabled": 0,
+        "key_full": 0,
+        "key_pending": 0,
+        "key_service_visits": 0,
+        "key_service_max_gap": 0,
+        "cycles": 30000000,
+        "pc": 1048,
+        "rom_handoff_cycle": 0,
+        "rom_handoff_target": 0,
+        "fields": 32,
+        "bytes": 1040,
+        "index_interrupts": 6,
+        "steps": 32,
+        "cylinder": 0,
+        "sector": 4,
+        "format": 0,
+        "control": 191,
+        "writes": 0,
+        "rejected_writes": 0,
+        "rx_capacity": 2,
+        "timed": 1,
+        "wait_ticks": 660829,
+        "arrivals": 816,
+        "overruns": 0,
+        "underflows": 0,
+        "drops": 0,
+        "tx_overruns": 0,
+        "tx_underruns": 0,
+        "max_read_age": 32,
+        "max_tx_interval": 0,
+        "resets": 0,
+        "reset_at": 0,
+        "reset_image_unchanged": 0,
+        "onboard": 1,
+        "keyboard_bytes": 0,
+        "sio_reads": 0,
+        "sio_writes": 5009,
+        "ctc_writes": 2,
+        "sio_errors": 0
+      },
+      "input_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+      "output_sha256": "a9c195bd985e1d42fa801091289545c851d1439fb7a041932e7a16f9cc72c42e",
+      "screen": "................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n................................................................................\n",
+      "stderr": "Stress {\"config\":{\"period\":257,\"width\":0,\"phase\":0,\"index_phase_us\":0,\"extra_us\":[0,0,0,0,0,0],\"sd_delays_us\":[]},\"hits\":[0,0,0,0,0,0],\"sd_calls\":0,\"sd_min_us\":0,\"sd_max_us\":0,\"index_resets\":1,\"index_start_tick\":491600,\"fault_iacks\":0}\nCosts config=[0,0,0,0,0,0] calls=[12205046,64,1072,0,0,0] yields=0 lock_wait_us=0 faults=0 first_fault_us=0\nStorage delay_us=0 yields=0 resets_while_busy=0\nFirmware state=2 requests=197867 sd_reads=1602 sd_writes=0 dirty=0 error=0\nRTL requests=197867 acks=6 reti=6\n"
+    }
+  ]
+}

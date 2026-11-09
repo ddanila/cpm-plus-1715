@@ -11,7 +11,10 @@ OUTPUTS = ['build/cpm3.sys', 'build/platform.cim', 'build/test.rom',
            'build/reliability-test.cim', 'build/directory-test.cim',
            'build/keyboard-map.json', 'build/keyboard-test.cim', 'build/p1715test.cim']
 SERIAL_OUTPUTS = ['build/platform-serial.cim', 'build/serial-test.rom',
-                  'out/cpm-plus-1715-serial.img']
+                  'out/cpm-plus-1715-serial.img', 'out/cpm-plus-1715-serial-base.img',
+                  'out/tools/manifest.json'] + ['out/tools/'+n for n in (
+                  'CAT.COM','CAL.COM','CP.COM','DU.COM','FIND.COM','HEXDUMP.COM',
+                  'LS.COM','MV.COM','UNTAR.COM','PIPEMGR.RSX','GENCOM.COM','SETDEF.COM','TOOLS.TXT')]
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()

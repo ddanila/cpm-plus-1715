@@ -94,6 +94,8 @@ def clean_disk(session):
 
 
 def validate_config(config, session):
+    if (session/"tools-transaction.json").exists():
+        raise ValueError("interrupted tools transaction; restore rollback snapshot first")
     is_pty = str(Path(config['serial']).resolve()).startswith('/dev/pts/')
     if bool(config['emulator']) != is_pty:
         raise ValueError('emulator sessions require a PTY; physical endpoints require hardware mode')
@@ -139,6 +141,17 @@ def initialize(a, session):
     is_pty = str(Path(config['serial']).resolve()).startswith('/dev/pts/')
     if a.emulator != is_pty:
         raise ValueError('--emulator requires a PTY and cannot open physical devices')
+    from session_tools import retain_inputs
+    config = retain_inputs(config, session)
+    from tool_bundle import bundle
+    from media import inspect
+    try:
+        manifest, payloads = bundle()
+        files = inspect(data)
+        if all((0,n) in files and files[(0,n)].exact_data == b for n,b in payloads.items()):
+            config['tools'] = manifest
+    except FileNotFoundError:
+        pass
     (session/'disk.img').write_bytes(data)
     atomic_json(session/'identity.json', config)
     return config
@@ -150,6 +163,9 @@ def launch(a, session):
     socket_path(session)
     with lock_session(session/'session.lock') as lock:
         config = initialize(a, session)
+        from session_tools import retain_inputs
+        config = retain_inputs(config, session)
+        atomic_json(session/"identity.json", config)
         validate_config(config, session)
         if a.command == 'resume' and config['requires_boot']:
             raise ValueError('session requires a fresh guest boot; resume refused')
@@ -436,33 +452,36 @@ def snapshot(a, session):
     with lock_session(session/'session.lock'):
         config = config_at(session)
         clean_disk(session)
+        from session_tools import retain_inputs, snapshot_meta, save_rollback, replace_disk
+        # Synthetic/legacy snapshot metadata remains readable; real sessions retain inputs.
+        if 'image' in config:
+            config = retain_inputs(config, session)
         directory = session/'snapshots'/a.name
         if a.command == 'snapshot':
+            if (session/'tools-transaction.json').exists():
+                raise ValueError('interrupted tools transaction; restore rollback first')
             directory.mkdir(parents=True, exist_ok=False)
             image = directory/'disk.img'
             with image.open('xb') as stream:
                 stream.write((session/'disk.img').read_bytes()); stream.flush(); os.fsync(stream.fileno())
-            atomic_json(directory/'identity.json', dict(schema=SCHEMA, sha256=digest(image),
-                platform_sha256=config['platform_sha256'], source_sha256=config['image_sha256']))
+            atomic_json(directory/'identity.json', snapshot_meta(config, image))
+            atomic_json(session/'identity.json', config)
         else:
             meta = read_json(directory/'identity.json')
             image = directory/'disk.img'
+            target = meta.get('config', config).copy()
             if (meta['schema'] != SCHEMA or meta['platform_sha256'] != config['platform_sha256']
-                    or meta['source_sha256'] != config['image_sha256'] or meta['sha256'] != digest(image)
+                    or meta['source_sha256'] != target['image_sha256'] or meta['sha256'] != digest(image)
                     or image.stat().st_size != 819200):
                 raise ValueError('snapshot integrity or compatibility mismatch')
-            rollback = session/'snapshots'/('rollback-'+uuid.uuid4().hex)
-            rollback.mkdir(parents=True)
-            with (rollback/'disk.img').open('xb') as stream:
-                stream.write((session/'disk.img').read_bytes()); stream.flush(); os.fsync(stream.fileno())
-            atomic_json(rollback/'identity.json', dict(meta, sha256=digest(rollback/'disk.img')))
-            # Persist boot requirement before replacing media, including interrupted restores.
-            config['requires_boot'] = True
-            atomic_json(session/'identity.json', config)
-            temp = session/('restore-'+uuid.uuid4().hex+'.tmp')
-            with temp.open('xb') as stream:
-                stream.write(image.read_bytes()); stream.flush(); os.fsync(stream.fileno())
-            os.replace(temp, session/'disk.img')
+            if 'image' in target:
+                target = retain_inputs(target, session)
+                validate_artifacts(image, Path(target['platform']))
+            rollback = save_rollback(session, config, prefix='rollback-')
+            target['requires_boot'] = True
+            atomic_json(session/'identity.json', target)
+            replace_disk(session, image.read_bytes())
+            (session/'tools-transaction.json').unlink(missing_ok=True)
             print('Restored; fresh guest boot required. Rollback:', rollback.name)
     return 0
 
@@ -470,7 +489,7 @@ def snapshot(a, session):
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='command', required=True)
-    for name in ('boot', 'resume', 'attach', 'status', 'stop', 'snapshot', 'restore', '_serve'):
+    for name in ('boot', 'resume', 'attach', 'status', 'stop', 'snapshot', 'restore', 'install-tools', '_serve'):
         q = sub.add_parser(name)
         q.add_argument('--session', type=Path, required=True)
         if name in ('boot', 'resume'):
@@ -517,6 +536,9 @@ def main(argv=None):
                     return 0
                 time.sleep(.05)
             raise TimeoutError('service has not released ownership')
+        if a.command == 'install-tools':
+            from session_tools import install_tools
+            return install_tools(session)
         return snapshot(a, session)
     except KeyboardInterrupt:
         return 130

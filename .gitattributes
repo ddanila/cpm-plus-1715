@@ -5,3 +5,6 @@ third_party/** -text -whitespace
 *.com binary
 *.zip binary
 *.gz binary
+
+# Unified patch context retains upstream whitespace for exact application.
+src/cpmbox/hitech.patch -whitespace
