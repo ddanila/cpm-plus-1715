@@ -15,7 +15,7 @@ from ravi.transport import SerialTransport, LoggedTransport
 from ravi.backends.robotron1715w.host import Monitor, MonitorError
 from ravi.backends.robotron1715w import protocol as protocol
 from ravi.backends.robotron1715w.build import ROOT as ROM_ROOT
-from serial_session import validate_artifacts
+from serial_session import validate_artifacts, lock_session
 
 ROOT = Path(__file__).resolve().parents[1]
 W2_ID = "4f81c5516ba23bbc"
@@ -187,7 +187,7 @@ def main():
         if (session / "disk.img").stat().st_size != 819200:
             p.error("invalid session disk")
     # Supervisor retains the lock across native-host descriptor adoption.
-    with SerialTransport(
+    with lock_session(session / "session.lock"), SerialTransport(
         a.serial,
         9600 if a.mode == "boot" and a.rom_profile == "w2" else 1200,
         parity="N",
