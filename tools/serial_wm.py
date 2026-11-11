@@ -56,7 +56,7 @@ def legacy_retry(action, monitor, attempts, evidence):
             time.sleep(1)
 
 
-def bootstrap(port, profile, platform, session):
+def bootstrap(port, profile, platform, session, w2_at_1200=False):
     report = dict(profile=profile, retries=[], complete=False)
     with (session / "bootstrap-tx.bin").open("wb") as tx, (
         session / "bootstrap-rx.bin"
@@ -67,7 +67,7 @@ def bootstrap(port, profile, platform, session):
         # Startup frames remain captured and are parsed by identify().
         time.sleep(1)
         try:
-            if profile == "w2":
+            if profile == "w2" and not w2_at_1200:
                 info = legacy_retry(m.identify, m, 5, report["retries"])
                 if info.get("protocol") != "W2" or info.get("build_id") != W2_ID:
                     raise ValueError(
@@ -151,6 +151,11 @@ def main():
     p.add_argument("mode", choices=["boot", "attach"])
     p.add_argument("--serial", required=True)
     p.add_argument("--rom-profile", choices=["w2", "w3"], required=True)
+    p.add_argument(
+        "--w2-at-1200",
+        action="store_true",
+        help="W2 monitor already has the verified temporary clock correction",
+    )
     p.add_argument("--session", type=Path, required=True)
     p.add_argument("--console-pty", required=True)
     p.add_argument("--image", type=Path, default=ROOT / "out/cpm-plus-1715-wm.img")
@@ -163,6 +168,8 @@ def main():
         help="qualification only: inject one disk CRC error",
     )
     a = p.parse_args()
+    if a.w2_at_1200 and (a.mode != "boot" or a.rom_profile != "w2"):
+        p.error("--w2-at-1200 requires boot with --rom-profile w2")
     _, platform = validate_artifacts(a.image, a.platform)
     if not a.host.is_file():
         p.error("native host executable not found")
@@ -189,13 +196,19 @@ def main():
     # Supervisor retains the lock across native-host descriptor adoption.
     with lock_session(session / "session.lock"), SerialTransport(
         a.serial,
-        9600 if a.mode == "boot" and a.rom_profile == "w2" else 1200,
+        (
+            9600
+            if a.mode == "boot" and a.rom_profile == "w2" and not a.w2_at_1200
+            else 1200
+        ),
         parity="N",
         stop_bits=1,
         exclusive=True,
     ) as port:
         if a.mode == "boot":
-            identity["rom"] = bootstrap(port, a.rom_profile, platform, session)
+            identity["rom"] = bootstrap(
+                port, a.rom_profile, platform, session, a.w2_at_1200
+            )
             (session / "identity.json").write_text(
                 json.dumps(identity, indent=2) + "\n"
             )

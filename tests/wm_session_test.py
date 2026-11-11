@@ -2,12 +2,14 @@
 
 import sys
 import unittest
+import tempfile
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 try:
-    from serial_wm import legacy_retry, host_command, SHIM
+    from serial_wm import legacy_retry, host_command, bootstrap, SHIM
 
     HAVE_RAVI = True
 except ModuleNotFoundError as exc:
@@ -46,3 +48,30 @@ class WmSessionTests(unittest.TestCase):
         self.assertNotIn("--writable", command)
         self.assertIn("--resume-disk", command)
         self.assertEqual(len(SHIM), 27)
+
+    def test_already_corrected_w2_verifies_identity_before_platform_only_handoff(self):
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "serial_wm.Monitor"
+        ) as cls, patch("serial_wm.time.sleep"):
+            monitor = cls.return_value
+            monitor.events = []
+            monitor.identify.return_value = {
+                "protocol": "W2",
+                "build_id": "4f81c5516ba23bbc",
+            }
+            monitor.read_memory.return_value = b"platform"
+            bootstrap(object(), "w2", b"platform", Path(directory), True)
+            monitor.write_memory.assert_called_once_with(0xC000, b"platform")
+            monitor.start.assert_called_once_with(0xC033)
+
+    def test_already_corrected_w2_rejects_unknown_fingerprint(self):
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "serial_wm.Monitor"
+        ) as cls, patch("serial_wm.time.sleep"):
+            monitor = cls.return_value
+            monitor.events = []
+            monitor.identify.return_value = {"protocol": "W2", "build_id": "unknown"}
+            with self.assertRaises(ValueError):
+                bootstrap(object(), "w2", b"platform", Path(directory), True)
+            monitor.write_memory.assert_not_called()
+            monitor.start.assert_not_called()

@@ -40,8 +40,11 @@ floppy is involved.
   writes and reads; an uncertain execute acknowledgement is never replayed.
 
 W3 is emulator-qualified; it has not yet been tested on PC001. W2's clock
-shim has previously been exercised on PC001, but the complete CP/M session
-still needs its coordinated physical trial. This is not a Kaypro ROM.
+shim has previously been exercised on PC001. The first physical CP/M trial
+verified the complete platform upload and execution acknowledgement, then
+stalled on malformed runtime serial requests before reaching a prompt.
+Hardware debugging is in progress; the complete CP/M session is not yet
+qualified on PC001. This is not a Kaypro ROM.
 
 ## Run
 
@@ -56,7 +59,11 @@ build/venv/bin/python tools/serial_wm.py boot \
   --host ../8080-cosim/build/jukuhost
 ```
 
-Use `--rom-profile w3` for W3. Expected output is the CP/M Plus banner
+Use `--rom-profile w3` for W3. If W2 is already running with the temporary
+1200-baud clock correction from a prior monitor session, add `--w2-at-1200`
+to `boot`; the launcher still checks its exact fingerprint and ROM integrity
+before writing anything. This option skips the clock shim, not verification.
+Expected output is the CP/M Plus banner
 followed by `A>`. Try `DIR` and `TYPE HELLO.TXT`. The launcher verifies the
 ROM identity and platform readback before execution. It keeps the serial
 port open and exclusively owned while handing its descriptor to the disk
