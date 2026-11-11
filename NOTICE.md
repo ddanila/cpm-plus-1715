@@ -11,8 +11,10 @@ Pinned source and binary archives are the same 2026-06-07 releases used by Juku.
 The vendored ld80 linker is public domain and is not needed by this build.
 Zmac retains its source notices (public-domain components and GPL components).
 ZXCC 0.5.7 retains the GPL notices in its unmodified source archive. These are
-host build tools, not part of the generated guest BIOS. No Juku ROM services,
-fonts, NetDisk code or historical Robotron ROM/OS binaries are included.
+host build tools, not part of the generated guest BIOS. Historical Robotron ROM/OS binaries are not included. The serial targets
+reuse the BSD-2-Clause N3 disk and N4 console engines from juku-common;
+see `third_party/juku-common/LICENSE-BSD-2-Clause`. They do not include
+Juku fonts or its complete ROM.
 
 The reference ROM is an external test input with SHA-256
 51cb80639b5667f2611da71ce7305061566cf3474bda7db6fc82709d08e46d01.
@@ -38,3 +40,10 @@ the GNU Library GPLv2.
 HI-TECH C and its runtime are Copyright HI-TECH Software, used under the
 free-use grant reproduced in `third_party/hitech/LICENSE`. Compiler binaries
 are build dependencies and are not installed in the CP/M image.
+
+## W/M serial package
+
+The W3 monitor and Ravi launcher support are MIT licensed, Copyright (c)
+2026 Danila Sukharev. The native jukuhost retains its BSD-2-Clause terms
+(the same copyright and grant reproduced in JUKU-LICENSE). The W/M image
+does not include the optional cpmbox or PIPEMGR tools.

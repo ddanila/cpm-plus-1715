@@ -27,6 +27,7 @@ def main():
         "LICENSE": ROOT / "LICENSE",
         "NOTICE.md": ROOT / "NOTICE.md",
         "JUKU-LICENSE": ROOT / "third_party/JUKU-LICENSE",
+        "JUKU-COMMON-LICENSE": ROOT / "third_party/juku-common/LICENSE-BSD-2-Clause",
         "CPM-LICENSE.md": ROOT / "third_party/cpm3/LICENSE.md",
     }.items():
         files[name] = path
