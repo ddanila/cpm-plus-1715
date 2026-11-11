@@ -4,6 +4,9 @@ net_cache: ds 131
 remote_state_end:
 ; Shared 8080 source executes natively on the Z80. No translated copy.
 SHARED_SERIAL equ 1
+.ifdef WM_FAST
+N3Z80TABLE equ 1
+.endif
 ROM_ABI_C9 equ 1
 ROMNETDISK equ 1
 N3MAXRECORDS equ 1
@@ -14,3 +17,7 @@ ROMNETSTATEBASE equ net_state
         include "third_party/juku-common/platform/rom-host-services.asm"
         include "third_party/juku-common/platform/netdisk-v3.asm"
         .z80
+
+.ifdef N3Z80TABLE
+        include "src/serial-crc-table.asm"
+.endif

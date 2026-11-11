@@ -114,7 +114,7 @@ all: $(BUILD)/p1715test.cim
 
 .PHONY: serial
 serial: all $(OUT)/cpm-plus-1715-serial.img
-$(BUILD)/platform-serial.cim: src/platform-serial.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) third_party/juku-common/platform/rom-host-services.asm third_party/juku-common/platform/netdisk-v3.asm third_party/juku-common/platform/rom-abi.inc
+$(BUILD)/platform-serial.cim: src/platform-serial.asm src/platform.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/system.inc $(ZMAC) third_party/juku-common/platform/rom-host-services.asm third_party/juku-common/platform/netdisk-v3.asm third_party/juku-common/platform/rom-abi.inc
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-serial.lst $<
 $(OUT)/cpm-plus-1715-serial.img: $(BUILD)/platform-serial.cim $(OUT)/cpm-plus-1715.img
 	$(PYTHON) tools/build_image.py --serial
@@ -136,7 +136,7 @@ $(OUT)/cpm-plus-1715-serial.img: $(OUT)/tools/manifest.json tools/tool_bundle.py
 
 .PHONY: wm
 wm: $(OUT)/cpm-plus-1715-wm.img
-$(BUILD)/platform-wm.cim: src/platform-wm.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
+$(BUILD)/platform-wm.cim: src/platform-wm.asm src/platform.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm.lst $<
 $(OUT)/cpm-plus-1715-wm.img: $(BUILD)/platform-wm.cim $(BUILD)/cpm3.sys $(BUILD)/p1715test.cim tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py --wm
@@ -149,7 +149,14 @@ build/wm-probe: tools/wm_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotr
 
 .PHONY: wm-fast
 wm-fast: $(OUT)/cpm-plus-1715-wm-fast.img
-$(BUILD)/platform-wm-fast.cim: src/platform-wm-fast.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
+$(BUILD)/platform-wm-fast.cim: src/platform-wm-fast.asm src/platform.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-fast.lst $<
 $(OUT)/cpm-plus-1715-wm-fast.img: $(BUILD)/platform-wm-fast.cim $(BUILD)/cpm3.sys $(BUILD)/p1715test.cim tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py --wm-fast
+
+.PHONY: wm-62400
+wm-62400: $(OUT)/cpm-plus-1715-wm-62400.img
+$(BUILD)/platform-wm-62400.cim: src/platform-wm-62400.asm src/platform.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm)
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-62400.lst $<
+$(OUT)/cpm-plus-1715-wm-62400.img: $(BUILD)/platform-wm-62400.cim $(BUILD)/cpm3.sys tools/build_image.py tools/media.py
+	$(PYTHON) tools/build_image.py --wm-62400

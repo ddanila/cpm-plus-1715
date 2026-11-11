@@ -57,7 +57,7 @@ remote_init:
         out (9),a
         out (0ah),a
  .ifdef WM_FAST
-        ld a,3
+        ld a,WM_FAST
  .else
         ld a,13
  .endif

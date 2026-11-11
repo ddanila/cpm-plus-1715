@@ -38,7 +38,7 @@ jobs:
           ref: f2d4cd17c9b3d3e327fef35c52a4b7c21f28363d
           path: build/deps/8080-cosim
       - run: python -m pip install pexpect -e build/deps/ravi
-      - run: make wm wm-probe DAC=build/deps/dac-emulation
+      - run: make wm wm-fast wm-62400 wm-probe DAC=build/deps/dac-emulation
       - run: bash build/deps/8080-cosim/sync/jukuhost_linux_build.sh
       - run: bash build/deps/8080-cosim/sync/jukuhost_runner_check.sh && bash build/deps/8080-cosim/sync/jukuhost_core_check.sh
       - run: |
@@ -46,6 +46,7 @@ jobs:
           build/serial-format-test
       - run: make -C build/deps/dac-emulation build/robotron-receive-phase test-robotron-devices && build/deps/dac-emulation/build/robotron-receive-phase
       - run: make test
+      - run: DAC=build/deps/dac-emulation python -m unittest discover -s tests -p serial_crc_fast_test.py
       - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-w3 --corrupt-read
       - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom.bin --rom-profile w2 --out local/wm-w2
       - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-readonly --read-only

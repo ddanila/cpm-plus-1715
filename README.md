@@ -140,3 +140,24 @@ The fast build is experimental and separate from the default 1200 build.
 Current emulator CI does not model this external counter clock. Reset after
 a failed CP/M bootstrap did not restore a responsive ROM; power cycling did.
 No ROM reburn or physical hardware changes were needed.
+
+### Table CRC and 62400 experiment
+
+`make wm-62400` builds a separate 62400 x16 platform/image (A5 counter 47h,
+constant 2); `wm-fast` retains the 41600 fallback (constant 3). Both opt into
+the Z80 table CRC. Two consecutive aligned 256-byte pages remove bit-loop
+branches, index multiplication and BC saves. The CRC update takes 72 clocks
+independent of input, compared with 462–702 clocks for the portable bitwise
+routine (about 582 on typical data). The 512-byte table plus alignment changes
+the boot payload from 3219 to 3858 bytes including its disk copy stub.
+
+`tests/serial_crc_fast_test.py` runs actual assembled code on the DAC Z80 core
+for all 16,777,216 CRC-state/input-byte combinations, checks an independent
+bitwise reference, register preservation and a cycle bound. Set `DAC` to the
+DAC source directory if it is not a sibling checkout. The normal 8080 and
+non-fast Robotron paths retain their existing implementation.
+
+Use `tools/serial_wm_fast.py --baud 62400` with the same boot/attach arguments
+as 41600. Artifacts default to the matching baud and the launcher validates
+the clock initializer. The installed W2 still requires the separate cold-start
+clock recovery; this change improves uploaded CP/M, not the burned ROM.
