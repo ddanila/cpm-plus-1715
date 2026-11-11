@@ -66,6 +66,7 @@ def main():
         "binary copy verified independently",
         "host restart without target reset",
         "warm boot",
+        "runtime framing remains 1200 8N1 after handoff",
         "read-only media unchanged",
         "corrupt disk CRC recovered with duplicate reply",
     }

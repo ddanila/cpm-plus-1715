@@ -136,6 +136,9 @@ def main():
             passed("host restart without target reset")
             command("ERASE RENAMED.TXT")
             assert (0, "RENAMED.TXT") not in inspect(disk.read_bytes())
+        for log_path in session.glob("host-*.log"):
+            assert "phase=netdisk serial=1200 8N1" in log_path.read_text()
+        passed("runtime framing remains 1200 8N1 after handoff")
         assert digest(image) == result["image_sha256"]
         passed("source image unchanged")
         if a.corrupt_read:
