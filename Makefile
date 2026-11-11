@@ -146,3 +146,10 @@ WM_CORE := $(addprefix $(DAC)/,machines/robotron1715m/robotron.c machines/robotr
 wm-probe: build/wm-probe
 build/wm-probe: tools/wm_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h | build
 	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) tools/wm_probe.c $(WM_CORE) -o $@
+
+.PHONY: wm-fast
+wm-fast: $(OUT)/cpm-plus-1715-wm-fast.img
+$(BUILD)/platform-wm-fast.cim: src/platform-wm-fast.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-fast.lst $<
+$(OUT)/cpm-plus-1715-wm-fast.img: $(BUILD)/platform-wm-fast.cim $(BUILD)/cpm3.sys $(BUILD)/p1715test.cim tools/build_image.py tools/media.py
+	$(PYTHON) tools/build_image.py --wm-fast

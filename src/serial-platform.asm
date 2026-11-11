@@ -49,10 +49,18 @@ remote_init:
         out (0fh),a
         ld a,18h
         out (0fh),a
+ .ifdef WM_FAST
+        ld a,47h
+ .else
         ld a,7
+ .endif
         out (9),a
         out (0ah),a
+ .ifdef WM_FAST
+        ld a,3
+ .else
         ld a,13
+ .endif
         out (9),a
         out (0ah),a
         ld a,4

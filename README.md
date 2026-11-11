@@ -118,3 +118,25 @@ The **1715W/M serial-only target** is documented in
 host-served A: disk, with an installed-W2 compatibility shim or the new W3
 ROM. Build it with `make wm`. Physical CP/M qualification is pending;
 this target has separate emulator evidence and CI packages.
+
+### Experimental PC001 fast serial link (2026-11-11)
+
+On the physical 1715M/W with W2 ROM, 41600 baud x16 booted CP/M Plus,
+ran DIR and TYPE, and copied the 3200-byte CCP twice using PIP. Both saved
+copies independently matched the original SHA-256. This is a short hardware
+smoke test, not sustained reliability qualification. The preceding 62400
+CP/M attempt exhausted disk-read retries despite passing a simple RAM echo.
+
+`make wm-fast` builds a matched experimental platform/image using A5 counter
+control 47h, constant 3 and SIO WR4 44h. `tools/serial_wm_fast.py` uses the
+PL2303HXD USB divisor override on macOS and passes the configured descriptor
+to the native host. It requires the verified W2 monitor already at 9600 x16
+(or 41600 x16); the installed cold W2 starts at unreliable 9600 x1 and must
+first receive a verified RAM clock shim. Do not use this launcher directly
+after cold start. Monitor uploads are paced at 0.5 ms per byte; runtime disk
+traffic is unpaced. The adapter runs approximately 41666 baud (+0.16%).
+
+The fast build is experimental and separate from the default 1200 build.
+Current emulator CI does not model this external counter clock. Reset after
+a failed CP/M bootstrap did not restore a responsive ROM; power cycling did.
+No ROM reburn or physical hardware changes were needed.

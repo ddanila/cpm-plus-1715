@@ -56,12 +56,29 @@ def legacy_retry(action, monitor, attempts, evidence):
             time.sleep(1)
 
 
+class LegacyPacedTransport:
+    """PC001's x1 W2 receiver needs conservative spacing until the RAM shim."""
+
+    def __init__(self, port):
+        self.port = port
+
+    def read(self, size, timeout):
+        return self.port.read(size, timeout)
+
+    def write(self, data):
+        for byte in data:
+            self.port.write(bytes([byte]))
+            time.sleep(0.003)
+
+
 def bootstrap(port, profile, platform, session, w2_at_1200=False):
     report = dict(profile=profile, retries=[], complete=False)
     with (session / "bootstrap-tx.bin").open("wb") as tx, (
         session / "bootstrap-rx.bin"
     ).open("wb") as rx:
-        wire = LoggedTransport(port, rx, tx)
+        legacy = profile == "w2" and not w2_at_1200
+        wire = LoggedTransport(LegacyPacedTransport(port) if legacy else port, rx, tx)
+        report["legacy_byte_delay_ms"] = 3 if legacy else 0
         m = Monitor(wire, 5)
         # Permit ROM self-test/display startup before the first request.
         # Startup frames remain captured and are parsed by identify().
@@ -75,6 +92,14 @@ def bootstrap(port, profile, platform, session, w2_at_1200=False):
                     )
                 report["before_switch"] = info
                 for offset, byte in enumerate(SHIM):
+                    current = legacy_retry(
+                        lambda: m.read_memory(0x8000 + offset, 1),
+                        m,
+                        5,
+                        report["retries"],
+                    )
+                    if current == bytes([byte]):
+                        continue
                     legacy_retry(
                         lambda: m.write_memory(0x8000 + offset, bytes([byte])),
                         m,
@@ -90,6 +115,7 @@ def bootstrap(port, profile, platform, session, w2_at_1200=False):
                 m.start(0x8000)  # never replay: STARTED then no cooperative return
                 time.sleep(0.1)
                 switch_baud(port, 1200)
+                wire = LoggedTransport(port, rx, tx)
                 m = Monitor(wire, 5)
             info = m.identify()
             expected = "W2" if profile == "w2" else "W3"
