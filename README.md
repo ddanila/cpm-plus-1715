@@ -161,3 +161,11 @@ Use `tools/serial_wm_fast.py --baud 62400` with the same boot/attach arguments
 as 41600. Artifacts default to the matching baud and the launcher validates
 the clock initializer. The installed W2 still requires the separate cold-start
 clock recovery; this change improves uploaded CP/M, not the burned ROM.
+
+Physical PC001 validation with this build: CP/M boot, three independently
+verified 25600-byte binary files (original plus two generations of PIP copies),
+warm boot and TYPE succeeded at 62400 with unpaced runtime traffic. The
+197-second session logged 1269 record reads, 624 writes and zero retries.
+The CRC change was sufficient to resolve the previous 62400 boot failure;
+this supports processing overhead as the cause, although target UART overrun
+was not separately instrumented. Longer soak testing remains useful.
