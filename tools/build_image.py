@@ -11,12 +11,12 @@ def put(disk,name,data,block):
     allocations=inspect(updated)[(0,name)].blocks
     return max(allocations,default=block-1)+1
 
-def image(serial=False, base=False, wm=False, wm_fast=False, wm_62400=False):
-    wm = wm or wm_fast or wm_62400
+def image(serial=False, base=False, wm=False, wm_fast=False, wm_62400=False, wm_9600=False):
+    wm = wm or wm_fast or wm_62400 or wm_9600
     disk=bytearray([0xe5])*819200
     for path,expected in json.loads((ROOT/'third_party/inputs.json').read_text()).items():
         assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==expected,path
-    platform=(ROOT/('build/platform-wm-62400.cim' if wm_62400 else 'build/platform-wm-fast.cim' if wm_fast else 'build/platform-wm.cim' if wm else 'build/platform-serial.cim' if serial else 'build/platform.cim')).read_bytes()
+    platform=(ROOT/('build/platform-wm-9600.cim' if wm_9600 else 'build/platform-wm-62400.cim' if wm_62400 else 'build/platform-wm-fast.cim' if wm_fast else 'build/platform-wm.cim' if wm else 'build/platform-serial.cim' if serial else 'build/platform.cim')).read_bytes()
     assert len(platform)<0x3600
     assert len(platform)<0x3700
     # Original 4000h bootstrap copies the resident services, then enters loader.
@@ -48,7 +48,7 @@ def image(serial=False, base=False, wm=False, wm_fast=False, wm_62400=False):
             from tool_bundle import install
             disk, _ = install(disk)
     if not base:
-        (out/('cpm-plus-1715-wm-62400.img' if wm_62400 else 'cpm-plus-1715-wm-fast.img' if wm_fast else 'cpm-plus-1715-wm.img' if wm else 'cpm-plus-1715-serial.img' if serial else 'cpm-plus-1715.img')).write_bytes(disk)
+        (out/('cpm-plus-1715-wm-9600.img' if wm_9600 else 'cpm-plus-1715-wm-62400.img' if wm_62400 else 'cpm-plus-1715-wm-fast.img' if wm_fast else 'cpm-plus-1715-wm.img' if wm else 'cpm-plus-1715-serial.img' if serial else 'cpm-plus-1715.img')).write_bytes(disk)
     print('built',len(disk),'bytes; bootstrap',len(payload),'bytes')
 if __name__=='__main__':
     import argparse
@@ -57,5 +57,6 @@ if __name__=='__main__':
     parser.add_argument('--wm', action='store_true')
     parser.add_argument('--wm-fast', action='store_true')
     parser.add_argument('--wm-62400', action='store_true')
+    parser.add_argument('--wm-9600', action='store_true')
     args = parser.parse_args()
-    image(args.serial, args.base, args.wm, args.wm_fast, args.wm_62400)
+    image(args.serial, args.base, args.wm, args.wm_fast, args.wm_62400, args.wm_9600)

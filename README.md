@@ -169,3 +169,22 @@ warm boot and TYPE succeeded at 62400 with unpaced runtime traffic. The
 The CRC change was sufficient to resolve the previous 62400 boot failure;
 this supports processing overhead as the cause, although target UART overrun
 was not separately instrumented. Longer soak testing remains useful.
+
+### W4 ROM cold-start launcher
+
+Firmware 4.0.0 / W4 discovers the host at 62400, 41600 or 9600 without a RAM
+clock shim. Build matched images with `make wm-62400 wm-fast wm-9600`.
+Use `tools/serial_wm_w4.py boot` with `--serial`, `--session`, `--console-pty`
+and `--host` as for the previous launcher; `--baud` defaults to 62400 and can
+select 41600 or 9600. It prints and records the ROM version, fingerprint,
+integrity and rate before an unpaced upload/readback and exact STARTED handoff.
+`attach` reuses the recorded disk and rate without probing a running CP/M.
+The previous W2 launcher remains available for the installed ROM.
+
+The W4 ROM is supplied by ravi as `src/ravi/backends/robotron1715w/rom-w4.bin`.
+It must actually be burned before using this cold-start launcher on PC001.
+The physical 30-minute soak and 20 cold starts are pending that installation.
+`tools/check_w4_runtime.py` performs an actual-ROM CP/M boot, binary copy and
+warm boot in the timed emulator at each rate. Its private PTY is a 9600 transport
+bridge; the model independently generates the selected 9600/41600/62400 wire
+clock. This is not evidence of the macOS USB driver's custom-rate behavior.

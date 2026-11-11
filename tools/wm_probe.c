@@ -52,7 +52,7 @@ static void outp(void *p, uint16_t a, uint8_t v) {
     robotron_output(p, a, v);
 }
 int main(int argc, char **argv) {
-  if (argc != 4)
+  if (argc != 4 && argc != 5)
     return 2;
   robotron *m = calloc(1, sizeof(*m));
   if (!m)
@@ -84,9 +84,12 @@ int main(int argc, char **argv) {
   unsigned speed = getenv("WM_SPEED") ? (unsigned)atoi(getenv("WM_SPEED")) : 8;
   if (!speed || speed > 32)
     return 2;
+  unsigned fixed_baud = argc == 5 ? (unsigned)atoi(argv[4]) : 0;
+  if (fixed_baud && fixed_baud != 9600 && fixed_baud != 41600 && fixed_baud != 62400) return 2;
   while (!stop) {
     struct termios a;
-    if (tcgetattr(fd, &a) == 0)
+    if (fixed_baud) m->v24.peer_baud = fixed_baud;
+    else if (tcgetattr(fd, &a) == 0)
       m->v24.peer_baud = cfgetospeed(&a) == B9600 ? 9600 : 1200;
     uint8_t buf[4096];
     ssize_t n = read(fd, buf, sizeof buf);

@@ -160,3 +160,10 @@ $(BUILD)/platform-wm-62400.cim: src/platform-wm-62400.asm src/platform.asm src/s
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-62400.lst $<
 $(OUT)/cpm-plus-1715-wm-62400.img: $(BUILD)/platform-wm-62400.cim $(BUILD)/cpm3.sys tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py --wm-62400
+
+.PHONY: wm-9600
+wm-9600: $(OUT)/cpm-plus-1715-wm-9600.img
+$(BUILD)/platform-wm-9600.cim: src/platform-wm-9600.asm src/platform.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm)
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-9600.lst $<
+$(OUT)/cpm-plus-1715-wm-9600.img: $(BUILD)/platform-wm-9600.cim $(BUILD)/cpm3.sys tools/build_image.py tools/media.py
+	$(PYTHON) tools/build_image.py --wm-9600
