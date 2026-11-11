@@ -133,3 +133,16 @@ tools: $(OUT)/tools/manifest.json
 $(OUT)/tools/manifest.json: $(ZXCC) $(ZMAC) tools/build_tools.py tools/build_pipemgr.py $(TOOLS_INPUTS) third_party/tools-inputs.json third_party/cpm3/releases/cpm3bin_unix-20260607.zip
 	$(PYTHON) tools/build_tools.py
 $(OUT)/cpm-plus-1715-serial.img: $(OUT)/tools/manifest.json tools/tool_bundle.py tools/build_image.py tools/media.py
+
+.PHONY: wm
+wm: $(OUT)/cpm-plus-1715-wm.img
+$(BUILD)/platform-wm.cim: src/platform-wm.asm src/platform.asm src/serial-platform.asm src/serial-common.asm $(BUILD)/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm.lst $<
+$(OUT)/cpm-plus-1715-wm.img: $(BUILD)/platform-wm.cim $(BUILD)/cpm3.sys $(BUILD)/p1715test.cim tools/build_image.py tools/media.py
+	$(PYTHON) tools/build_image.py --wm
+
+.PHONY: wm-probe
+WM_CORE := $(addprefix $(DAC)/,machines/robotron1715m/robotron.c machines/robotron1715m/disk.c machines/robotron1715m/sio.c machines/robotron1715m/keyboard_board.c machines/robotron1715m/keyboard_cpu.c common/cpu/z80.c common/media/media.c common/trace/trace.c)
+wm-probe: build/wm-probe
+build/wm-probe: tools/wm_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h | build
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) tools/wm_probe.c $(WM_CORE) -o $@

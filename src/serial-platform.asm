@@ -44,6 +44,34 @@ write:  call serial_position
         jp N3WRITE
 
 remote_init:
+.ifdef WM_BOOT
+        xor a
+        out (0fh),a
+        ld a,18h
+        out (0fh),a
+        ld a,7
+        out (9),a
+        out (0ah),a
+        ld a,13
+        out (9),a
+        out (0ah),a
+        ld a,4
+        out (0fh),a
+        ld a,44h
+        out (0fh),a
+        ld a,1
+        out (0fh),a
+        xor a
+        out (0fh),a
+        ld a,3
+        out (0fh),a
+        ld a,0c1h
+        out (0fh),a
+        ld a,5
+        out (0fh),a
+        ld a,0eah
+        out (0fh),a
+.else
         ; Only reset channel B. Keep keyboard A and its clock intact.
         ld a,18h
         out (0fh),a
@@ -63,6 +91,7 @@ remote_init:
         out (9),a
         ld a,1              ; stock ROM CTC-B clock setup
         out (9),a
+.endif
         ld hl,remote_state
         ld de,remote_state+1
         ld bc,remote_state_end-remote_state-1

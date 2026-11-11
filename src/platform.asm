@@ -24,6 +24,14 @@
         jp keypause
         jp keyresume
 init:   di
+.ifdef WM_BOOT
+        ld a,11h
+        out (24h),a
+        xor a
+        ld (keyhold),a
+        call remote_init
+        jp home
+.else
 .ifndef SERIAL_BOOT
         ld a,0efh
         out (20h),a
@@ -84,11 +92,15 @@ init:   di
         call remote_init
 .endif
         jp home
+.endif
 unavailable: xor a
         ret
  ; Bounded cooperative service; never invoked inside an active disk field.
  ; Preserve all main registers and flags, including CRC and seek state.
 keyservice:
+.ifdef WM_BOOT
+        ret
+.endif
         push af
         push bc
         push de
@@ -149,7 +161,16 @@ keypause: ld a,1
 keyresume: xor a
         ld (keyhold),a
         ret
-const:  call keyservice
+const:
+.ifdef WM_BOOT
+        ld a,(keyhold)
+        or a
+        jr z,wm_const
+        xor a
+        ret
+wm_const: jp rh_status
+.endif
+        call keyservice
         ld a,(keyhold)
         or a
         jr z,keyavailable
@@ -164,7 +185,16 @@ keyavailable: ld a,(keycount)
 .endif
         ld a,0ffh
         ret
-conin:  call keyresume
+conin:
+.ifdef WM_BOOT
+        call keyresume
+wm_keywait:
+        call rh_status
+        or a
+        jr z,wm_keywait
+        jp rh_input
+.endif
+        call keyresume
 keywait: call const
         or a
         jr z,keywait
@@ -192,7 +222,9 @@ keywait: call const
         ret
 conout:
 .ifdef SERIAL_BOOT
+ .ifndef WM_BOOT
         call localout
+ .endif
         push af
         push bc
         push de

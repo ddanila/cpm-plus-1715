@@ -112,3 +112,9 @@ one-command boot, detachable console and offline snapshots.
 
 The default serial image includes [PIPEMGR and nine cpmbox utilities](docs/pipes-and-tools.md),
 with text/binary pipelines and an explicit offline upgrade for existing sessions.
+
+The **1715W/M serial-only target** is documented in
+[W/M serial CP/M](docs/wm-serial.md). It uses a 1200 8N1 host console and
+host-served A: disk, with an installed-W2 compatibility shim or the new W3
+ROM. Build it with `make wm`. Physical CP/M qualification is pending;
+this target has separate emulator evidence and CI packages.

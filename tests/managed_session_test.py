@@ -75,6 +75,7 @@ class ManagedTests(unittest.TestCase):
         (self.path/'identity.json').write_text('{}')
         with self.assertRaisesRegex(ValueError, 'legacy'): config_at(self.path)
 
+    @unittest.skipUnless(sys.platform.startswith("linux"), "Linux prctl parent-death contract")
     def test_native_host_guard_exits_on_parent_death(self):
         pidfile = self.path/'pid'
         program = "import os,time; from pathlib import Path; Path("+repr(str(pidfile))+").write_text(str(os.getpid())); time.sleep(30)"

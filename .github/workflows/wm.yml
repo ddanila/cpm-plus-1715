@@ -1,0 +1,56 @@
+name: W/M serial CP/M qualification
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wm:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-26]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y bison
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/ravi
+          ref: 207b025dbb56b767cf79bc219299daf16a20b9a8
+          path: build/deps/ravi
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/dac-emulation
+          ref: 972b1c94ea3738b22d28784cc5c2dfbfd3744a3f
+          path: build/deps/dac-emulation
+      - uses: actions/checkout@v4
+        with:
+          repository: ddanila/8080-cosim
+          ref: 4d71a4766c8d8939c2cebf5dabe468f3b550cc66
+          path: build/deps/8080-cosim
+      - run: python -m pip install pexpect -e build/deps/ravi
+      - run: make wm wm-probe DAC=build/deps/dac-emulation
+      - run: bash build/deps/8080-cosim/sync/jukuhost_linux_build.sh
+      - run: bash build/deps/8080-cosim/sync/jukuhost_runner_check.sh && bash build/deps/8080-cosim/sync/jukuhost_core_check.sh
+      - run: make -C build/deps/dac-emulation build/robotron-receive-phase test-robotron-devices && build/deps/dac-emulation/build/robotron-receive-phase
+      - run: make test
+      - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-w3 --corrupt-read
+      - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom.bin --rom-profile w2 --out local/wm-w2
+      - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-readonly --read-only
+      - run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wm-${{ matrix.os }}
+          path: |
+            local/wm-*/
+            out/cpm-plus-1715-wm.zip
