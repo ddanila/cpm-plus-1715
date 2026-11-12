@@ -1,0 +1,56 @@
+
+CP/M Plus 3.1 - Robotron 1715M banked
+A>DIR
+A: CPM3     SYS : CCP      COM : DIR      COM : TYPE     COM : PIP      COM 
+A: ERASE    COM : RENAME   COM : SHOW     COM : SET      COM : SUBMIT   COM 
+A: HELLO    TXT : TEST     SUB : TPATEST  COM : DSKTEST  COM : COLD     COM 
+A: BIG      BIN 
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>SHOW
+
+A: RW, Space:       594k
+
+
+A>TPATEST
+BANKED TPA PASS
+
+A>DSKTEST
+BANKED DISK PASS
+
+A>PIP B:HELLO.TXT=A:HELLO.TXT
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>COLD
+
+CP/M Plus 3.1 - Robotron 1715M banked
+
+A>DIR B:
+No File
+A>SHOW
+
+A: RW, Space:       514k
+B: RW, Space:        94k
+
+
+A>

@@ -120,3 +120,33 @@ The checked-in [runtime reports](../reports/banked/) and
 Linux emulator qualification. The accompanying local regression run passed
 62 Python tests plus the instruction-executed BIOS probe. No physical hardware
 was accessed for these reports.
+
+
+## PC001 bank-transfer correction — 2026-11-12
+
+Physical testing found that the original scalar `LDAX D` / `MOV M,A` copy
+loop wrote the source bank when port 24h selected different source and
+destination banks. CCP.COM consequently loaded into system bank 1 rather
+than application bank 2. The same code passed the current emulator, whose
+memory model applies the destination selector to every write.
+
+The BIOS MOVE routine now uses Z80 `LDIR`, exchanging DE/HL around it to
+preserve the CP/M calling convention and retaining the zero-length guard.
+On PC001, separate 64-byte tests with distinct initial source/destination
+patterns showed the scalar loop modifying only bank 1 and LDIR modifying
+only bank 2. A checkpoint build returned to W4 automatically; readback then
+confirmed all 3,200 CCP bytes in application bank 2 with the corrected routine.
+No EPROM change is required.
+
+Robotron's [SCP 3.0 version 0002 customer notice](https://forum.maxiol.com/index.php?act=Attach&id=9079&type=post)
+also describes interbank transfers using LDIR or DMA. The emulator's broader
+write-bank behavior remains a known modeling gap; its passing tests alone
+must not be taken as evidence that a scalar interbank copy works on hardware.
+
+The corrected build passed [physical PC001 acceptance at 62400](../reports/hardware-banked-pc001-20261112.json):
+47 KiB TPA test, B: full-directory/full-disk/random-record/reuse tests,
+three warm boots preserving files, an independently compared 80 KiB round trip,
+and a cold OS restart clearing B: while retaining host-backed A:. SHOW reports
+94 KiB free on the empty B: drive. Launcher-to-prompt time was 16.8 seconds.
+The installed W4 4.0.0 ROM was unchanged. This is one machine at one CP/M rate,
+not a long soak or a replacement for the remaining physical acceptance cases.

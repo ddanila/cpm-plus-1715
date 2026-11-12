@@ -230,14 +230,12 @@ move$loop$check:
         ora c
         jz move$done
 move$loop:
-        ldax d
-        mov m,a
-        inx d
-        inx h
-        dcx b
-        mov a,b
-        ora c
-        jnz move$loop
+        ; PC001's split read/write mapping transfers between banks with
+        ; Z80 LDIR. A scalar LDAX/MOV loop writes the read bank on hardware.
+        ; MOVE takes DE=source, HL=destination; LDIR uses the reverse pair.
+        xchg
+        db 0edh,0b0h            ; Z80 LDIR (RMAC uses 8080 mnemonics)
+        xchg
 move$done:
         xra a
         sta move$map

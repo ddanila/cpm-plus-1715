@@ -1,0 +1,65 @@
+{
+  "hardware_executed": true,
+  "complete": true,
+  "baud": 62400,
+  "profile": "1715m-banked",
+  "source_image_sha256": "3a2f98a5e8c2104193453289c7ffb28f6e1b1f94f0cd23bae8c71a86cecacd46",
+  "test_image_sha256": "648e40df929a3567a3b86c3417b85c798e039a29456a974c0661f69863ec134c",
+  "host_sha256": "edd86650fde991211494c18cc740ea9248daa0052ce713ed2d777d43134fd7ab",
+  "cases": [
+    "W4 direct banked CP/M cold boot",
+    "advertised TPA written and verified",
+    "B full directory, full disk, random records and reuse",
+    "RAM disk survives three warm boots",
+    "80 KiB A to B to A exact independent readback",
+    "cold OS restart empties B",
+    "host-backed A persists across cold OS restart",
+    "source disk unchanged"
+  ],
+  "launcher_to_prompt_seconds": 16.813267749734223,
+  "roundtrip_sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e",
+  "seconds": 133.83905008388683,
+  "host_left_running": true,
+  "base_commit": "b4ea05f7ca810a728743e60f9dfa2bffa7a48095",
+  "bios_source_sha256": "da757ae40c549fd8e7a68b893f1b6eaf57fa9e344be48329c92fe094e4d83d12",
+  "tested_patch": "hardware-banked-pc001-20261112.patch",
+  "rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.0.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "ac6dcf19b54cb668",
+    "rom_integrity": "CRC16 residue zero"
+  },
+  "bank_preflight": {
+    "low_ram_bytes_tested": 196608,
+    "patterns": [
+      "00",
+      "FF",
+      "55",
+      "AA"
+    ],
+    "independent_banks": 4,
+    "common_window_sample_addresses": [
+      "C000",
+      "D000",
+      "E000",
+      "FF00"
+    ]
+  },
+  "scope": "PC001 headless at 62400; source BIOS differs from base_commit by the accompanying tested patch. Native host remains running. Not a long soak or all-rate CP/M qualification."
+}
