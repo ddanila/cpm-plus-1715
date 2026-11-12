@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/ravi
-          ref: 3de77aca760155c1c8f6b0f2bcde336cde785523
+          ref: fc8c53c7f7997d154c053f4c478f6746393aa8e5
           path: build/deps/ravi
       - uses: actions/checkout@v4
         with:
