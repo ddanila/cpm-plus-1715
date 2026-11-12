@@ -152,3 +152,14 @@ and a cold OS restart clearing B: while retaining host-backed A:. SHOW reports
 94 KiB free on the empty B: drive. Launcher-to-prompt time was 16.8 seconds.
 The installed W4 4.0.0 ROM was unchanged. This is one machine at one CP/M rate,
 not a long soak or a replacement for the remaining physical acceptance cases.
+
+
+A subsequent [physical reconnect and soak test](../reports/hardware-reconnect-soak-pc001-20261112.json)
+passed at 62400. Two host-service restarts, each with a two-second disconnected
+interval, recovered console and A:/B: reads in about six seconds without target
+reset or power cycling. Five fresh 80 KiB round trips with warm boots ran for
+354 seconds; all 400 KiB of readback matched. The closed host epoch reported
+zero retries and UART errors. PIP needs space for both an existing file and its
+replacement, so the repeated-copy test erases its test destinations first.
+An initial capacity-limited attempt is recorded separately and excluded from
+the successful soak rounds. CP/M and the final host were left running at A>.

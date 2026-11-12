@@ -1,0 +1,72 @@
+TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP B:HELLO.TXT=A:HELLO.TXT
+
+A>ERA B:BIG.$$$
+No File
+A>ERA SOAK.$$$
+No File
+A>ERA B:BIG.BIN
+A>ERA SOAK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP SOAK.BIN=B:BIG.BIN
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA SOAK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP SOAK.BIN=B:BIG.BIN
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA SOAK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP SOAK.BIN=B:BIG.BIN
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA SOAK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP SOAK.BIN=B:BIG.BIN
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA SOAK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>PIP SOAK.BIN=B:BIG.BIN
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>SHOW
+
+A: RW, Space:       430k
+B: RW, Space:        13k
+
+
+A>

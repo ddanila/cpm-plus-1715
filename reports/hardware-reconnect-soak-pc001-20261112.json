@@ -1,0 +1,84 @@
+{
+  "hardware_executed": true,
+  "baud": 62400,
+  "complete": true,
+  "reconnects": [
+    {
+      "label": "initial",
+      "complete": true,
+      "seconds_to_console_and_both_disks": 6.076603624969721,
+      "power_cycle": false,
+      "target_reset": false
+    },
+    {
+      "label": "after-soak",
+      "complete": true,
+      "seconds_to_console_and_both_disks": 6.046162707731128,
+      "power_cycle": false,
+      "target_reset": false
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "seconds": 70.9187963749282,
+      "elapsed": 70.91880299989134,
+      "bytes_verified": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 2,
+      "seconds": 70.85274929180741,
+      "elapsed": 141.77254320913926,
+      "bytes_verified": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 3,
+      "seconds": 70.97783320816234,
+      "elapsed": 212.75185104180127,
+      "bytes_verified": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 4,
+      "seconds": 70.87872883304954,
+      "elapsed": 283.6315130419098,
+      "bytes_verified": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 5,
+      "seconds": 70.79053595801815,
+      "elapsed": 354.4234138750471,
+      "bytes_verified": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    }
+  ],
+  "host_left_running": true,
+  "initial_attempt_note": "PIP replacement exhausted B capacity; corrected by erasing test destinations before each fresh copy; timer restarted",
+  "payload_bytes": 81920,
+  "payload_sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e",
+  "soak_seconds": 354.4246447919868,
+  "host_epoch_summary": {
+    "exit": 0,
+    "rx": 778929,
+    "tx": 1046188,
+    "requests": 20343,
+    "reads": 7231,
+    "records": 7231,
+    "writes": 4655,
+    "retries": 0,
+    "boot-restarts": 0,
+    "target-resets": 0,
+    "reconnects": 0,
+    "uart-errors": 0,
+    "available-memory": 0
+  },
+  "counter_scope": "Entire closed host epoch, including initial capacity-limited attempt and corrected five-round soak",
+  "verified_bytes_total": 409600,
+  "logical_copy_bytes_total": 819200,
+  "target": "PC001 Robotron 1715M, W4 4.0.0, banked CP/M",
+  "protocol": "62400 8N1 (adapter effective 62500)",
+  "loaded_bios_fix_commit": "d83dbe206958209fe2fe51a709ef52f5d012099e"
+}
