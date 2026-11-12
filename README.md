@@ -192,3 +192,10 @@ The physical 30-minute soak and 20 cold starts are pending that installation.
 warm boot in the timed emulator at each rate. Its private PTY is a 9600 transport
 bridge; the model independently generates the selected 9600/41600/62400 wire
 clock. This is not evidence of the macOS USB driver's custom-rate behavior.
+
+## W/M firmware 4.1.0 candidate
+
+The [versioned 2 KiB ROM and checksums](firmware/w4-4.1.0/README.md) are included
+for burning from another machine. W4 protocol compatibility is retained; idle
+connections now expire back to baud scanning. Emulator ROM and banked CP/M
+recovery tests pass. Physical qualification of this new image is pending.

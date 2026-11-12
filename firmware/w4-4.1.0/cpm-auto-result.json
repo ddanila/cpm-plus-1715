@@ -1,0 +1,11 @@
+{
+  "complete": true,
+  "hardware_executed": false,
+  "cases": [
+    "auto cold boot",
+    "verified session write",
+    "auto host restart",
+    "target power cycle 1",
+    "target power cycle 2"
+  ]
+}

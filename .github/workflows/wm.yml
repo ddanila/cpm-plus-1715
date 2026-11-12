@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/ravi
-          ref: fc8c53c7f7997d154c053f4c478f6746393aa8e5
+          ref: 451925f693852d6423af717b3b0add23672536ee
           path: build/deps/ravi
       - uses: actions/checkout@v4
         with:
@@ -37,6 +37,7 @@ jobs:
           repository: ddanila/8080-cosim
           ref: c279e7e13a7936520570641e8af2900fa5ad4361
           path: build/deps/8080-cosim
+      - run: cmp firmware/w4-4.1.0/rom-w4.bin build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin
       - run: python -m pip install pexpect -e build/deps/ravi
       - run: make wm wm-fast wm-62400 wm-9600 wm-probe DAC=build/deps/dac-emulation
       - run: python tools/check_recovery_profile.py
