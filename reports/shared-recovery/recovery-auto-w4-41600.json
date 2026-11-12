@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "hardware_executed": false,
+  "cases": [
+    "auto cold boot",
+    "verified session write",
+    "auto host restart",
+    "target power cycle 1",
+    "target power cycle 2"
+  ],
+  "session_identity": {
+    "machine": "robotron1715w",
+    "protocol": "W4",
+    "baud": 41600,
+    "framing": "8N1",
+    "image_sha256": "56fbc985194454b0a08442e31eea63fef04a76f8fc930078b5c767164994c360",
+    "platform_sha256": "3d6de1bde628eede7f4fdb90659e457fa4abcb1242520e4e52afd9973a77cd77",
+    "host_sha256": "a7d9710aed3a360a5f9c84d88966798f2000042bf580381a4edd823be0f93c3b",
+    "read_only": false,
+    "profile": "1715m-banked"
+  }
+}

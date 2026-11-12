@@ -106,3 +106,19 @@ W3 uses 1760 of its 2046 payload bytes, leaving 286 bytes plus its two-byte
 CRC. Reports and SHA-256 manifests are included in CI packages. Hardware
 qualification remains a separate, coordinated step with PC001 powered and
 connected deliberately.
+
+## Automatic recovery
+
+The current launcher also accepts `auto`: `serial_wm_w4.py auto` for W4,
+or `serial_boot.py auto` for stock 1715. Keep the same session directory and
+options. The shared host detects boot versus running CP/M and recovers after
+a later target reset while preserving the private disk and journal. W4 keeps
+the selected banked/nonbanked profile and rate. W2/W3 retain explicit workflows.
+
+The pinned host's `host/python/jh_recovery` modules are required (packages put
+them beside the executable under `python/`). Custom adapter configuration is
+shared with Kaypro; PTY emulator runs never open USB devices. Stock-ROM partial
+LOAD/EXEC cannot be replayed safely and ends with an intervention-required
+error. Reset the machine before attempting recovery again.
+
+Details: [shared recovery](https://github.com/ddanila/8080-cosim/blob/master/docs/serial-recovery.md).

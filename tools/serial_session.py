@@ -36,15 +36,16 @@ def validate_artifacts(image, platform):
     return data, code
 
 
-def bootstrap(port, platform, session, timeout):
+def bootstrap(port, platform, session, timeout, boot=None):
     from ravi.transport import LoggedTransport
     from ravi.backends.robotron1715.boot import StockBoot
     from ravi.backends.robotron1715.monitor import Monitor, IDENTITY
     positive(timeout)
     with (session/'bootstrap-tx.bin').open('wb') as tx, (session/'bootstrap-rx.bin').open('wb') as rx:
         wire = LoggedTransport(port, rx, tx)
-        boot = StockBoot(wire)
-        boot.handshake(timeout)
+        if boot is None:
+            boot = StockBoot(wire)
+            boot.handshake(timeout)
         payload = files('ravi.backends.robotron1715').joinpath('monitor.bin').read_bytes()
         boot.upload(0x4000, payload)
         boot.execute(0x4000)

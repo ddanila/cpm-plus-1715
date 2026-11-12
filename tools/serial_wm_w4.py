@@ -7,9 +7,10 @@ import shutil
 import signal
 import subprocess
 import time
+import sys
 from pathlib import Path
 
-from ravi.backends.robotron1715w.discovery import configure_rate, identify_at_rate
+from ravi.backends.robotron1715w.discovery import identify_at_rate
 from ravi.transport import LoggedTransport, SerialTransport
 from serial_session import lock_session, validate_artifacts
 from serial_wm import ROOT, digest, host_command
@@ -18,7 +19,7 @@ from banked_contract import validate_banked
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("mode", choices=["boot", "attach"])
+    p.add_argument("mode", choices=["boot", "attach", "auto"])
     p.add_argument("--serial", required=True)
     p.add_argument("--session", type=Path, required=True)
     p.add_argument("--console-pty", required=True)
@@ -27,6 +28,11 @@ def main():
     p.add_argument("--read-only", action="store_true")
     p.add_argument('--nonbanked', action='store_true', help='use the previous single-bank system')
     a = p.parse_args()
+    if a.mode=='auto':
+        from shared_host import load
+        load(a.host)
+        from jh_recovery import preflight
+        preflight(a.host)
     a.test_corrupt_read_reply_once = False
     suffix = {9600: "9600", 41600: "fast", 62400: "62400"}[a.baud]
     a.image = ROOT / f"out/cpm-plus-1715-wm-{suffix}.img"
@@ -56,7 +62,7 @@ def main():
     )
     if not a.nonbanked:
         identity["profile"] = "1715m-banked"
-    if a.mode == "boot":
+    if a.mode == "boot" or (a.mode == "auto" and not session.exists()):
         session.mkdir(parents=True, exist_ok=False)
         shutil.copyfile(a.image, session / "disk.img")
         (session / "identity.json").write_text(json.dumps(identity, indent=2))
@@ -65,6 +71,9 @@ def main():
             raise ValueError("Session identity mismatch")
         if (session / "disk.img").stat().st_size != 819200:
             raise ValueError("Invalid disk size")
+    from shared_host import load
+    load(a.host)
+    from jh_recovery import configure_link
     report = {"complete": False, "monitor_byte_delay_ms": 0, "baud": a.baud}
     with (
         lock_session(session / "session.lock"),
@@ -74,7 +83,7 @@ def main():
     ):
         child = None
         try:
-            report["rate"] = configure_rate(port, a.serial, a.baud)
+            report['rate']=configure_link(port.fd,a.serial,a.baud,adapter='pl2303hxd' if a.baud in (41600,62400) else 'posix')
             if a.mode == "boot":
                 with (
                     (session / "bootstrap-rx.bin").open("wb") as rx,
@@ -94,7 +103,15 @@ def main():
                     m.start(entry)
                     report["events"] = m.events
                     report["complete"] = True
-            command = host_command(a, session, port.fd) + ["--disk-baud", str(a.baud)]
+            command = host_command(a, session, port.fd) + ["--disk-baud", str(a.baud), "--serial-verified"]
+            if a.mode == "auto":
+                from shared_host import load
+                load(a.host)
+                from jh_recovery import arguments
+                command+=arguments(a.host,session,ROOT/'tools/recovery_profile.py',
+                    dict(baud=a.baud,parity='N',stop_bits=1),[a.image,a.platform],
+                    serial=a.serial,adapter='pl2303hxd' if a.baud in (41600,62400) else 'posix',
+                    options=dict(profile='w4',platform=str(a.platform.resolve()),start=start,entry=entry))
             report["command"] = command
             (session / f"launch-{time.time_ns()}.json").write_text(
                 json.dumps(report, indent=2)

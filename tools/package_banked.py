@@ -31,9 +31,12 @@ def main():
             files[str(path.relative_to(ROOT))]=path
     for name in ['system-map.json','cpm3.sys']:
         files['build/banked/'+name]=ROOT/'build/banked'/name
-    for name in ['serial_wm_w4.py','serial_wm.py','serial_session.py','banked_contract.py','media.py']:
+    for name in ['serial_wm_w4.py','shared_host.py','recovery_profile.py','serial_wm.py','serial_session.py','banked_contract.py','media.py']:
         files['tools/'+name]=ROOT/'tools'/name
     files['jukuhost']=a.host
+    from shared_host import load
+    shared=load(a.host)
+    for module in (shared/'jh_recovery').glob('*.py'):files['python/jh_recovery/'+module.name]=module
     rom=a.ravi/'src/ravi/backends/robotron1715w/rom-w4.bin'
     files['rom-w4.bin']=rom
     for name in ['LICENSE','NOTICE.md','docs/wm-banked.md','docs/wm-serial.md',
