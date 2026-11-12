@@ -1,0 +1,42 @@
+{
+  "hardware_executed": false,
+  "source_sha256": "e9b624ed09949e5fef9d3c13a8978d92615f54f00f7998cb49b8eac96bb2c7d1",
+  "probe_sha256": "da5e240164fadcd394393f3fa76a600ea67a80d92f3345aafcc362ef1f2b6d27",
+  "baud": 62400,
+  "pty_transport_baud": 9600,
+  "complete": true,
+  "image_sha256": "a61cbe769493cc376b4a6b76dd4c8392eadf707f249305de4cd2d31db8e5d328",
+  "platform_sha256": "18df63bfc2e1f4c8e75146b0f5ad24b317c8bf07b1f560937c58ed35e8b899be",
+  "host_sha256": "0eb289e7137c96e6bab055ca0cd117a80f23b332926c41495bd09ac6bb5434ff",
+  "profile": "banked",
+  "fault": "missing-bank",
+  "fragmented": false,
+  "read_only": false,
+  "corrupt_read": false,
+  "rom_sha256": "2a60fcc34fd3782696ced9ba7fd64382d991cffa133a6d30e25930e51ae0a50b",
+  "cases": [
+    "boot rejected missing-bank"
+  ],
+  "rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.0.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "ac6dcf19b54cb668",
+    "rom_integrity": "CRC16 residue zero"
+  }
+}

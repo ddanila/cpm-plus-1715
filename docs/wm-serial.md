@@ -1,4 +1,8 @@
-# Robotron 1715W/M serial CP/M Plus (wm-0.1.0)
+# Robotron 1715W/M serial CP/M Plus
+
+W4 now defaults to the [banked profile with RAM disk](wm-banked.md). Build
+`make wm-banked` before using the W4 launcher. Pass `--nonbanked` for the
+previous W4 image. The original W2/W3 profile below remains nonbanked.
 
 This target uses the W/M mainboard, its V.24 serial port and one 64 KiB RAM
 bank. The console and writable 800 KiB A: disk are served by the host.

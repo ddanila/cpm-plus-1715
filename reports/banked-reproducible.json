@@ -1,0 +1,19 @@
+{
+  "complete": true,
+  "fresh_source_build": true,
+  "source_sha256": "e9b624ed09949e5fef9d3c13a8978d92615f54f00f7998cb49b8eac96bb2c7d1",
+  "equal_outputs": {
+    "build/banked/cpm3.sys": "472925520a86811f5a495c7575252bba8807f7e3bb02aa093dfad576bf4439c8",
+    "build/banked/system.inc": "3ff3668b9bf7dd3ba2440bd035ffecc838aace8c7fc4dba354366b209dcd6eda",
+    "build/banked/system-map.json": "3ca2e9b3b8972ccac4562ef4ad82ce459a8c7d4cb4007a471f7935fc5eea1255",
+    "build/banked/platform-9600.cim": "d4b01f0acc0a32fe31fe8b32186de316a37df6852b8b3314befa835382ad5645",
+    "build/banked/platform-9600.json": "29e53e28066c2e2a5ada32d5c5b05ea924aef9eeaf272bd1cd77484aa9fc8d90",
+    "out/cpm-plus-1715-wm-banked-9600.img": "32c4c439c9cc0621fdd0b370eaad528878383d7ec508911b4f385cc0624201aa",
+    "build/banked/platform-fast.cim": "0613b2801e24308c7d355cc0c2e4544886f7a4eac14a883eb37024d5b2e6c9a7",
+    "build/banked/platform-fast.json": "bb0c5948f657f0e5f693ecb54448ad044d6790ff5df5954495f8da147c7e61e3",
+    "out/cpm-plus-1715-wm-banked-fast.img": "32ad8f35037892934abe5867a54ec1e6393278ff52f631c566cff57418b85aac",
+    "build/banked/platform-62400.cim": "18df63bfc2e1f4c8e75146b0f5ad24b317c8bf07b1f560937c58ed35e8b899be",
+    "build/banked/platform-62400.json": "852c45ee2a7ba7b3e72b1261b0419824934bac00b48fa5d31ae9b60b6c3bb49f",
+    "out/cpm-plus-1715-wm-banked-62400.img": "a61cbe769493cc376b4a6b76dd4c8392eadf707f249305de4cd2d31db8e5d328"
+  }
+}

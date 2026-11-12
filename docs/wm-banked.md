@@ -1,0 +1,118 @@
+# Banked CP/M Plus on the 1715M
+
+The W4 launcher defaults to banked CP/M with a serial console, persistent
+host-backed A: and volatile B:. Local video, keyboard and floppy drivers are
+not part of this profile. W2/W3 and classic 64 KiB 1715 builds remain nonbanked.
+
+Build with `make wm-banked`. The existing W4 boot command in
+[wm-serial.md](wm-serial.md) selects the matching banked artifacts at 9600,
+41600 or 62400 baud. Upload and readback are at E000h, entry E033h. The
+launcher validates the platform, disk, system and rate against a generated
+manifest before opening the physical port. The serial wire protocol and W4
+ROM are unchanged.
+
+For the previous W4 system, build `make wm-9600 wm-fast wm-62400` and pass
+`--nonbanked` to `tools/serial_wm_w4.py` for both boot and attach. An old
+nonbanked session requires that option. Profiles cannot be mixed within a
+session. Boot always creates a new session disk; it never upgrades an existing
+disk in place. Copy user files offline into a separately prepared new image
+using the repository's disk tools, retaining the newly built CPM3.SYS and
+CCP.COM. Rebuild the matching manifest after an intentional image change.
+
+## Memory
+
+This profile requires the reference CAS-PROM mapping: selectors 1–4 provide
+four independent 0000h–BFFFh regions and share base RAM at C000h–FFFFh.
+That is 208 KiB addressable RAM, not 256 KiB. The boot loader checks low-bank
+isolation and stops with a boot error if a required bank aliases another.
+This is not a full RAM diagnostic or qualification of a specimen's CAS PROM.
+
+| Region | Use |
+| --- | --- |
+| Selector 1, below C000h | CP/M bank 0: banked BDOS at 8F00h, BIOS data/buffers at BD00h |
+| Selector 2, below C000h | CP/M bank 1: application TPA and CCP |
+| Selectors 3 and 4, below C000h | Two 48 KiB halves of B: |
+| C000h–C5FFh, common | Resident BDOS and SCB |
+| C600h–DFFFh, common | Resident BIOS and reserved common space |
+| E000h–F5FFh, common | Serial platform and filesystem loader |
+| F600h–F6FFh, common | Platform/BIOS stack |
+| F700h–F7FFh | Reserved scratch, used by the TPA acceptance diagnostic |
+| F800h–FFFFh | Reserved; no local display service |
+
+The application ceiling is C000h; CCP's resident loader uses some of that
+space. Acceptance requires at least 47 KiB of advertised TPA and writes and
+reads every byte below the actual advertised ceiling. The generated memory
+map and SYS header are checked during the build.
+
+SELMEM changes execution banks; SETBNK independently selects the disk DMA
+bank. XMOVE applies to one MOVE, then ordinary moves resume in the execution
+bank. Copies and selector changes execute from common memory with common
+stacks. Serial disk I/O stages 128-byte records in common RAM before copying
+to or from the selected DMA bank. Directory buffers and allocation data live
+in CP/M bank 0. RAM-disk banks are not offered to CP/M's buffer allocator.
+
+## RAM disk and boot validation
+
+B: has 96 KiB raw capacity, 1 KiB blocks, 64 directory entries and 94 KiB file
+capacity. It survives warm boots and disk resets. A fresh OS boot formats it;
+power loss also loses its contents. Save anything important to A: before
+rebooting. There is no automatic persistence, recovery or degraded-bank mode.
+
+The loader scans the full directory and accepts the generated two-extent SYS
+in either extent order with fragmented blocks. It validates extent lengths,
+block bounds, duplicate allocations and allocations shared with other files.
+It checks the header and both segment CRCs before entering the BIOS. This is
+a generated-system loader: replacing CPM3.SYS requires rebuilding its matching
+platform and manifest. Invalid images and unavailable banks stop visibly.
+
+## Verification
+
+Use the revisions in `tools/wm-dependencies.json`. Build the emulator and host
+as described in wm-serial.md, then run:
+
+```sh
+make test-banked wm-probe DAC=/path/to/dac-emulation
+python3 tools/check_banked_reproducible.py
+python3 tools/check_w4_runtime.py --banked --extended --fragmented \
+  --baud 62400 --host /path/to/jukuhost --rom /path/to/rom-w4.bin \
+  --out local/banked-62400
+```
+
+Repeat the extended suite at 9600 and 41600, with `--corrupt-read` at 41600.
+Run a separate `--banked --read-only` campaign. Boot rejection cases use
+`--fault header`, `payload`, `duplicate`, `foreign`, and `missing-bank`, each
+with a fresh output directory. Faults alter private images or the emulator's
+CAS fixture; they never change source media or physical hardware.
+
+Tests cover instruction-executed BIOS banking and DMA, copy boundaries,
+zero-length/one-shot moves, invalid RAM-disk addresses, the advertised TPA,
+full directory/full disk, random records, deletion/reuse, an 80 KiB A:↔B:
+round trip, warm boots, cold clearing, SUBMIT and SHOW. Extended suites inject
+destructive B: diagnostics only into private test images. Do not run those
+diagnostics against a RAM disk containing files you want to keep.
+
+CI runs the emulator campaigns on Linux and macOS, rebuilds the tools and
+images in a fresh tree, and packages only evidence matching current source,
+probe, ROM, host and image fingerprints. `tools/package_banked.py` requires
+all three rates, all rejection cases, read-only/retry coverage, and an explicit
+fresh-build reproducibility report. Packages include the nonbanked fallback.
+
+## Physical acceptance
+
+Emulator qualification does **not** establish physical 1715M compatibility.
+Before a hardware campaign, verify the actual CAS-PROM mapping and all four
+RAM banks with the existing Ravi diagnostics. Use a new disposable session
+and known-working W4 ROM and serial adapter.
+
+Boot at 9600 first. Check sign-on, DIR/SHOW, copies A:→B:→A: with independent
+host-side byte comparison, repeated Ctrl-C warm boots, and preservation of B:.
+Repeat with a file larger than 48 KiB. Start a new OS boot and confirm B: is
+empty while A: remains intact. Repeat at 41600 and 62400, retaining upload
+readback, serial logs, checksums and session identity. Only successful physical
+campaigns should be described as hardware qualification.
+
+The checked-in [runtime reports](../reports/banked/) and
+[fresh-build report](../reports/banked-reproducible.json) record the initial
+Linux emulator qualification. The accompanying local regression run passed
+62 Python tests plus the instruction-executed BIOS probe. No physical hardware
+was accessed for these reports.

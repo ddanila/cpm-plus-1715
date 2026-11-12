@@ -12,7 +12,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-26]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
         with:
@@ -55,6 +55,20 @@ jobs:
             python tools/check_w4_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/w4-$rate --baud $rate
           done
       - run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
+      - run: make test-banked DAC=build/deps/dac-emulation
+      - run: python tools/check_banked_reproducible.py
+      - run: |
+          for rate in 9600 41600 62400; do
+            extra=""
+            if [ "$rate" = 41600 ]; then extra="--corrupt-read"; fi
+            if [ "$rate" = 62400 ]; then extra="--fragmented"; fi
+            python tools/check_w4_runtime.py --banked --extended $extra --baud "$rate" --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-$rate
+          done
+          python tools/check_w4_runtime.py --banked --read-only --baud 9600 --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-readonly
+          for fault in header payload duplicate foreign missing-bank; do
+            python tools/check_w4_runtime.py --banked --fault "$fault" --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-$fault
+          done
+      - run: python tools/package_banked.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reproducible reports/banked-reproducible.json --reports local/banked-*/result.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -62,3 +76,6 @@ jobs:
           path: |
             local/wm-*/
             out/cpm-plus-1715-wm.zip
+            local/banked-*/
+            out/cpm-plus-1715-wm-banked.zip
+            reports/banked-reproducible.json

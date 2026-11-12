@@ -43,7 +43,13 @@ are build dependencies and are not installed in the CP/M image.
 
 ## W/M serial package
 
-The W3 monitor and Ravi launcher support are MIT licensed, Copyright (c)
+The W3/W4 monitors and Ravi launcher support are MIT licensed, Copyright (c)
 2026 Danila Sukharev. The native jukuhost retains its BSD-2-Clause terms
 (the same copyright and grant reproduced in JUKU-LICENSE). The W/M image
 does not include the optional cpmbox or PIPEMGR tools.
+
+The banked 1715M profile uses RESBDOS3.SPR and BNKBDOS3.SPR from the same
+pinned Digital Research binary archive. Their source is included in the
+matching source archive. The banked BIOS retains the BSD-2-Clause terms of
+the existing BIOS glue; its new loader, RAM-disk diagnostics and qualification
+tools carry their source-file notices.

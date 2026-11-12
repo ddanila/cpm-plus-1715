@@ -167,3 +167,35 @@ $(BUILD)/platform-wm-9600.cim: src/platform-wm-9600.asm src/platform.asm src/ser
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/platform-wm-9600.lst $<
 $(OUT)/cpm-plus-1715-wm-9600.img: $(BUILD)/platform-wm-9600.cim $(BUILD)/cpm3.sys tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py --wm-9600
+
+.PHONY: wm-banked
+wm-banked: $(foreach rate,9600 fast 62400,$(OUT)/cpm-plus-1715-wm-banked-$(rate).img $(BUILD)/banked/platform-$(rate).json)
+$(BUILD)/banked/cpm3.sys: src/cpm3-banked-bios.asm tools/build_banked.py tools/regenerate_cpm3.py third_party/cpm3/scb.asm third_party/cpm3/gencpm.dat $(wildcard third_party/cpm3/releases/*.zip) $(ZXCC)
+	$(PYTHON) tools/build_banked.py
+$(BUILD)/banked/system.inc: $(BUILD)/banked/cpm3.sys
+	@test -f $@ || $(PYTHON) tools/build_banked.py
+$(BUILD)/banked/platform-%.cim: src/platform-banked-%.asm src/platform.asm src/banked-loader.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/banked/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
+	$(ZMAC) --zmac -o $@ -o $(BUILD)/banked/platform-$*.lst $<
+$(OUT)/cpm-plus-1715-wm-banked-%.img: $(BUILD)/banked/platform-%.cim $(BUILD)/banked/cpm3.sys tools/build_image.py tools/media.py
+	$(PYTHON) tools/build_image.py --banked $*
+
+.SECONDARY: $(foreach rate,9600 fast 62400,$(BUILD)/banked/platform-$(rate).cim)
+
+$(BUILD)/banked-probe: tools/banked_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h | build
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) tools/banked_probe.c $(WM_CORE) -o $@
+.PHONY: test-banked
+test-banked: wm-banked $(BUILD)/banked-probe
+
+$(BUILD)/banked/tpa-test.cim: src/banked-tpa-test.asm $(ZMAC) $(BUILD)/banked/cpm3.sys
+	$(ZMAC) --zmac -o $@ $<
+$(BUILD)/banked/disk-test.cim: src/banked-disk-test.asm $(ZMAC) $(BUILD)/banked/cpm3.sys
+	$(ZMAC) --zmac -o $@ $<
+test-banked: $(BUILD)/banked/tpa-test.cim $(BUILD)/banked/disk-test.cim
+
+test-banked:
+	$(BUILD)/banked-probe $(BUILD)/banked/cpm3.sys
+	$(PYTHON) -m unittest discover -s tests -p 'banked*_test.py'
+	$(PYTHON) tools/build_banked.py --check
+
+$(BUILD)/banked/platform-%.json: $(OUT)/cpm-plus-1715-wm-banked-%.img
+	@test -f $@ || $(PYTHON) tools/build_image.py --banked $*

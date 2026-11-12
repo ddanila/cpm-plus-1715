@@ -1,8 +1,13 @@
 ; SPDX-License-Identifier: MIT
 ; Copyright (c) 2026 Danila Sukharev
 ; Original classic 1715 hardware services. No historical BIOS code included.
+ .ifdef BANKED
+        include "build/banked/system.inc"
+        org 0e000h
+ .else
         include "build/system.inc"
         org 0c000h
+ .endif
         jp unavailable
         jp home
         jp const
@@ -684,6 +689,9 @@ writegate: out (4),a
 .endif
 ; Bootstrap scans the user-0 directory for the single-extent CPM3.SYS.
 ; GENCPM's reverse 128-byte record order is retained on disk.
+ .ifdef BANKED
+        include "src/banked-loader.asm"
+ .else
 loader: di
         ld sp,0f700h
         call init
@@ -875,6 +883,7 @@ sysdivdone: add hl,de
         ld bc,dirrecord
         call setdma
         jp read
+ .endif
 booterror: ld hl,bootmsg
 bootprint: ld a,(hl)
         or a

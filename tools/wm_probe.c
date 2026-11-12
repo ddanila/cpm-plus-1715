@@ -68,6 +68,8 @@ int main(int argc, char **argv) {
   for (unsigned b = 1; b <= 4; b++)
     for (unsigned pg = 0; pg < 16; pg++)
       m->prom[128 + b * 16 + pg] = (pg >= 12 ? 1 : 1u << (b - 1)) ^ 15;
+  if (getenv("WM_ALIAS_BANK") && *getenv("WM_ALIAS_BANK"))
+    for (unsigned pg=0; pg<12; pg++) m->prom[128+4*16+pg]=4^15;
   m->cpu.bus.read = rd;
   m->cpu.bus.write = wr;
   m->cpu.bus.input = inp;

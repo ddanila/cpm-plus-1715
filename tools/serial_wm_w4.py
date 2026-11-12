@@ -13,6 +13,7 @@ from ravi.backends.robotron1715w.discovery import configure_rate, identify_at_ra
 from ravi.transport import LoggedTransport, SerialTransport
 from serial_session import lock_session, validate_artifacts
 from serial_wm import ROOT, digest, host_command
+from banked_contract import validate_banked
 
 
 def main():
@@ -24,12 +25,21 @@ def main():
     p.add_argument("--host", type=Path, required=True)
     p.add_argument("--baud", type=int, choices=[9600, 41600, 62400], default=62400)
     p.add_argument("--read-only", action="store_true")
+    p.add_argument('--nonbanked', action='store_true', help='use the previous single-bank system')
     a = p.parse_args()
     a.test_corrupt_read_reply_once = False
     suffix = {9600: "9600", 41600: "fast", 62400: "62400"}[a.baud]
     a.image = ROOT / f"out/cpm-plus-1715-wm-{suffix}.img"
     a.platform = ROOT / f"build/platform-wm-{suffix}.cim"
-    _, code = validate_artifacts(a.image, a.platform)
+    if a.nonbanked:
+        _, code = validate_artifacts(a.image, a.platform)
+        start, entry = 0xc000, 0xc033
+    else:
+        a.image = ROOT / f"out/cpm-plus-1715-wm-banked-{suffix}.img"
+        a.platform = ROOT / f"build/banked/platform-{suffix}.cim"
+        contract, code = validate_banked(a.image, a.platform,
+            ROOT / f"build/banked/platform-{suffix}.json", a.baud)
+        start, entry = contract['platform_start'], contract['platform_entry']
     divisor = {9600: 13, 41600: 3, 62400: 2}[a.baud]
     if bytes.fromhex(f"3e47d309d30a3e{divisor:02x}d309d30a") not in code:
         raise ValueError("Platform clock does not match requested rate")
@@ -44,6 +54,8 @@ def main():
         host_sha256=digest(a.host),
         read_only=a.read_only,
     )
+    if not a.nonbanked:
+        identity["profile"] = "1715m-banked"
     if a.mode == "boot":
         session.mkdir(parents=True, exist_ok=False)
         shutil.copyfile(a.image, session / "disk.img")
@@ -74,12 +86,12 @@ def main():
                     if m.identity["protocol"] != "W4" or m.identity["baud"] != a.baud:
                         raise ValueError("Expected W4 at selected rate")
                     print(json.dumps({"rom": m.identity}), flush=True)
-                    m.write_memory(0xC000, code)
-                    actual = m.read_memory(0xC000, len(code))
+                    m.write_memory(start, code)
+                    actual = m.read_memory(start, len(code))
                     (session / "platform-readback.bin").write_bytes(actual)
                     if actual != code:
                         raise ValueError("Platform readback mismatch")
-                    m.start(0xC033)
+                    m.start(entry)
                     report["events"] = m.events
                     report["complete"] = True
             command = host_command(a, session, port.fd) + ["--disk-baud", str(a.baud)]
