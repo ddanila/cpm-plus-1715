@@ -35,10 +35,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/8080-cosim
-          ref: 3c2c76bf809436606406460094c35a9f2dbdc482
+          ref: c279e7e13a7936520570641e8af2900fa5ad4361
           path: build/deps/8080-cosim
       - run: python -m pip install pexpect -e build/deps/ravi
       - run: make wm wm-fast wm-62400 wm-9600 wm-probe DAC=build/deps/dac-emulation
+      - run: python tools/check_recovery_profile.py
       - run: bash build/deps/8080-cosim/sync/jukuhost_linux_build.sh
       - run: bash build/deps/8080-cosim/sync/jukuhost_runner_check.sh && bash build/deps/8080-cosim/sync/jukuhost_core_check.sh
       - run: |

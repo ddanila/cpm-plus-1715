@@ -15,7 +15,9 @@ def recover(port,config):
         try:boot.handshake(timeout=3)
         except BootError:return dict(status='unknown')
         # From here LOAD/EXEC is single-use. Any exception ends recovery.
-        bootstrap(wire,Path(options['platform']).read_bytes(),session,120,boot=boot)
+        try:bootstrap(wire,Path(options['platform']).read_bytes(),session,120,boot=boot)
+        except Exception as error:
+            raise RuntimeError('Stock LOAD/EXEC state uncertain; reset required before retry') from error
         return dict(status='booted',rom=dict(protocol='R1715BT',version='unknown'))
     from ravi.backends.robotron1715w.discovery import identify_at_rate
     try:monitor=identify_at_rate(wire,5)
@@ -29,5 +31,9 @@ def recover(port,config):
     actual=monitor.read_memory(start,len(code))
     (session/'platform-readback.bin').write_bytes(actual)
     if actual!=code:raise ValueError('platform readback mismatch')
-    monitor.start(entry)
+    try:monitor.start(entry)
+    except TimeoutError:
+        # EXEC may have happened. Never repeat it here: the native host first
+        # looks for a checked runtime request, then requires fresh ROM identity.
+        return dict(status='unknown',rom=identity,execution_uncertain=True)
     return dict(status='booted',rom=identity)

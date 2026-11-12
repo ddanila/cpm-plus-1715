@@ -93,7 +93,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/8080-cosim
-          ref: 3c2c76bf809436606406460094c35a9f2dbdc482
+          ref: c279e7e13a7936520570641e8af2900fa5ad4361
           path: 8080-cosim
       - run: sudo apt-get update && sudo apt-get install -y build-essential bison python3-pexpect
       - run: ../8080-cosim/sync/jukuhost_linux_build.sh
