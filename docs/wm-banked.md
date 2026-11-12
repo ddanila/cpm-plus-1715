@@ -139,9 +139,11 @@ confirmed all 3,200 CCP bytes in application bank 2 with the corrected routine.
 No EPROM change is required.
 
 Robotron's [SCP 3.0 version 0002 customer notice](https://forum.maxiol.com/index.php?act=Attach&id=9079&type=post)
-also describes interbank transfers using LDIR or DMA. The emulator's broader
-write-bank behavior remains a known modeling gap; its passing tests alone
-must not be taken as evidence that a scalar interbank copy works on hardware.
+also describes interbank transfers using LDIR or DMA. The emulator now models
+measured memory-cycle bank selection, with 20 physical instruction cases as
+regression expectations. CP/M CI pins that correction and runs its bank-bus
+regression; reverting the BIOS to scalar copies fails the BIOS probe. See the
+[model and measurement limits](https://github.com/ddanila/dac-emulation/blob/e53c19710a3d1a498082fa3fc60f4cfaa63ce52c/docs/robotron-bank-bus.md).
 
 The corrected build passed [physical PC001 acceptance at 62400](../reports/hardware-banked-pc001-20261112.json):
 47 KiB TPA test, B: full-directory/full-disk/random-record/reuse tests,

@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/dac-emulation
-          ref: 864331fd04844698d35b8258f80fb6fcc04a8b76
+          ref: e53c19710a3d1a498082fa3fc60f4cfaa63ce52c
           path: build/deps/dac-emulation
       - uses: actions/checkout@v4
         with:
@@ -44,7 +44,7 @@ jobs:
       - run: |
           cc -std=c99 -O2 -Wall -Wextra -Werror -D_DEFAULT_SOURCE -Ibuild/deps/8080-cosim/host/include -Ibuild/deps/8080-cosim/host/src build/deps/8080-cosim/host/tests/serial_format_test.c build/deps/8080-cosim/host/src/platform_posix.c -o build/serial-format-test
           build/serial-format-test
-      - run: make -C build/deps/dac-emulation build/robotron-receive-phase test-robotron-devices && build/deps/dac-emulation/build/robotron-receive-phase
+      - run: make -C build/deps/dac-emulation build/robotron-receive-phase test-robotron-devices test-robotron-bank-bus && build/deps/dac-emulation/build/robotron-receive-phase
       - run: make test
       - run: DAC=build/deps/dac-emulation python -m unittest discover -s tests -p serial_crc_fast_test.py
       - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-w3 --corrupt-read
