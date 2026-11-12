@@ -61,7 +61,7 @@ jobs:
           for rate in 9600 41600 62400; do
             extra=""
             if [ "$rate" = 41600 ]; then extra="--corrupt-read"; fi
-            if [ "$rate" = 62400 ]; then extra="--fragmented"; fi
+            if [ "$rate" = 62400 ]; then extra="--fragmented --ram-fill 0xaa"; fi
             python tools/check_w4_runtime.py --banked --extended $extra --baud "$rate" --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-$rate
           done
           python tools/check_w4_runtime.py --banked --read-only --baud 9600 --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-readonly

@@ -1,4 +1,4 @@
-/* MIT. Actual W/M CPU/device execution through a PTY, no RAM/PC injection.
+/* MIT. Actual W/M CPU/device execution through a PTY, no runtime RAM/PC injection.
  * Video board, keyboard and floppy media are absent. */
 #define _POSIX_C_SOURCE 200809L
 #include "machines/robotron1715m/robotron.h"
@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
@@ -58,6 +59,14 @@ int main(int argc, char **argv) {
   if (!m)
     return 2;
   robotron_init(m);
+  /* Power-on contents only; all subsequent code arrives through the ROM. */
+  if (getenv("WM_RAM_FILL")) {
+    char *end;
+    unsigned long fill = strtoul(getenv("WM_RAM_FILL"), &end, 0);
+    if (!*getenv("WM_RAM_FILL") || *end || fill > 255)
+      return 2;
+    memset(m->ram, (int)fill, sizeof(m->ram));
+  }
   FILE *f = fopen(argv[1], "rb");
   if (!f || fread(m->rom, 1, 2048, f) != 2048 || fgetc(f) != EOF)
     return 2;

@@ -78,6 +78,10 @@ python3 tools/check_w4_runtime.py --banked --extended --fragmented \
   --out local/banked-62400
 ```
 
+The 62400 CI campaign also uses `--ram-fill 0xaa` to check startup with
+nonzero power-on RAM. This initializes memory before the first ROM instruction;
+the ROM still receives and starts the platform over serial normally.
+
 Repeat the extended suite at 9600 and 41600, with `--corrupt-read` at 41600.
 Run a separate `--banked --read-only` campaign. Boot rejection cases use
 `--fault header`, `payload`, `duplicate`, `foreign`, and `missing-bank`, each

@@ -33,7 +33,11 @@ def main():
     p.add_argument('--fragmented', action='store_true')
     p.add_argument('--read-only', action='store_true')
     p.add_argument('--corrupt-read', action='store_true')
+    p.add_argument("--ram-fill", type=lambda value: int(value, 0), default=0,
+                   help="initial emulator RAM byte (0..255), before ROM execution")
     a = p.parse_args()
+    if not 0 <= a.ram_fill <= 255:
+        p.error("--ram-fill must be between 0 and 255")
     a.out.mkdir(parents=True, exist_ok=False)
     suffix = {9600: "9600", 41600: "fast", 62400: "62400"}[a.baud]
     image = ROOT / f"out/cpm-plus-1715-wm-{suffix}.img"
@@ -102,7 +106,7 @@ def main():
         host_sha256=digest(a.host),
         profile='banked' if a.banked else 'nonbanked',
         fault=a.fault, fragmented=a.fragmented, read_only=a.read_only,
-        corrupt_read=a.corrupt_read,
+        corrupt_read=a.corrupt_read, ram_fill=a.ram_fill,
         rom_sha256=digest(a.rom),
         cases=[],
     )
@@ -118,7 +122,8 @@ def main():
         ],
         pass_fds=(wire,),
         stderr=elog,
-        env=dict(os.environ, WM_ALIAS_BANK="4" if a.fault == "missing-bank" else ""),
+        env=dict(os.environ, WM_ALIAS_BANK="4" if a.fault == "missing-bank" else "",
+                 WM_RAM_FILL=str(a.ram_fill)),
     )
     host = None
     try:
