@@ -198,4 +198,7 @@ clock. This is not evidence of the macOS USB driver's custom-rate behavior.
 The [versioned 2 KiB ROM and checksums](firmware/w4-4.1.0/README.md) are included
 for burning from another machine. W4 protocol compatibility is retained; idle
 connections now expire back to baud scanning. Emulator ROM and banked CP/M
-recovery tests pass. Physical qualification of this new image is pending.
+recovery tests pass. PC001 has also passed physical ROM identity/integrity,
+idle speed-change recovery and RAM transfers at all three rates; see the
+[4.1.0 hardware report](reports/rom41-pc001-20261113/README.md) for CP/M results
+and qualification limits.

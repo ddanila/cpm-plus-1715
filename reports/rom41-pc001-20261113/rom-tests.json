@@ -1,0 +1,154 @@
+[
+  {
+    "test": "initial_identity_62400",
+    "rate": {
+      "device": {
+        "location": 34668544,
+        "vid": 1659,
+        "pid": 8963,
+        "revision": 1024
+      },
+      "requested": 62400,
+      "calculated_actual": 62500,
+      "coding": "80050080000008",
+      "error_percent": 0.1602564102564097
+    },
+    "identity": {
+      "target": "robotron1715w",
+      "protocol": "W4",
+      "rom_bytes": 2048,
+      "main_ram_workspace": 0,
+      "max_block": 64,
+      "boot_identity": null,
+      "replay_scope": "none",
+      "capabilities": 127,
+      "firmware_version": "4.1.0",
+      "machine_family": "Robotron 1715M/W",
+      "baud": 62400,
+      "supported_bauds": [
+        62400,
+        41600,
+        9600
+      ],
+      "framing": "8N1",
+      "clock_multiplier": 16,
+      "build_id": "5d0209bb55b89711",
+      "rom_integrity": "CRC16 residue zero"
+    }
+  },
+  {
+    "test": "idle_expiry_rate_change_and_ram_roundtrip",
+    "baud": 41600,
+    "identity": {
+      "target": "robotron1715w",
+      "protocol": "W4",
+      "rom_bytes": 2048,
+      "main_ram_workspace": 0,
+      "max_block": 64,
+      "boot_identity": null,
+      "replay_scope": "none",
+      "capabilities": 127,
+      "firmware_version": "4.1.0",
+      "machine_family": "Robotron 1715M/W",
+      "baud": 41600,
+      "supported_bauds": [
+        62400,
+        41600,
+        9600
+      ],
+      "framing": "8N1",
+      "clock_multiplier": 16,
+      "build_id": "5d0209bb55b89711",
+      "rom_integrity": "CRC16 residue zero"
+    },
+    "rate": {
+      "device": {
+        "location": 34668544,
+        "vid": 1659,
+        "pid": 8963,
+        "revision": 1024
+      },
+      "requested": 41600,
+      "calculated_actual": 41666,
+      "coding": "90060080000008",
+      "error_percent": 0.15865384615385558
+    },
+    "bytes": 2048,
+    "sha256": "157a7b02f2ab4f7fcc8f72242fc5d9af6b2c22f82955bef5936cd1f0b7e34392",
+    "reset": false
+  },
+  {
+    "test": "idle_expiry_rate_change_and_ram_roundtrip",
+    "baud": 9600,
+    "identity": {
+      "target": "robotron1715w",
+      "protocol": "W4",
+      "rom_bytes": 2048,
+      "main_ram_workspace": 0,
+      "max_block": 64,
+      "boot_identity": null,
+      "replay_scope": "none",
+      "capabilities": 127,
+      "firmware_version": "4.1.0",
+      "machine_family": "Robotron 1715M/W",
+      "baud": 9600,
+      "supported_bauds": [
+        62400,
+        41600,
+        9600
+      ],
+      "framing": "8N1",
+      "clock_multiplier": 16,
+      "build_id": "5d0209bb55b89711",
+      "rom_integrity": "CRC16 residue zero"
+    },
+    "rate": {
+      "requested": 9600,
+      "calculated_actual": 9600
+    },
+    "bytes": 2048,
+    "sha256": "157a7b02f2ab4f7fcc8f72242fc5d9af6b2c22f82955bef5936cd1f0b7e34392",
+    "reset": false
+  },
+  {
+    "test": "idle_expiry_rate_change_and_ram_roundtrip",
+    "baud": 62400,
+    "identity": {
+      "target": "robotron1715w",
+      "protocol": "W4",
+      "rom_bytes": 2048,
+      "main_ram_workspace": 0,
+      "max_block": 64,
+      "boot_identity": null,
+      "replay_scope": "none",
+      "capabilities": 127,
+      "firmware_version": "4.1.0",
+      "machine_family": "Robotron 1715M/W",
+      "baud": 62400,
+      "supported_bauds": [
+        62400,
+        41600,
+        9600
+      ],
+      "framing": "8N1",
+      "clock_multiplier": 16,
+      "build_id": "5d0209bb55b89711",
+      "rom_integrity": "CRC16 residue zero"
+    },
+    "rate": {
+      "device": {
+        "location": 34668544,
+        "vid": 1659,
+        "pid": 8963,
+        "revision": 1024
+      },
+      "requested": 62400,
+      "calculated_actual": 62500,
+      "coding": "80050080000008",
+      "error_percent": 0.1602564102564097
+    },
+    "bytes": 2048,
+    "sha256": "157a7b02f2ab4f7fcc8f72242fc5d9af6b2c22f82955bef5936cd1f0b7e34392",
+    "reset": false
+  }
+]

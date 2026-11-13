@@ -1,0 +1,77 @@
+{
+  "hardware_executed": true,
+  "complete": true,
+  "machine": "PC001 Robotron 1715M",
+  "rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.1.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "5d0209bb55b89711",
+    "rom_integrity": "CRC16 residue zero"
+  },
+  "baud": 62400,
+  "profile": "1715m-banked",
+  "boot_seconds": 19.348357459064573,
+  "cases": [
+    {
+      "test": "automatic ROM identification, validated upload/readback and banked CP/M boot"
+    },
+    {
+      "test": "advertised TPA written and verified"
+    },
+    {
+      "test": "B full directory, full disk, random records and reuse"
+    },
+    {
+      "test": "RAM disk survives three warm boots"
+    },
+    {
+      "test": "80 KiB A to B to A exact independent readback",
+      "bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "test": "automatic host restart reattaches to running CP/M, preserving A and B"
+    },
+    {
+      "test": "source disk unchanged"
+    }
+  ],
+  "source_image_sha256": "3a2f98a5e8c2104193453289c7ffb28f6e1b1f94f0cd23bae8c71a86cecacd46",
+  "test_image_sha256": "5416b2a582369138a8ff2f5526b18ff515b0f47f2ed0ff08353b6ad3d2499e0a",
+  "platform_sha256": "c537a608611577682b8243e733c0c631853121a8e64c76a63e345d90a9af2160",
+  "host_sha256": "94cf13ef5b909bbd018a05177b73d7df3e3e6ac1494bfef44b0f1fa0e9c74ac0",
+  "setup_issue": "First auto-host attempt failed before serial traffic because isolated artifact tree lacked tools/recovery_profile.py; corrected tools symlink, then boot succeeded without reset.",
+  "host_left_running": true,
+  "tested_cpm_commit": "06d935c52692c3826389b0eb5ca61dd23e6a8652",
+  "ravi_commit": "451925f693852d6423af717b3b0add23672536ee",
+  "shared_host_checkout_commit": "67b1156bf07d7e27eb1a3e3321770f88a5399f38",
+  "closed_session_counters": {
+    "reads": 1757,
+    "records": 1757,
+    "writes": 660,
+    "retries": 0,
+    "uart_errors": 0,
+    "target_resets": 0
+  },
+  "limitations": [
+    "One physical power-on; repeated cold starts and a prolonged soak were not performed in this campaign.",
+    "No physical power cycle or RESET during running CP/M; automatic cold-boot recovery remains emulator-qualified for 4.1.0.",
+    "Local keyboard/video, floppy drives and operation with absent or faulty RAM were not tested."
+  ]
+}

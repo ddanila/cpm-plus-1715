@@ -1,0 +1,8 @@
+00000000 INFO  start version=0.4.0-m9 port=/dev/cu.usbserial-2110
+00000000 INFO  platform=Darwin timer=CLOCK_MONOTONIC resolution-ms=1 available-memory=0
+00000000 INFO  phase=artifact-validation
+00000000 INFO  phase=serial-open requested=62400 8N1 flow=none
+00000001 INFO  serial applied=62400 8N1 flow=none
+00000064 ERROR recovery helper failed or requires intervention; no upload replay
+00000064 INFO  phase=failed
+00000064 ERROR stop exit=5 rx=0 tx=0 requests=0 reads=0 records=0 writes=0 retries=0 boot-restarts=0 target-resets=0 reconnects=0 uart-errors=0 available-memory=0

@@ -16,5 +16,10 @@ No stack or main-RAM workspace is added.
 Actual-ROM emulator tests exercise idle expiry, all supported speeds, headless
 and no-RAM operation, corrupt transfers, transmit stalls and diagnostic return.
 Banked CP/M at 62400 passed boot, verified writes, host restart and two modeled
-power cycles (see cpm-auto-result.json). Physical 4.1.0 qualification is pending;
-the previous 4.0.0 image remains the hardware-tested fallback in git history.
+power cycles (see cpm-auto-result.json).
+
+PC001 physical testing on 2026-11-13 confirmed version/build/ROM integrity,
+idle expiry and reconnection at 41600, 9600 and 62400 without resetting, and
+exact 2 KiB RAM transfers at each rate. See the
+[hardware report](../../reports/rom41-pc001-20261113/README.md) for the banked
+CP/M tests and remaining limits. The earlier 4.0.0 image remains in git history.
