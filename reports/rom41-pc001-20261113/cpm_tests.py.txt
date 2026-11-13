@@ -1,0 +1,27 @@
+report={'hardware_executed':True,'complete':False,'machine':'PC001 Robotron 1715M','rom':results[0]['identity'],'baud':62400,'profile':'1715m-banked','boot_seconds':boot_seconds,'cases':[],'source_image_sha256':source_sha,'test_image_sha256':digest(staged),'platform_sha256':digest(stage/'build/banked/platform-62400.cim'),'host_sha256':digest(host),'setup_issue':'First auto-host attempt failed before serial traffic because isolated artifact tree lacked tools/recovery_profile.py; corrected tools symlink, then boot succeeded without reset.'}
+def passed(name,**details):
+ report['cases'].append(dict(test=name,**details));(out/'cpm-tests.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS',name,flush=True)
+passed('automatic ROM identification, validated upload/readback and banked CP/M boot')
+assert b'Robotron' in cmd('TYPE HELLO.TXT')
+cmd('SHOW')
+assert b'BANKED TPA PASS' in cmd('TPATEST');passed('advertised TPA written and verified')
+assert b'BANKED DISK PASS' in cmd('DSKTEST');passed('B full directory, full disk, random records and reuse')
+cmd('PIP B:HELLO.TXT=A:HELLO.TXT')
+for _ in range(3):
+ c.warm_boot();assert b'Robotron' in cmd('TYPE B:HELLO.TXT')
+passed('RAM disk survives three warm boots')
+answer=cmd('PIP B:BIG.BIN=A:BIG.BIN');assert b'ERROR' not in answer.upper()
+c.warm_boot()
+answer=cmd('PIP BACK.BIN=B:BIG.BIN');assert b'ERROR' not in answer.upper()
+close_host()
+actual=inspect((session/'disk.img').read_bytes())[(0,'BACK.BIN')].data
+assert actual==big
+passed('80 KiB A to B to A exact independent readback',bytes=len(actual),sha256=hashlib.sha256(actual).hexdigest())
+start_host()
+assert b'Robotron' in cmd('TYPE HELLO.TXT')
+assert b'Robotron' in cmd('TYPE B:HELLO.TXT')
+passed('automatic host restart reattaches to running CP/M, preserving A and B')
+assert digest(image)==source_sha;passed('source disk unchanged')
+report['complete']=True;report['host_left_running']=True
+(out/'cpm-tests.json').write_text(json.dumps(report,indent=2)+'\n')
+print('CP/M HARDWARE TESTS COMPLETE',flush=True)

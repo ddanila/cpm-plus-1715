@@ -1,0 +1,27 @@
+# Execute in bench REPL after ROM diagnostics; isolated disposable A/B disks.
+from media import add,inspect
+from serial_session import Console,digest
+from banked_contract import validate_banked
+stage=out/'artifacts';(stage/'out').mkdir(parents=True,exist_ok=True);(stage/'build/banked').mkdir(parents=True,exist_ok=True)
+image=ROOT/'out/cpm-plus-1715-wm-banked-62400.img';source_sha=digest(image)
+big=bytes((i*73^(i>>8))&255 for i in range(80*1024));data=image.read_bytes()
+for name,payload in [('TPATEST.COM',(ROOT/'build/banked/tpa-test.cim').read_bytes()),('DSKTEST.COM',(ROOT/'build/banked/disk-test.cim').read_bytes()),('BIG.BIN',big)]:data=add(data,name,payload,replace=True)
+staged=stage/'out'/image.name;staged.write_bytes(data)
+for name in ('platform-62400.cim','platform-62400.json'):(stage/'build/banked'/name).write_bytes((ROOT/'build/banked'/name).read_bytes())
+mf=stage/'build/banked/platform-62400.json';contract=json.loads(mf.read_text());contract['image_sha256']=digest(staged);mf.write_text(json.dumps(contract,indent=2))
+validate_banked(staged,stage/'build/banked/platform-62400.cim',mf,62400)
+terminal,console=pty.openpty();tty.setraw(terminal);tty.setraw(console)
+session=out/'session';host=ROOT.parent/'8080-cosim/build/jukuhost'
+env=dict(os.environ,PYTHONPATH=os.pathsep.join([str(ROOT/'tools'),str(ROOT.parent/'ravi/src')]))
+command=[sys.executable,'-c','import sys; from pathlib import Path; import serial_wm_w4 as w; w.ROOT=Path(sys.argv.pop(1)); raise SystemExit(w.main())',str(stage),'auto','--serial','/dev/cu.usbserial-2110','--session',str(session),'--console-pty',os.ttyname(console),'--host',str(host),'--baud','62400']
+def start_host():
+ global proc,log
+ log=(out/('host-'+str(time.time_ns())+'.log')).open('wb')
+ proc=subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT)
+def close_host():
+ if proc.poll() is None:proc.terminate();proc.wait(timeout=15)
+def check():
+ if proc.poll() is not None:raise RuntimeError(f'Host exited {proc.returncode}; inspect log')
+def cmd(text):
+ answer=c.command(text,timeout=180);print(answer.decode('ascii',errors='replace'),flush=True);return answer
+print('Banked test image and automatic host prepared',flush=True)

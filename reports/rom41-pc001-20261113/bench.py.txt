@@ -1,0 +1,12 @@
+import os,sys,time,json,hashlib,subprocess,pty,tty,select
+from pathlib import Path
+ROOT=Path.cwd();out=ROOT/'local/pc001-rom41-20261113'
+sys.path[:0]=[str(ROOT/'tools'),str(ROOT.parent/'ravi/src')]
+from ravi.transport import SerialTransport,LoggedTransport
+from ravi.backends.robotron1715w.discovery import configure_rate,identify_at_rate
+port=SerialTransport('/dev/cu.usbserial-2110',9600,parity='N',stop_bits=1,exclusive=True)
+port.__enter__()
+rx=(out/'monitor-rx.bin').open('wb');tx=(out/'monitor-tx.bin').open('wb');wire=LoggedTransport(port,rx,tx)
+results=[]
+def save(): (out/'rom-tests.json').write_text(json.dumps(results,indent=2)+'\n')
+print('Serial port open; ready for PC001 power-on',flush=True)
