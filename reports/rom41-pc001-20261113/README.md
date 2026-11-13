@@ -92,3 +92,17 @@ snapshot preserve this check. This supersedes the earlier power-cycle coverage
 limitation for a single physical cycle; repeated cold starts and RESET-only
 recovery are still untested. Power-on timing was not instrumented. The log
 snapshot is from the still-running host, so it has no final aggregate counters.
+
+## Reassembled machine serial check
+
+The owner reassembled PC001 with the video adapter and FDU installed, but no
+external display or keyboard connected, and reconnected the serial cable.
+After reopening `/dev/cu.usbserial-2110`, the automatic host discovered ROM
+4.1.0 with the expected build and passing CRC at 62400, uploaded the platform,
+and booted banked CP/M to A>. TYPE HELLO.TXT succeeded over serial, and the
+host disk remained unchanged. CP/M and the host were left running.
+
+[Results](reassembled/result.json), [console](reassembled/console.txt), and a
+live host-log snapshot record this configuration. This confirms serial boot
+and console operation with the boards installed; it does not qualify video
+output, keyboard operation, or physical floppy I/O.

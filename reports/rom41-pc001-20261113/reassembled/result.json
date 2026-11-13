@@ -1,0 +1,24 @@
+{
+  "hardware_executed": true,
+  "complete": true,
+  "machine": "PC001 Robotron 1715M",
+  "configuration_owner_reported": {
+    "reassembled": true,
+    "video_adapter_installed": true,
+    "FDU_installed": true,
+    "display_connected": false,
+    "keyboard_connected": false
+  },
+  "serial": "/dev/cu.usbserial-2110",
+  "baud": 62400,
+  "rom_version": "4.1.0",
+  "rom_build": "5d0209bb55b89711",
+  "rom_crc": "pass",
+  "automatic_banked_cpm_boot": "pass",
+  "serial_command_TYPE_HELLO_TXT": "pass",
+  "host_disk_unchanged": true,
+  "host_left_running": true,
+  "limits": [
+    "Serial boot and console check only; video output, keyboard, and physical floppy I/O not tested."
+  ]
+}

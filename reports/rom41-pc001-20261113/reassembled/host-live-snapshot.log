@@ -1,0 +1,18 @@
+00000000 INFO  start version=0.4.0-m9 port=/dev/cu.usbserial-2110
+00000000 INFO  platform=Darwin timer=CLOCK_MONOTONIC resolution-ms=1 available-memory=0
+00000000 INFO  phase=artifact-validation
+00000001 INFO  phase=serial-open requested=62400 8N1 flow=none
+00000001 INFO  serial applied=62400 8N1 flow=none
+00000088 INFO  phase=discover serial=62400 8N1
+00008584 INFO  phase=discover serial=62400 8N1
+00017037 INFO  phase=discover serial=62400 8N1
+00025517 INFO  phase=discover serial=62400 8N1
+00033971 INFO  phase=discover serial=62400 8N1
+00042483 INFO  phase=discover serial=62400 8N1
+00050979 INFO  phase=discover serial=62400 8N1
+00059381 INFO  phase=discover serial=62400 8N1
+00065738 INFO  phase=runtime-link boot-complete serial=62400 8N1
+00065827 INFO  phase=discover serial=62400 8N1
+00065827 INFO  checked NetDisk request; target runtime confirmed
+00065827 INFO  phase=netdisk
+00065827 INFO  serving A: writable+journal, 62400 baud 8N1, N3
