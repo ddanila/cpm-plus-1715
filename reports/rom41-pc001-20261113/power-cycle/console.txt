@@ -1,0 +1,14 @@
+[2J[H
+CP/M Plus 3.1 - Robotron 1715M banked
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>DIR B:
+No File
+A>SHOW
+
+A: RW, Space:       516k
+B: RW, Space:        94k
+
+
+A>

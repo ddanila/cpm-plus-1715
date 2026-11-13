@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "status": "booted",
+  "operation": "discover",
+  "rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.1.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "5d0209bb55b89711",
+    "rom_integrity": "CRC16 residue zero"
+  },
+  "last_rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.1.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "5d0209bb55b89711",
+    "rom_integrity": "CRC16 residue zero"
+  },
+  "settings": {
+    "baud": 62400,
+    "parity": "N",
+    "stop_bits": 1,
+    "simulated": false,
+    "usb": {
+      "requested": 62400,
+      "calculated_actual": 62500,
+      "coding": "80050080000008",
+      "error_percent": 0.1602564102564097,
+      "device": {
+        "path": "/dev/cu.usbserial-2110",
+        "address": 3,
+        "location": 34668544,
+        "revision": 1024
+      }
+    }
+  }
+}

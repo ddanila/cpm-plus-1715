@@ -71,3 +71,24 @@ and reset/power-cycle recovery are still outside this session's coverage.
 [console](soak-10min/console.txt), and closed host logs are preserved alongside
 the bench script. Only the disposable BIG.BIN/BACK.BIN destinations were
 replaced; no user disk or physical floppy was used.
+
+## Physical power-cycle recovery
+
+Following the soak, the owner switched PC001 off and back on with the serial
+cable connected and the automatic host still running. The same launcher
+process and native-host log epoch remained active. The host detected missing
+runtime traffic, rediscovered W4 **4.1.0 / 5d0209bb55b89711** with passing ROM
+CRC, uploaded/read-verified the platform and automatically booted banked CP/M
+at 62400 to A>. No host restart or manual upload was needed.
+
+TYPE HELLO.TXT succeeded on A:. The complete 819200-byte host disk was identical
+to the pre-cycle snapshot, including the exact 81920-byte BACK.BIN test file.
+DIR B: reported `No File` and SHOW reported 94 KiB free: the volatile RAM disk
+was freshly initialized as expected. CP/M and the host were left running at A>.
+
+[Result](power-cycle/result.json), [console](power-cycle/console.txt),
+[ROM recovery identity](power-cycle/recovery-booted.json), and a live host-log
+snapshot preserve this check. This supersedes the earlier power-cycle coverage
+limitation for a single physical cycle; repeated cold starts and RESET-only
+recovery are still untested. Power-on timing was not instrumented. The log
+snapshot is from the still-running host, so it has no final aggregate counters.

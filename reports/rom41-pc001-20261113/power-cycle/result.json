@@ -1,0 +1,24 @@
+{
+  "hardware_executed": true,
+  "complete": true,
+  "machine": "PC001 Robotron 1715M",
+  "owner_confirmed_power_cycle": true,
+  "baud": 62400,
+  "launcher_pid_before": 11886,
+  "launcher_pid_after": 11886,
+  "host_restarted": false,
+  "automatic_cpm_boot_observed": true,
+  "persistent_disk_exact_match": true,
+  "persistent_disk_bytes": 819200,
+  "persistent_disk_sha256": "14909f7ed9f3fdc00925c6b7ed88838218c3d5030277fc815bd97efbdfd33baa",
+  "back_bin_bytes": 81920,
+  "back_bin_sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e",
+  "A_hello_read_pass": true,
+  "B_directory": "No File",
+  "B_free_kib": 94,
+  "host_left_running": true,
+  "limitations": [
+    "One owner-operated physical power cycle; repeated cold-start reliability and RESET-only recovery not tested.",
+    "Power-on timestamp not instrumented; no precise power-on-to-prompt timing claimed."
+  ]
+}
