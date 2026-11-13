@@ -199,3 +199,11 @@ test-banked:
 
 $(BUILD)/banked/platform-%.json: $(OUT)/cpm-plus-1715-wm-banked-%.img
 	@test -f $@ || $(PYTHON) tools/build_image.py --banked $*
+
+.PHONY: test-video
+test-video: build/video-test.cim build/video-probe build/banked/platform-62400.cim
+	build/video-probe build/video-test.cim build/banked/platform-62400.cim
+build/video-test.cim: src/video-test.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ -o build/video-test.lst $<
+build/video-probe: tests/video_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) $< $(WM_CORE) -o $@

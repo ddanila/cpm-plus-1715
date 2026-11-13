@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/dac-emulation
-          ref: e53c19710a3d1a498082fa3fc60f4cfaa63ce52c
+          ref: 8e559628bdb333a1e0255430dc968648fe6fa366
           path: build/deps/dac-emulation
       - uses: actions/checkout@v4
         with:
@@ -57,7 +57,7 @@ jobs:
             python tools/check_w4_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/w4-$rate --baud $rate
           done
       - run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
-      - run: make test-banked DAC=build/deps/dac-emulation
+      - run: make test-banked test-video DAC=build/deps/dac-emulation
       - run: python tools/check_banked_reproducible.py
       - run: |
           for rate in 9600 41600 62400; do

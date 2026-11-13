@@ -1,0 +1,38 @@
+VIDTEST
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO FAIL: memory/status or restoration mismatch
+
+A>^C
+A>VIDTEST
+Mismatch expected-buffer address high/low, expected/actual: 50 00 50 58 
+Mismatch expected-buffer address high/low, expected/actual: 50 00 AF A7 
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO FAIL: memory/status or restoration mismatch
+
+A>^C
+A>VIDTEST
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO RAM PASS: 4096 char + 2048 screen (mirrored), two patterns, restored
+
+A>^C
+A>VIDTEST
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO RAM PASS: 4096 char + 2048 screen (mirrored), two patterns + bidirectional alias, restored
+
+A>VIDTEST
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO RAM PASS: 4096 char + 2048 screen (mirrored), two patterns + bidirectional alias, restored
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>DIR B:
+No File
+A>PIP B:VIDCHK.TXT=A:HELLO.TXT
+
+A>TYPE B:VIDCHK.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERASE B:VIDCHK.TXT
+A>^C
+A>

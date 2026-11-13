@@ -1,0 +1,7 @@
+VIDTEST
+Mismatch expected-buffer address high/low, expected/actual: 50 00 50 58 
+Mismatch expected-buffer address high/low, expected/actual: 50 00 AF A7 
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO FAIL: memory/status or restoration mismatch
+
+A>

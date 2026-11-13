@@ -1,0 +1,28 @@
+{
+  "machine": "PC001 Robotron 1715M/W",
+  "date": "2026-11-13",
+  "rom": "4.1.0 W4",
+  "baud": 62400,
+  "configuration": "Video adapter and FDU installed; no external monitor or keyboard",
+  "character_ram_bytes": 4096,
+  "video_ram_bytes": 2048,
+  "video_window": "3000-3fff, A11 ignored (3800 mirrors 3000)",
+  "patterns": "address high XOR low, and inverse; upper-to-lower and lower-to-upper alias verification",
+  "controller_status_hex": [
+    "04",
+    "00",
+    "04"
+  ],
+  "original_memory_restored_and_verified": true,
+  "final_diagnostic_passes": 2,
+  "existing_host_disk_files_intact": true,
+  "ram_disk_write_read_cleanup": "passed",
+  "diagnostic_sha256": "d200852a0c5cb3235b36d84dd15b9b77cfbbeeb7c8fb4c301baa6f4ba9f47aef",
+  "emulator_revision": "8e559628",
+  "limitations": [
+    "No visible video or analogue timing validation",
+    "No keyboard or floppy I/O tested",
+    "Banked CP/M remains serial-only",
+    "Status reads acknowledge sticky controller flags"
+  ]
+}

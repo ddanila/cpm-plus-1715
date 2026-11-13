@@ -163,3 +163,12 @@ zero retries and UART errors. PIP needs space for both an existing file and its
 replacement, so the repeated-copy test erases its test destinations first.
 An initial capacity-limited attempt is recorded separately and excluded from
 the successful soak rounds. CP/M and the final host were left running at A>.
+
+## Video adapter hardware probe
+
+`make test-video` builds `build/video-test.cim` (VIDTEST.COM) and exercises it
+in the emulator. On PC001 with W4 4.1.0 and the qualified banked 62400 platform,
+it checks/restores 4 KiB character RAM and 2 KiB screen RAM (mirrored over the
+4 KiB CPU window), plus controller stop/start status. It does not enable a local
+console. See [qualification and exact compatibility constraints](../reports/rom41-pc001-20261113/video/README.md)
+before running it on another configuration.
