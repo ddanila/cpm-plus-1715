@@ -1,0 +1,132 @@
+TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>ERA B:BIG.BIN
+A>ERA BACK.BIN
+A>PIP B:BIG.BIN=A:BIG.BIN
+
+A>^C
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP BACK.BIN=B:BIG.BIN
+
+A>TYPE HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>

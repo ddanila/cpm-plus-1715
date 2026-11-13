@@ -48,3 +48,26 @@ The `.py.txt` files preserve the bench harness used; they are evidence, not
 standalone supported launchers. The preparation script required the tools
 symlink described above. The actual shared-host checkout used was newer than
 this repository's pin; its revision and executable hash are recorded explicitly.
+
+## Follow-up 10-minute soak
+
+The same powered-on PC001 passed a **638.02-second** soak at 62400 without any
+operator intervention. Eight 80 KiB A:→B:→A: rounds returned **655360 bytes
+(640 KiB), all exact matches**, independently inspected after clean host stops.
+Each round included a warm boot and an automatic host reconnect; B: retained
+its files throughout. Round three held the host disconnected for 45 seconds.
+
+Eight closed host epochs totalled 8272 record reads and 5320 writes with
+**zero retries, zero UART errors and zero target resets**. A:→B: times were
+35.39–35.55 seconds, B:→A: 30.74–30.81 seconds, and reconnection plus both-disk
+checks took 2.41–2.76 seconds. No progressive slowdown was observed. These are
+end-to-end CP/M file-copy times, including protocol/filesystem overhead.
+
+The final automatic host was left running; a post-soak TYPE HELLO.TXT
+confirmed the console remained at A>. The source disk remained unchanged.
+This extends the initial functional campaign; repeated physical cold starts
+and reset/power-cycle recovery are still outside this session's coverage.
+[Results and counters](soak-10min/result.json),
+[console](soak-10min/console.txt), and closed host logs are preserved alongside
+the bench script. Only the disposable BIG.BIN/BACK.BIN destinations were
+replaced; no user disk or physical floppy was used.

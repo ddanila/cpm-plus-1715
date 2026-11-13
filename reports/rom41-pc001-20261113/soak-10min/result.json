@@ -1,0 +1,282 @@
+{
+  "hardware_executed": true,
+  "complete": true,
+  "machine": "PC001",
+  "firmware_version": "4.1.0",
+  "baud": 62400,
+  "requested_seconds": 600,
+  "payload_bytes": 81920,
+  "payload_sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e",
+  "rounds": [
+    {
+      "round": 1,
+      "a_to_b_seconds": 35.496306042186916,
+      "b_to_a_seconds": 30.806327583268285,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.699604082852602,
+      "round_seconds": 74.45823383284733,
+      "elapsed_seconds": 74.4596535419114,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 2,
+      "a_to_b_seconds": 35.38517662510276,
+      "b_to_a_seconds": 30.808695916086435,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.7308396250009537,
+      "round_seconds": 74.32610091706738,
+      "elapsed_seconds": 148.7887104167603,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 3,
+      "a_to_b_seconds": 35.552152667194605,
+      "b_to_a_seconds": 30.7976029580459,
+      "host_pause_seconds": 45,
+      "reconnect_seconds": 2.4114393331110477,
+      "round_seconds": 117.11322149960324,
+      "elapsed_seconds": 265.905660207849,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 4,
+      "a_to_b_seconds": 35.46820666687563,
+      "b_to_a_seconds": 30.757072875276208,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.758837167173624,
+      "round_seconds": 74.39889812469482,
+      "elapsed_seconds": 340.30914020817727,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 5,
+      "a_to_b_seconds": 35.525257958099246,
+      "b_to_a_seconds": 30.736747042275965,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.749748958274722,
+      "round_seconds": 74.43916054209694,
+      "elapsed_seconds": 414.752581667155,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 6,
+      "a_to_b_seconds": 35.51725829113275,
+      "b_to_a_seconds": 30.771555207669735,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.7306536249816418,
+      "round_seconds": 74.48011308396235,
+      "elapsed_seconds": 489.23668937478215,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 7,
+      "a_to_b_seconds": 35.45120979193598,
+      "b_to_a_seconds": 30.793463916983455,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.7549862917512655,
+      "round_seconds": 74.3877198328264,
+      "elapsed_seconds": 563.627999083139,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    },
+    {
+      "round": 8,
+      "a_to_b_seconds": 35.46979537513107,
+      "b_to_a_seconds": 30.793091374915093,
+      "host_pause_seconds": 2,
+      "reconnect_seconds": 2.7006652909331024,
+      "round_seconds": 74.38348837476224,
+      "elapsed_seconds": 638.0161793329753,
+      "verified_bytes": 81920,
+      "sha256": "423b90ec6b7d291d678c3e7ddc1a6e98830adaab82bf5572de675c015a0a851e"
+    }
+  ],
+  "host_epochs": [
+    {
+      "log": "host-1794579437733696000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 105271,
+        "tx": 145910,
+        "requests": 2239,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579511375675000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106635,
+        "tx": 146687,
+        "requests": 2390,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579585687989000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106630,
+        "tx": 146687,
+        "requests": 2390,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579703100521000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106639,
+        "tx": 146687,
+        "requests": 2391,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579777173617000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106630,
+        "tx": 146687,
+        "requests": 2390,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579851630209000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106621,
+        "tx": 146682,
+        "requests": 2389,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794579926130801000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106621,
+        "tx": 146677,
+        "requests": 2389,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    },
+    {
+      "log": "host-1794580000516053000.log",
+      "counters": {
+        "exit": 0,
+        "rx": 106648,
+        "tx": 146697,
+        "requests": 2392,
+        "reads": 1034,
+        "records": 1034,
+        "writes": 665,
+        "retries": 0,
+        "boot-restarts": 0,
+        "target-resets": 0,
+        "reconnects": 0,
+        "uart-errors": 0,
+        "available-memory": 0
+      }
+    }
+  ],
+  "target_resets": 0,
+  "power_cycles": 0,
+  "host_left_running": true,
+  "phase": "complete",
+  "elapsed_seconds": 638.0191285419278,
+  "verified_bytes": 655360,
+  "tested_cpm_commit": "7e9cd9a18d2f1e7feedc5f581b8c0f050e1cd61b",
+  "totals": {
+    "reads": 8272,
+    "records": 8272,
+    "writes": 5320,
+    "retries": 0,
+    "uart-errors": 0,
+    "target-resets": 0
+  },
+  "timings": {
+    "a_to_b_seconds": {
+      "min": 35.38517662510276,
+      "mean": 35.48317042720737,
+      "max": 35.552152667194605
+    },
+    "b_to_a_seconds": {
+      "min": 30.736747042275965,
+      "mean": 30.783069609315135,
+      "max": 30.808695916086435
+    },
+    "reconnect_seconds": {
+      "min": 2.4114393331110477,
+      "mean": 2.69209679675987,
+      "max": 2.758837167173624
+    }
+  },
+  "warm_boots": 8,
+  "host_reconnects": 8,
+  "final_console_check": "TYPE HELLO.TXT succeeded at A> after soak",
+  "scope": "Same powered-on PC001 and disposable banked session as initial ROM 4.1 tests; no power cycling, ROM reburn, or physical cable disconnect."
+}

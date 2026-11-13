@@ -1,0 +1,56 @@
+# Execute in the existing hardware supervisor REPL. Only disposable test files.
+import re
+soakdir=out/'soak-10min';soakdir.mkdir(exist_ok=False)
+soak={'hardware_executed':True,'complete':False,'machine':'PC001','firmware_version':'4.1.0','baud':62400,'requested_seconds':600,'payload_bytes':len(big),'payload_sha256':hashlib.sha256(big).hexdigest(),'rounds':[],'host_epochs':[],'target_resets':0,'power_cycles':0,'host_left_running':False}
+soak_console_start=len(c.output)
+def save_soak():
+ (soakdir/'result.json').write_text(json.dumps(soak,indent=2)+'\n')
+ (soakdir/'console.txt').write_bytes(bytes(c.output[soak_console_start:]))
+def checked_command(text):
+ ans=c.command(text,timeout=180)
+ assert not any(x in ans.upper() for x in (b'ERROR',b'NO SPACE',b'DISK FULL')),ans
+ return ans
+close_host()
+(soakdir/'baseline-disk.img').write_bytes((session/'disk.img').read_bytes())
+logged=set(session.glob('host-*.log'))
+start_host()
+assert b'Robotron' in checked_command('TYPE HELLO.TXT')
+soak_begin=time.monotonic()
+try:
+ while time.monotonic()-soak_begin < 600:
+  number=len(soak['rounds'])+1
+  soak['phase']=f'round {number}: transfer';save_soak()
+  begin=time.monotonic()
+  checked_command('ERA B:BIG.BIN')
+  checked_command('ERA BACK.BIN')
+  t=time.monotonic();checked_command('PIP B:BIG.BIN=A:BIG.BIN');to_b=time.monotonic()-t
+  c.warm_boot()
+  assert b'Robotron' in checked_command('TYPE B:HELLO.TXT')
+  t=time.monotonic();checked_command('PIP BACK.BIN=B:BIG.BIN');to_a=time.monotonic()-t
+  close_host()
+  files=inspect((session/'disk.img').read_bytes())
+  actual=files[(0,'BACK.BIN')].data
+  assert actual==big and files[(0,'BIG.BIN')].data==big,'80 KiB image comparison failed'
+  for path in sorted(set(session.glob('host-*.log'))-logged):
+   text=path.read_text();(soakdir/path.name).write_text(text)
+   stops=[line for line in text.splitlines() if 'stop exit=' in line]
+   assert len(stops)==1,('missing final host counters',path)
+   counters={k:int(v) for k,v in re.findall(r'([a-z-]+)=(\d+)',stops[0])}
+   soak['host_epochs'].append(dict(log=path.name,counters=counters))
+   assert counters['exit']==0 and counters['retries']==0 and counters['uart-errors']==0,counters
+   logged.add(path)
+  delay=45 if number==3 else 2
+  soak['phase']=f'round {number}: host disconnected for {delay}s';save_soak()
+  print('ROUND',number,'DATA VERIFIED; host pause',delay,'seconds',flush=True)
+  time.sleep(delay)
+  reconnect_begin=time.monotonic();start_host()
+  assert b'Robotron' in checked_command('TYPE HELLO.TXT')
+  assert b'Robotron' in checked_command('TYPE B:HELLO.TXT')
+  reconnect_seconds=time.monotonic()-reconnect_begin
+  result=dict(round=number,a_to_b_seconds=to_b,b_to_a_seconds=to_a,host_pause_seconds=delay,reconnect_seconds=reconnect_seconds,round_seconds=time.monotonic()-begin,elapsed_seconds=time.monotonic()-soak_begin,verified_bytes=len(actual),sha256=hashlib.sha256(actual).hexdigest())
+  soak['rounds'].append(result);soak['phase']='between rounds';save_soak();print('SOAK ROUND PASS',json.dumps(result),flush=True)
+ assert digest(image)==source_sha
+ soak['complete']=True;soak['elapsed_seconds']=time.monotonic()-soak_begin;soak['verified_bytes']=sum(r['verified_bytes'] for r in soak['rounds']);soak['host_left_running']=proc.poll() is None;soak['phase']='complete';save_soak()
+ print('TEN-MINUTE SOAK COMPLETE',json.dumps({k:soak[k] for k in ['elapsed_seconds','verified_bytes','host_left_running']}),flush=True)
+except BaseException as exc:
+ soak['error']=repr(exc);soak['elapsed_seconds']=time.monotonic()-soak_begin;save_soak();raise
