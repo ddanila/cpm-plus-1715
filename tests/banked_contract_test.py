@@ -64,3 +64,20 @@ class W4DefaultTests(unittest.TestCase):
                 identity=json.loads((session/'identity.json').read_text())
                 self.assertEqual(identity.get('profile'),None if fallback else '1715m-banked')
                 self.assertEqual((session/'disk.img').stat().st_size,819200)
+                self.assertEqual((session/'disk-b.img').exists(),not fallback)
+                if not fallback:
+                    self.assertEqual((session/'disk-b.img').read_bytes(),bytes([0xe5])*819200)
+                    self.assertEqual(identity['drive_map'],
+                        ['serial-a','serial-b','floppy-0','floppy-1','ram'])
+
+
+    def test_invalid_b_image_rejected_before_port_open(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            image=Path(directory)/'bad.img'; image.write_bytes(b'bad')
+            args=['serial_wm_w4.py','boot','--serial','/dev/test',
+                  '--session',str(Path(directory)/'session'),'--console-pty','/dev/test-console',
+                  '--host',str(ROOT/'build/banked/cpm3.sys'),'--drive-b',str(image)]
+            with patch.object(sys,'argv',args), patch.object(serial_wm_w4,'SerialTransport') as port:
+                with self.assertRaises(ValueError): serial_wm_w4.main()
+                port.assert_not_called()

@@ -7,8 +7,9 @@ home:   call N3INV
 serial_position:
         call keyservice
         ld a,(drive)
-        or a
-        jp nz,error
+        cp 2
+        jp nc,error
+        ld (SEKDSK),a
         ld hl,(track)
         ld a,h
         or a
@@ -30,7 +31,6 @@ serial_position:
         ld hl,(dma)
         ld (MEMADR),hl
         xor a
-        ld (SEKDSK),a
         ret
 read:   call serial_position
         or a

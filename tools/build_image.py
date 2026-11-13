@@ -44,6 +44,8 @@ def image(serial=False, base=False, wm=False, wm_fast=False, wm_62400=False, wm_
     with zipfile.ZipFile(archive) as z:
         for name in ('dir','type','pip','erase','rename','show','set','submit'):
             block=put(disk,name.upper()+'.COM',z.read(name+'.com'),block)
+    if banked:
+        block=put(disk,'FORMAT.COM',(ROOT/'build/wm-format.cim').read_bytes(),block)
     if not wm:
         block=put(disk,'P1715TST.COM',(ROOT/'build/p1715test.cim').read_bytes(),block)
     block=put(disk,'HELLO.TXT',b'Native CP/M Plus on Robotron 1715\r\n\x1a',block)

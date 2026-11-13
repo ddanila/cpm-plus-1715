@@ -210,10 +210,7 @@ digit:  ld e,a
         ld c,2
         jp 5
 signature:
-        db 0c3h,04bh,0e0h,0c3h,035h,0e2h,0c3h,0bdh
-        db 0e0h,0c3h,0ddh,0e0h,0c3h,016h,0e1h,0c3h
-        db 04bh,0e0h,0c3h,04bh,0e0h,0c3h,04bh,0e0h
-        db 0c3h,035h,0e2h,0c3h,0ech,0e1h,0c3h,0f7h
+        include 'build/video-signature.inc'
 initial: db 0
 stopped: db 0
 restarted: db 0

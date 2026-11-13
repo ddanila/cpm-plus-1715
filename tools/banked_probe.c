@@ -8,13 +8,14 @@
 #include <string.h>
 static robotron m;
 static unsigned entry;
+static unsigned char physical_disk[819200];
 static void invoke(unsigned vector, unsigned af, unsigned bc, unsigned de, unsigned hl) {
   m.cpu.cpu.af=af; m.cpu.cpu.bc=bc; m.cpu.cpu.de=de; m.cpu.cpu.hl=hl;
   m.cpu.cpu.sp=0xf680;
   m.ram[0xf680]=0x80; m.ram[0xf681]=0xf7; m.ram[0xf780]=0x76;
   m.cpu.pins=z80_prefetch(&m.cpu.cpu,(uint16_t)(entry+3*vector));
-  for(unsigned n=0;n<3000000;n++) {
-    dac_z80_tick(&m.cpu,0,0);
+  for(unsigned n=0;n<30000000;n++) {
+    robotron_run(&m,1);
     if(m.cpu.pins & Z80_HALT) return;
   }
   fprintf(stderr,"BIOS %u timed out pc=%04x bank=%02x\n",vector,m.cpu.cpu.pc,m.bank);
@@ -47,6 +48,10 @@ int main(int argc,char **argv) {
     }
   }
   assert(fgetc(f)==EOF); fclose(f);
+  /* Isolate all adapter calls, including SETTRK/SETSEC/SETDMA tails.
+   * Falling through empty adapter RAM executes arbitrary stack bytes.
+   * The serial protocol is exercised separately by the full runtime suite. */
+  for(unsigned v=0;v<17;v++) m.ram[0xe000+3*v]=0xc9;
   select(0); select(1); select(0);
   /* One-shot interbank move, returned pointers, zero count, common boundary. */
   for(unsigned i=0;i<256;i++) m.ram[65536+0x4000+i]=(unsigned char)(i^0x5a);
@@ -62,7 +67,7 @@ int main(int argc,char **argv) {
   invoke(29,0,0x0100,0,0); invoke(25,0,2,0xbfff,0xbfff);
   assert(m.ram[65536+0xbfff]==0x61 && m.ram[0xc000]==0x62 && m.bank==0x11);
   /* RAM disk first/last records and both sides of the bank boundary. */
-  invoke(9,0,1,0,0); assert(m.cpu.cpu.hl);
+  invoke(9,0,4,0,0); assert(m.cpu.cpu.hl);
   const unsigned records[]={0,383,384,767};
   for(unsigned bank=0;bank<2;bank++) for(unsigned k=0;k<4;k++) {
     unsigned r=records[k];
@@ -77,7 +82,21 @@ int main(int argc,char **argv) {
   io(0,96,1,0x6000,0); assert(m.cpu.cpu.a==1 && m.bank==0x11);
   io(0,0,0,0x6000,0); assert(m.cpu.cpu.a==1 && m.bank==0x11);
   io(0,0,9,0x6000,0); assert(m.cpu.cpu.a==1 && m.bank==0x11);
-  invoke(9,0,2,0,0); assert(m.cpu.cpu.hl==0);
+  for(unsigned d=0;d<5;d++) { invoke(9,0,d,0,0); assert(m.cpu.cpu.hl); }
+  invoke(9,0,5,0,0); assert(m.cpu.cpu.hl==0);
+  memset(physical_disk,0xe5,sizeof physical_disk);
+  assert(!robotron_disk(&m,dac_memory_storage(physical_disk,sizeof physical_disk,1),1));
+  unsigned bios_entry=entry; entry=0xd000;
+  invoke(0,0,0,0,0); entry=bios_entry;
+  invoke(9,0,2,0,0); assert(m.cpu.cpu.hl);
+  physical_disk[159*5120+39*128]=0x6a;
+  io(0,159,40,0x6000,1); if(m.cpu.cpu.a) fprintf(stderr,"floppy read failed: st=%02x %02x %02x physical=%u cylinder=%u phase=%u bank=%x\n",m.fdc.result[0],m.fdc.result[1],m.fdc.result[2],m.fdc.physical[0],m.fdc.cylinder[0],m.fdc.phase,m.bank); assert(m.cpu.cpu.a==0);
+  assert(m.ram[65536+0x6000]==0x6a);
+  io(1,159,40,0x6000,1); assert(m.cpu.cpu.a==1);
+  entry=0xd000; invoke(4,0xa500,2,0,0); entry=bios_entry;
+  m.ram[65536+0x6000]=0x9b;
+  io(1,159,40,0x6000,1); assert(m.cpu.cpu.a==0);
+  assert(physical_disk[159*5120+39*128]==0x9b);
   puts("BANKED-BIOS: PASS (mapping, copy, DMA, RAM-disk boundaries, errors)");
   return 0;
 }

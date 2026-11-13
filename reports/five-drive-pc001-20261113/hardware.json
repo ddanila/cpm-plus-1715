@@ -1,0 +1,35 @@
+{
+  "complete": true,
+  "hardware_executed": true,
+  "machine": "PC001 Robotron 1715M",
+  "rom": "W4 4.1.0",
+  "baud_requested": 62400,
+  "baud_actual": 62500,
+  "drive_map": [
+    "serial-a",
+    "serial-b",
+    "floppy-0",
+    "floppy-1",
+    "ram"
+  ],
+  "physical_format": {
+    "drive": "C",
+    "bytes": 819200,
+    "tracks": 160,
+    "sectors": 800,
+    "seconds": 261.51999012520537,
+    "all_e5_verified": true
+  },
+  "text_roundtrip": true,
+  "binary_roundtrip": true,
+  "binary_bytes": 8192,
+  "binary_sha256": "384121f3c086d2eec60e27816c1062d7bebf3b772a8881dfd610c9e9efaa95ab",
+  "cold_os_reload_readback": true,
+  "manual_recalibration_required_after_fix": false,
+  "physical_d_written": false,
+  "physical_d_qualified": false,
+  "physical_writes_locked": true,
+  "reset_or_power_cycle_required": false,
+  "final_sys_sha256": "4fbc5f745d039742167d047eba94115ee43b150424659463f0a4ac8f157deb9a",
+  "final_platform_sha256": "82a8f7f85b44b5543605e20679acce62f42cd5651dda0f6af5dca9530a8d7d80"
+}

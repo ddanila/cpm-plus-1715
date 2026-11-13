@@ -1,0 +1,26 @@
+build/bin/zmac --zmac -o build/platform.cim -o build/platform.lst src/platform.asm
+/tmp/pc001-video-check-venv/bin/python tools/build_image.py
+built 819200 bytes; bootstrap 1724 bytes
+/tmp/pc001-video-check-venv/bin/python tools/keyboard_map.py
+build/bin/zmac --zmac -o build/keyboard-test.cim src/keyboard-test.asm
+build/bin/zmac --zmac -o build/platform-serial.cim -o build/platform-serial.lst src/platform-serial.asm
+/tmp/pc001-video-check-venv/bin/python tools/build_image.py --serial
+built 819200 bytes; bootstrap 3260 bytes
+/tmp/pc001-video-check-venv/bin/python tools/build_test_rom.py
+/tmp/pc001-video-check-venv/bin/python -m unittest discover -s tests -p '*_test.py'
+.......................s..........CRC: 16777216 state/byte cases PASS, max 87 clocks including entry JP and HALT
+............usage: python -m unittest [-h] --serial SERIAL --board BOARD --out OUT
+                          [--image IMAGE] [--platform PLATFORM] [--host HOST]
+                          [--boot-timeout BOOT_TIMEOUT] [--timeout TIMEOUT]
+                          [--emulator]
+python -m unittest: error: hardware campaign requires the current serial platform; run make serial
+.................
+----------------------------------------------------------------------
+Ran 63 tests in 8.449s
+
+OK (skipped=1)
+Restored; fresh guest boot required. Rollback: rollback-8bb0f94568644820823e9480337d3c85
+Restored; fresh guest boot required. Rollback: rollback-2f8fe9166fdb4193973b2b86647fa499
+Installed tools; fresh guest boot required. Rollback: tools-rollback-98af820090c444af8286f5c6d765a154
+Installed tools; fresh guest boot required. Rollback: tools-rollback-e6e356b7d0a4406a866b614738e14430
+Restored; fresh guest boot required. Rollback: rollback-4bef08b42ca2413796b01d2596f151c6

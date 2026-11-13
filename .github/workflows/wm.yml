@@ -30,12 +30,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/dac-emulation
-          ref: 8e559628bdb333a1e0255430dc968648fe6fa366
+          ref: 7d71be59cac8afeb12d055266a547bb23c1175a3
           path: build/deps/dac-emulation
       - uses: actions/checkout@v4
         with:
           repository: ddanila/8080-cosim
-          ref: c279e7e13a7936520570641e8af2900fa5ad4361
+          ref: dfadee28dc2be6cbd0ee921bc6d449c6832c0a14
           path: build/deps/8080-cosim
       - run: cmp firmware/w4-4.1.0/rom-w4.bin build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin
       - run: python -m pip install pexpect -e build/deps/ravi
@@ -57,7 +57,7 @@ jobs:
             python tools/check_w4_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/w4-$rate --baud $rate
           done
       - run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
-      - run: make test-banked test-video DAC=build/deps/dac-emulation
+      - run: make test-banked test-video test-floppy test-formatter DAC=build/deps/dac-emulation
       - run: python tools/check_banked_reproducible.py
       - run: |
           for rate in 9600 41600 62400; do

@@ -1,0 +1,113 @@
+cc -std=c11 -O2 -Wall -Wextra -Werror -I../dac-emulation tools/banked_probe.c ../dac-emulation/machines/robotron1715m/robotron.c ../dac-emulation/machines/robotron1715m/disk.c ../dac-emulation/machines/robotron1715m/sio.c ../dac-emulation/machines/robotron1715m/keyboard_board.c ../dac-emulation/machines/robotron1715m/keyboard_cpu.c ../dac-emulation/common/cpu/z80.c ../dac-emulation/common/media/media.c ../dac-emulation/common/trace/trace.c -o build/banked-probe
+build/banked-probe build/banked/cpm3.sys
+BANKED-BIOS: PASS (mapping, copy, DMA, RAM-disk boundaries, errors)
+/tmp/pc001-video-check-venv/bin/python -m unittest discover -s tests -p 'banked*_test.py'
+....ss
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+OK (skipped=2)
+/tmp/pc001-video-check-venv/bin/python tools/build_banked.py --check
+CP/M RMAC ASSEM 1.1
+0600
+008H USE FACTOR
+END OF ASSEMBLY
+
+CP/M RMAC ASSEM 1.1
+0000
+001H USE FACTOR
+END OF ASSEMBLY
+
+LINK 1.31
+
+@MXTPA   FE62   @CIVEC   FE22   @COVEC   FE24   @AIVEC   FE26   
+@AOVEC   FE28   @LOVEC   FE2A   @BNKBF   FE35   @CRDMA   FE3C   
+@CRDSK   FE3E   @VINFO   FE3F   @RESEL   FE41   @FX      FE43   
+@USRCD   FE44   @MLTIO   FE4A   @ERMDE   FE4B   @ERDSK   FE51   
+@MEDIA   FE54   @BFLGS   FE57   @DATE    FE58   @HOUR    FE5A   
+@MIN     FE5B   @SEC     FE5C   
+
+ABSOLUTE     0000
+CODE SIZE    1A00 (0000-19FF)
+DATA SIZE    0600 (1A00-1FFF)
+COMMON SIZE  0000
+USE FACTOR     0B
+
+
+
+CP/M 3.0 System Generation
+Copyright (C) 1982, Digital Research
+
+Default entries are shown in (parens).
+Default base is Hex, precede entry with # for decimal
+
+Use GENCPM.DAT for defaults (Y) ?  Y 
+
+Create a new GENCPM.DAT file (N) ?  N 
+
+Display Load Map at Cold Boot (N) ?  
+
+Number of console columns (#80) ?  
+Number of lines in console page (#24) ?  
+Backspace echoes erased character (N) ?  
+Rubout echoes erased character (Y) ?  
+
+Initial default drive (A:) ?  
+
+Top page of memory (D7) ?  D DF 
+Bank switched memory (N) ?  Y 
+Common memory base page (00) ?  C C0 
+
+Long error messages (Y) ?  Y 
+
+Accept new system definition (Y) ?  Y 
+
+ BNKBIOS3 SPR  C600H  1A00H
+ BNKBIOS3 SPR  BA00H  0600H
+ RESBDOS3 SPR  C000H  0600H
+ BNKBDOS3 SPR  8C00H  2E00H
+
+*** CP/M 3.0 SYSTEM GENERATION DONE ***
+
+BANKED-REPRODUCIBLE: PASS
+/tmp/pc001-video-check-venv/bin/python tools/video_signature.py
+build/bin/zmac --zmac -o build/video-test.cim -o build/video-test.lst src/video-test.asm
+cc -std=c11 -O2 -Wall -Wextra -Werror -I../dac-emulation tests/video_probe.c ../dac-emulation/machines/robotron1715m/robotron.c ../dac-emulation/machines/robotron1715m/disk.c ../dac-emulation/machines/robotron1715m/sio.c ../dac-emulation/machines/robotron1715m/keyboard_board.c ../dac-emulation/machines/robotron1715m/keyboard_cpu.c ../dac-emulation/common/cpu/z80.c ../dac-emulation/common/media/media.c ../dac-emulation/common/trace/trace.c -o build/video-probe
+build/video-probe build/video-test.cim build/banked/platform-62400.cim
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO RAM PASS: 4096 char + 2048 screen (mirrored), two patterns + bidirectional alias, restored
+
+Mismatch expected-buffer address high/low, expected/actual: 50 7B DC DD 
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO FAIL: memory/status or restoration mismatch
+
+VIDEO SKIP: requires qualified banked 62400 platform and W4 display state
+
+VIDEO-PROBE PASS: real instructions, failure restoration, profile guard, bank isolation
+cc -std=c11 -O2 -Wall -Wextra -Werror -I../dac-emulation tests/floppy_probe.c ../dac-emulation/machines/robotron1715m/robotron.c ../dac-emulation/machines/robotron1715m/disk.c ../dac-emulation/machines/robotron1715m/sio.c ../dac-emulation/machines/robotron1715m/keyboard_board.c ../dac-emulation/machines/robotron1715m/keyboard_cpu.c ../dac-emulation/common/cpu/z80.c ../dac-emulation/common/media/media.c ../dac-emulation/common/trace/trace.c -o build/floppy-probe
+build/floppy-probe build/wm-floppy.cim build/wm-format.cim
+call 0 drive 0 track 0 -> 0 FDC c3 00 00 bytes=0 phase=0
+call 1 drive 2 track 0 -> 0 FDC 00 00 00 bytes=1024 phase=0
+call 5 drive 2 track 0 -> 0 FDC 38 00 00 bytes=1024 phase=0
+call 2 drive 2 track 0 -> 1 FDC 38 00 00 bytes=1024 phase=0
+call 3 drive 2 track 0 -> 1 FDC 38 00 00 bytes=1024 phase=0
+call 3 drive 2 track 0 -> 0 FDC 00 00 00 bytes=20 phase=0
+call 1 drive 2 track 0 -> 0 FDC 00 00 00 bytes=1024 phase=0
+call 4 drive 2 track 0 -> 0 FDC 00 00 00 bytes=1024 phase=0
+call 2 drive 2 track 0 -> 0 FDC 00 00 00 bytes=1024 phase=0
+call 2 drive 3 track 0 -> 1 FDC 00 00 00 bytes=1024 phase=0
+call 3 drive 3 track 159 -> 0 FDC 05 00 00 bytes=20 phase=0
+call 4 drive 0 track 0 -> 0 FDC 05 00 00 bytes=20 phase=0
+call 2 drive 2 track 0 -> 1 FDC 05 00 00 bytes=20 phase=0
+call 1 drive 2 track 160 -> 1 FDC 05 00 00 bytes=20 phase=0
+call 1 drive 2 track 0 -> 1 FDC 20 00 00 bytes=20 phase=0
+call 1 drive 2 track 0 -> 1 FDC 20 00 00 bytes=20 phase=0
+call 1 drive 4 track 0 -> 1 FDC 20 00 00 bytes=20 phase=0
+call 3 drive 2 track 0 -> 1 FDC 40 02 00 bytes=20 phase=0
+call 5 drive 2 track 0 -> 1 FDC 18 00 00 bytes=20 phase=0
+call 7 drive 0 track 0 -> 0 FDC 18 00 00 bytes=20 phase=0
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+
+FORMAT PASS: 800 KiB verified; selected floppy writes enabled.
+FORMATTER PASS: command parser, all 160 tracks/800 sectors, verify, other disk unchanged
+FLOPPY PASS: probe, token guard, format, RMW, two drives, last cylinder/head, write isolation

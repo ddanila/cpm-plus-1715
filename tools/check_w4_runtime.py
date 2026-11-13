@@ -50,6 +50,8 @@ def main():
                         ROOT/f'build/banked/platform-{suffix}.json', a.baud)
     disk = a.out / "disk.img"
     shutil.copyfile(image, disk)
+    disk_b = a.out/'disk-b.img'
+    if a.banked: disk_b.write_bytes(bytes([0xe5])*819200)
     if a.banked and a.extended:
         data = disk.read_bytes()
         for name, payload in [
@@ -152,6 +154,8 @@ def main():
                     str(port.fd),
                     "--volume",
                     str(disk),
+                    *(['--drive-b',str(disk_b)] if a.banked else []),
+                    *(['--drive-b-writable'] if a.banked and not a.read_only else []),
                     *( [] if a.read_only else ["--writable"] ),
                     *( ["--test-corrupt-read-reply-once"] if a.corrupt_read else [] ),
                     "--console-pty",
@@ -188,33 +192,38 @@ def main():
             c.warm_boot()
             report["cases"].append("warm boot")
             assert b"Robotron" in c.command("TYPE HELLO.TXT")
+            if a.banked and not a.read_only:
+                c.command('PIP B:SERIAL.TXT=A:HELLO.TXT')
+                assert b'Robotron' in c.command('TYPE B:SERIAL.TXT')
+                assert inspect(disk_b.read_bytes())[(0,'SERIAL.TXT')].data == inspect(disk.read_bytes())[(0,'HELLO.TXT')].data
+                report['cases'].append('independent serial B disk')
             if a.banked:
-                c.command("PIP B:HELLO.TXT=A:HELLO.TXT")
-                assert b"Robotron" in c.command("TYPE B:HELLO.TXT")
+                c.command("PIP E:HELLO.TXT=A:HELLO.TXT")
+                assert b"Robotron" in c.command("TYPE E:HELLO.TXT")
                 c.warm_boot()
-                assert b"Robotron" in c.command("TYPE B:HELLO.TXT")
+                assert b"Robotron" in c.command("TYPE E:HELLO.TXT")
                 if not a.read_only:
-                    c.command("PIP RAMCOPY.COM=B:HELLO.TXT")
+                    c.command("PIP RAMCOPY.COM=E:HELLO.TXT")
                 report["cases"].append("RAM disk and warm boot")
             if a.banked and a.extended:
                 assert b'BANKED TPA PASS' in c.command('TPATEST')
                 assert b'BANKED DISK PASS' in c.command('DSKTEST')
                 report['cases'].extend(['advertised TPA verified', 'RAM disk full directory, full disk, random records and reuse'])
-                c.command('PIP B:BIG.BIN=A:BIG.BIN')
+                c.command('PIP E:BIG.BIN=A:BIG.BIN')
                 c.warm_boot()
-                c.command('PIP BACK.BIN=B:BIG.BIN')
+                c.command('PIP BACK.BIN=E:BIG.BIN')
                 files = inspect(disk.read_bytes())
                 assert files[(0,'BACK.BIN')].data == files[(0,'BIG.BIN')].data
                 report['cases'].append('80 KiB cross-bank roundtrip')
                 c.command('COLD')
-                assert b'No File' in c.command('DIR B:') or b'NO FILE' in c.output[-200:]
+                assert b'No File' in c.command('DIR E:') or b'NO FILE' in c.output[-200:]
                 report['cases'].append('cold boot clears RAM disk')
                 at = len(c.output)
                 c.command('SUBMIT TEST')
                 c.expect(b'Native CP/M Plus on Robotron', start=at)
                 c.expect(b'A>', start=c.output.index(b'Native CP/M Plus on Robotron', at))
                 shown = c.command('SHOW')
-                assert re.search(rb'B: RW, Space:\s+94k', shown), shown
+                assert re.search(rb'E: RW, Space:\s+94k', shown), shown
                 report['cases'].append('SUBMIT and SHOW')
             if a.read_only:
                 assert b'ERROR' in c.command('PIP COPY.TXT=HELLO.TXT')

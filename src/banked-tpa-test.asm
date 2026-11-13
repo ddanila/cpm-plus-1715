@@ -12,7 +12,7 @@ body:
         ld hl,(6)
         ld l,0
         ld a,h
-        cp 0bdh
+        cp 0bah
         jr c,failed
         ld de,0100h
         or a

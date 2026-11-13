@@ -1,0 +1,52 @@
+{
+  "hardware_executed": false,
+  "source_sha256": "c4e21efca69ef43fba13d19334874428f98bd1b1277e2e43907f22a20b1d8981",
+  "probe_sha256": "20bd40b03691ef52f7ede07a9aff087165f4b88272930d1974fbd07a5633f903",
+  "baud": 62400,
+  "pty_transport_baud": 9600,
+  "complete": true,
+  "image_sha256": "36f768c6abcf6b9e5a915b3a4d4e8e6e54d6c0d7a773b770de98d82fd60ca55c",
+  "platform_sha256": "82a8f7f85b44b5543605e20679acce62f42cd5651dda0f6af5dca9530a8d7d80",
+  "host_sha256": "6576f30cdb9337a74bdb487e60b06216fb62aa0d31aa3a469ccb937719a8a70a",
+  "profile": "banked",
+  "fault": null,
+  "fragmented": true,
+  "read_only": false,
+  "corrupt_read": false,
+  "ram_fill": 170,
+  "rom_sha256": "f76f3bc15bddd7a4af2f4da5d66e0153b765d910d204b06f186efc15c68d8736",
+  "cases": [
+    "cold boot",
+    "binary copy verified",
+    "warm boot",
+    "independent serial B disk",
+    "RAM disk and warm boot",
+    "advertised TPA verified",
+    "RAM disk full directory, full disk, random records and reuse",
+    "80 KiB cross-bank roundtrip",
+    "cold boot clears RAM disk",
+    "SUBMIT and SHOW"
+  ],
+  "rom": {
+    "target": "robotron1715w",
+    "protocol": "W4",
+    "rom_bytes": 2048,
+    "main_ram_workspace": 0,
+    "max_block": 64,
+    "boot_identity": null,
+    "replay_scope": "none",
+    "capabilities": 127,
+    "firmware_version": "4.1.0",
+    "machine_family": "Robotron 1715M/W",
+    "baud": 62400,
+    "supported_bauds": [
+      62400,
+      41600,
+      9600
+    ],
+    "framing": "8N1",
+    "clock_multiplier": 16,
+    "build_id": "5d0209bb55b89711",
+    "rom_integrity": "CRC16 residue zero"
+  }
+}

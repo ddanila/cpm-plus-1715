@@ -6,7 +6,7 @@
 ;
 ; Banked BIOS: common code at C600h, private data below C000h in bank 0.
 ; The serial adapter occupies E000h..F5FFh. CP/M banks 0/1 map to selectors
-; 1/2; selectors 3/4 exclusively back the volatile B: disk.
+; 1/2; selectors 3/4 exclusively back the volatile E: disk.
 
 true            equ     0ffffh
 jmpop           equ     0c3h
@@ -82,6 +82,7 @@ boot:   lxi sp,stack$top
         call format
         xra a
         call selmem
+        call 0d000h ; initialize U8272, physical writes locked
         lxi h,signon
         call print
         jmp load$ccp
@@ -108,7 +109,7 @@ load$ccp:
         ora a
         jz ccp$reset$done
         ; BOOT may be called without reloading SYS: discard the previous
-        ; login/allocation state after formatting B:, unlike a warm boot.
+        ; login/allocation state after formatting E:, unlike a warm boot.
         mvi c,13
         call bdos
         xra a
@@ -259,18 +260,27 @@ setdma: mov h,b
         ret
 seldsk: lxi h,0
         mov a,c
-        cpi 2
+        cpi 5
         rnc
         sta disk$drive
-        ora a
-        lxi h,xdph1
-        rnz
+        cpi 2
+        jnc local$select
         push b
         push d
         call a$seldsk
         pop d
         pop b
-        lxi h,xdph0
+local$select:
+        lda disk$drive
+        add a
+        mov e,a
+        mvi d,0
+        lxi h,dph$table
+        dad d
+        mov e,m
+        inx h
+        mov d,m
+        xchg
         ret
 read:   xra a
         sta disk$write
@@ -284,8 +294,10 @@ diskio: lda disk$write
         call from$dma
 disk$transfer:
         lda disk$drive
-        ora a
-        jnz ramio
+        cpi 4
+        jz ramio
+        cpi 2
+        jnc physical$io
         lxi b,staging
         call a$setdma
         lda disk$write
@@ -295,6 +307,21 @@ disk$transfer:
         jmp io$done
 host$read:
         call a$read
+        jmp io$done
+physical$io:
+        mov c,a
+        lhld disk$sector
+        xchg
+        lhld disk$track
+        db 0ddh,21h ; LD IX,common staging
+        dw staging
+        lda disk$write
+        ora a
+        jnz physical$write
+        call 0d003h
+        jmp io$done
+physical$write:
+        call 0d006h
         jmp io$done
 ramio:  lhld disk$track
         mov a,h
@@ -423,6 +450,7 @@ disk$sector: dw 1
 disk$dma: dw 80h
 staging: ds 128
 ; Reserve common BIOS to place RESBDOS at C000h and cap the TPA.
+; FLOPPY_DRIVER
         ds 1a00h-($-boot$entry)
         dseg
         dw write,read,return,return
@@ -430,10 +458,23 @@ staging: ds 128
 xdph0: dw trans,0,0,0,0,0,dpb0,csv0,alv0,dirhead0,0ffffh,0ffffh
         db 0
         dw write,read,return,return
-        db 1,0
-xdph1: dw trans1,0,0,0,0,0,dpb1,0,alv1,dirhead1,0ffffh,0ffffh
+        db 4,0
+xdph4: dw trans4,0,0,0,0,0,dpb4,0,alv4,dirhead4,0ffffh,0ffffh
         db 0
-trans1: db 1,2,3,4,5,6,7,8
+dph$table: dw xdph0,xdph1,xdph2,xdph3,xdph4
+        dw write,read,return,return
+        db 1,0
+xdph1: dw trans,0,0,0,0,0,dpb0,csv1,alv1,dirhead1,0ffffh,0ffffh
+        db 0
+        dw write,read,return,return
+        db 2,0
+xdph2: dw trans,0,0,0,0,0,dpb0,csv2,alv2,dirhead2,0ffffh,0ffffh
+        db 0
+        dw write,read,return,return
+        db 3,0
+xdph3: dw trans,0,0,0,0,0,dpb0,csv3,alv3,dirhead3,0ffffh,0ffffh
+        db 0
+trans4: db 1,2,3,4,5,6,7,8
 trans: db 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
         db 21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40
 ; A: unchanged 800K host disk.
@@ -443,8 +484,8 @@ dpb0: dw 40
         db 0c0h,0
         dw 32,4
         db 0,0
-; B: 96 x 1K blocks, two directory blocks, 64 directory entries.
-dpb1: dw 8
+; E: 96 x 1K blocks, two directory blocks, 64 directory entries.
+dpb4: dw 8
         db 3,7,0
         dw 95,63
         db 0c0h,0
@@ -452,15 +493,36 @@ dpb1: dw 8
         db 0,0
 csv0: ds 32
 alv0: ds 98
-alv1: ds 24
+alv4: ds 24
 dirhead0: dw bcb0
-dirhead1: dw bcb1
+dirhead4: dw bcb4
 bcb0: db 0ffh,0,0,0,0,0,0,0,0,0
         dw dirbuf0
         db 0,0,0
+bcb4: db 0ffh,0,0,0,0,0,0,0,0,0
+        dw dirbuf4
+        db 0,0,0
+dirbuf0: ds 128
+dirbuf4: ds 128
+csv1: ds 32
+alv1: ds 98
+dirhead1: dw bcb1
 bcb1: db 0ffh,0,0,0,0,0,0,0,0,0
         dw dirbuf1
         db 0,0,0
-dirbuf0: ds 128
 dirbuf1: ds 128
+csv2: ds 32
+alv2: ds 98
+dirhead2: dw bcb2
+bcb2: db 0ffh,0,0,0,0,0,0,0,0,0
+        dw dirbuf2
+        db 0,0,0
+dirbuf2: ds 128
+csv3: ds 32
+alv3: ds 98
+dirhead3: dw bcb3
+bcb3: db 0ffh,0,0,0,0,0,0,0,0,0
+        dw dirbuf3
+        db 0,0,0
+dirbuf3: ds 128
         end

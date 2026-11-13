@@ -27,7 +27,14 @@ def main():
     p.add_argument("--baud", type=int, choices=[9600, 41600, 62400], default=62400)
     p.add_argument("--read-only", action="store_true")
     p.add_argument('--nonbanked', action='store_true', help='use the previous single-bank system')
+    p.add_argument('--drive-b',type=Path,help='800K source image copied into the session; default empty disk')
+    p.add_argument('--drive-b-read-only',action='store_true')
     a = p.parse_args()
+    if a.nonbanked and a.drive_b: p.error('--drive-b requires banked profile')
+    b_source = a.drive_b.read_bytes() if a.drive_b else bytes([0xe5])*819200
+    if not a.nonbanked:
+        from media import inspect
+        inspect(b_source)
     if a.mode=='auto':
         from shared_host import load
         load(a.host)
@@ -62,15 +69,23 @@ def main():
     )
     if not a.nonbanked:
         identity["profile"] = "1715m-banked"
+        import hashlib
+        identity['drive_map'] = ['serial-a','serial-b','floppy-0','floppy-1','ram']
+        identity['drive_b_source_sha256'] = hashlib.sha256(b_source).hexdigest()
+        identity['drive_b_read_only'] = a.drive_b_read_only
     if a.mode == "boot" or (a.mode == "auto" and not session.exists()):
         session.mkdir(parents=True, exist_ok=False)
         shutil.copyfile(a.image, session / "disk.img")
+        if not a.nonbanked: (session/'disk-b.img').write_bytes(b_source)
         (session / "identity.json").write_text(json.dumps(identity, indent=2))
     else:
         if json.loads((session / "identity.json").read_text()) != identity:
             raise ValueError("Session identity mismatch")
         if (session / "disk.img").stat().st_size != 819200:
             raise ValueError("Invalid disk size")
+    if not a.nonbanked:
+        from media import inspect
+        inspect((session/'disk-b.img').read_bytes())
     from shared_host import load
     load(a.host)
     from jh_recovery import configure_link
@@ -104,6 +119,9 @@ def main():
                     report["events"] = m.events
                     report["complete"] = True
             command = host_command(a, session, port.fd) + ["--disk-baud", str(a.baud), "--serial-verified"]
+            if not a.nonbanked:
+                command += ['--drive-b',str(session/'disk-b.img')]
+                if not a.drive_b_read_only and not a.read_only: command += ['--drive-b-writable']
             if a.mode == "auto":
                 from shared_host import load
                 load(a.host)

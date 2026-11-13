@@ -1,8 +1,8 @@
 # Banked CP/M Plus on the 1715M
 
 The W4 launcher defaults to banked CP/M with a serial console, persistent
-host-backed A: and volatile B:. Local video, keyboard and floppy drivers are
-not part of this profile. W2/W3 and classic 64 KiB 1715 builds remain nonbanked.
+host-backed A: and B:, physical floppies C: and D:, and volatile RAM disk E:.
+Local video and keyboard console drivers are not part of this profile. W2/W3 and classic 64 KiB 1715 builds remain nonbanked.
 
 Build with `make wm-banked`. The existing W4 boot command in
 [wm-serial.md](wm-serial.md) selects the matching banked artifacts at 9600,
@@ -19,6 +19,45 @@ disk in place. Copy user files offline into a separately prepared new image
 using the repository's disk tools, retaining the newly built CPM3.SYS and
 CCP.COM. Rebuild the matching manifest after an intentional image change.
 
+## Five-drive layout and physical media
+
+| Drive | Storage | Persistence |
+| --- | --- | --- |
+| A: | Serial system image | Session `disk.img` |
+| B: | Additional serial image | Session `disk-b.img` |
+| C: | First physical floppy | Diskette |
+| D: | Second physical floppy | Diskette |
+| E: | 96 KiB RAM disk | Cleared by a fresh OS boot |
+
+The banked launcher creates an empty native 800 KiB B: image by default.
+`--drive-b image.img` supplies a source copied into the new session;
+`--drive-b-read-only` protects B:, and `--read-only` protects both serial
+images. Keep the same options when attaching. Earlier two-drive sessions
+have a different identity: migrate files offline into a new session instead
+of changing their identity by hand.
+
+C:/D: currently use the native 800 KiB layout: 80 cylinders, two heads,
+five 1024-byte sectors (IDs 1–5) per head, exposed as 40 CP/M records per
+logical track. Other diskette geometries are not autodetected. Each 128-byte
+write reads and merges a whole sector before DMA writes it back. Reads do
+not require write permission; ordinary physical writes start locked after
+cold boot. Serial read-only options do not govern physical media.
+
+`FORMAT C PROBE` recalibrates and reports readiness without writing disk
+contents. `FORMAT C ERASE` irreversibly formats **all** of C:, verifies all
+800 sectors as E5, and only then unlocks C: for filesystem writes. Use D in
+place of C only when its diskette may be erased. An error locks both physical
+drives and stops the motor. `FORMAT C LOCK` locks both drives and stops the
+motor. It does not flush application buffers: finish file operations first.
+The resulting disk is an empty filesystem, not a bootable system disk.
+
+DMA uses the UA858 at port 00h and FDC data endpoint 41h, with the CPU
+interrupts disabled as in the serial BIOS. The stock S550 control sequence
+and motherboard schematic were used to correct motor control and transfer
+mode. This remains a serial-console port; local display refresh and keyboard
+support are separate work. Physical read/write error recovery is bounded;
+a bad disk returns a CP/M error rather than redirecting I/O to serial media.
+
 ## Memory
 
 This profile requires the reference CAS-PROM mapping: selectors 1–4 provide
@@ -29,18 +68,18 @@ This is not a full RAM diagnostic or qualification of a specimen's CAS PROM.
 
 | Region | Use |
 | --- | --- |
-| Selector 1, below C000h | CP/M bank 0: banked BDOS at 8F00h, BIOS data/buffers at BD00h |
+| Selector 1, below C000h | CP/M bank 0: banked BDOS at 8C00h, BIOS data/buffers at BA00h |
 | Selector 2, below C000h | CP/M bank 1: application TPA and CCP |
-| Selectors 3 and 4, below C000h | Two 48 KiB halves of B: |
+| Selectors 3 and 4, below C000h | Two 48 KiB halves of E: |
 | C000h–C5FFh, common | Resident BDOS and SCB |
-| C600h–DFFFh, common | Resident BIOS and reserved common space |
+| C600h–DFFFh, common | Resident BIOS; DMA floppy driver D000h–DBFFh, sector buffer DC00h–DFFFh |
 | E000h–F5FFh, common | Serial platform and filesystem loader |
 | F600h–F6FFh, common | Platform/BIOS stack |
 | F700h–F7FFh | Reserved scratch, used by the TPA acceptance diagnostic |
 | F800h–FFFFh | Reserved; no local display service |
 
 The application ceiling is C000h; CCP's resident loader uses some of that
-space. Acceptance requires at least 47 KiB of advertised TPA and writes and
+space. Acceptance requires at least 46 KiB of advertised TPA and writes and
 reads every byte below the actual advertised ceiling. The generated memory
 map and SYS header are checked during the build.
 
@@ -53,9 +92,9 @@ in CP/M bank 0. RAM-disk banks are not offered to CP/M's buffer allocator.
 
 ## RAM disk and boot validation
 
-B: has 96 KiB raw capacity, 1 KiB blocks, 64 directory entries and 94 KiB file
+E: has 96 KiB raw capacity, 1 KiB blocks, 64 directory entries and 94 KiB file
 capacity. It survives warm boots and disk resets. A fresh OS boot formats it;
-power loss also loses its contents. Save anything important to A: before
+power loss also loses its contents. Save anything important to A: or B: before
 rebooting. There is no automatic persistence, recovery or degraded-bank mode.
 
 The loader scans the full directory and accepts the generated two-extent SYS
@@ -71,7 +110,7 @@ Use the revisions in `tools/wm-dependencies.json`. Build the emulator and host
 as described in wm-serial.md, then run:
 
 ```sh
-make test-banked wm-probe DAC=/path/to/dac-emulation
+make test-banked test-floppy test-formatter wm-probe DAC=/path/to/dac-emulation
 python3 tools/check_banked_reproducible.py
 python3 tools/check_w4_runtime.py --banked --extended --fragmented \
   --baud 62400 --host /path/to/jukuhost --rom /path/to/rom-w4.bin \
@@ -90,9 +129,9 @@ CAS fixture; they never change source media or physical hardware.
 
 Tests cover instruction-executed BIOS banking and DMA, copy boundaries,
 zero-length/one-shot moves, invalid RAM-disk addresses, the advertised TPA,
-full directory/full disk, random records, deletion/reuse, an 80 KiB A:↔B:
+full directory/full disk, random records, deletion/reuse, an 80 KiB A:↔E:
 round trip, warm boots, cold clearing, SUBMIT and SHOW. Extended suites inject
-destructive B: diagnostics only into private test images. Do not run those
+destructive E: diagnostics only into private test images. Do not run those
 diagnostics against a RAM disk containing files you want to keep.
 
 CI runs the emulator campaigns on Linux and macOS, rebuilds the tools and
@@ -108,9 +147,9 @@ Before a hardware campaign, verify the actual CAS-PROM mapping and all four
 RAM banks with the existing Ravi diagnostics. Use a new disposable session
 and known-working W4 ROM and serial adapter.
 
-Boot at 9600 first. Check sign-on, DIR/SHOW, copies A:→B:→A: with independent
-host-side byte comparison, repeated Ctrl-C warm boots, and preservation of B:.
-Repeat with a file larger than 48 KiB. Start a new OS boot and confirm B: is
+Boot at 9600 first. Check sign-on, DIR/SHOW, copies A:→E:→A: with independent
+host-side byte comparison, repeated Ctrl-C warm boots, and preservation of E:.
+Repeat with a file larger than 48 KiB. Start a new OS boot and confirm E: is
 empty while A: remains intact. Repeat at 41600 and 62400, retaining upload
 readback, serial logs, checksums and session identity. Only successful physical
 campaigns should be described as hardware qualification.
@@ -123,6 +162,9 @@ was accessed for these reports.
 
 
 ## PC001 bank-transfer correction — 2026-11-12
+
+The following historical results predate the five-drive layout; their B: was
+the RAM disk now assigned to E:.
 
 Physical testing found that the original scalar `LDAX D` / `MOV M,A` copy
 loop wrote the source bank when port 24h selected different source and

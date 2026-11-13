@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 import zipfile
 import pexpect
@@ -23,7 +24,12 @@ def build(out=None):
             for name in ('resbdos3.spr', 'bnkbdos3.spr'):
                 (work/name).write_bytes(archive.read(name))
         shutil.copyfile(dri.INPUTS/'gencpm.dat', work/'gencpm.dat')
-        dri.dos_text(ROOT/'src/cpm3-banked-bios.asm', work/'jbios.asm')
+        subprocess.run([str(ROOT/'build/bin/zmac'), '--zmac', '-o', str(out/'floppy.cim'), str(ROOT/'src/wm-floppy.asm')], cwd=ROOT, check=True)
+        floppy = (out/'floppy.cim').read_bytes()
+        if len(floppy)>0xc00: raise ValueError('floppy code overlaps common buffer')
+        include = '        ds 0a00h-($-boot$entry)\n' + ''.join('        db '+','.join(f'0{x:02x}h' for x in floppy[i:i+16])+'\n' for i in range(0,len(floppy),16))
+        bios = (ROOT/'src/cpm3-banked-bios.asm').read_text().replace('; FLOPPY_DRIVER',include)
+        (work/'jbios.asm').write_bytes(bios.replace('\n','\r\n').encode())
         dri.dos_text(dri.INPUTS/'scb.asm', work/'scb.asm')
         for args in [('RMAC.COM','jbios'), ('RMAC.COM','scb'),
                      ('LINK.COM','bnkbios3[b]=jbios,scb')]:

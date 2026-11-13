@@ -1,6 +1,7 @@
 # Robotron 1715W/M serial CP/M Plus
 
-W4 now defaults to the [banked profile with RAM disk](wm-banked.md). Build
+W4 now defaults to the [five-drive banked profile](wm-banked.md): serial A:/B:,
+physical C:/D:, RAM E:. Build
 `make wm-banked` before using the W4 launcher. Pass `--nonbanked` for the
 previous W4 image. The original W2/W3 profile below remains nonbanked.
 

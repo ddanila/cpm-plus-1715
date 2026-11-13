@@ -1,5 +1,5 @@
 ; SPDX-License-Identifier: MIT
-; Destructive B: acceptance diagnostic, injected only into private test images.
+; Destructive E: acceptance diagnostic, injected only into private test images.
         org 100h
         ld sp,stack
         ld c,45
@@ -139,7 +139,7 @@ clear_fcb:
         ld de,fcb+1
         ld bc,11
         ldir
-        ld a,2
+        ld a,5
         ld (fcb),a
         ret
 close:  ld de,fcb

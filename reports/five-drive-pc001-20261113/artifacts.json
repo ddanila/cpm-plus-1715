@@ -1,0 +1,8 @@
+{
+  "build/wm-floppy.cim": "45037a4ceed40fef3cd03df0f37623dab0d02d0b16a986c8e930d687da5f9f09",
+  "build/wm-format.cim": "b181cb8eaa680cac3823b6667afc1412a0a5477736f339f32630c28263c654e1",
+  "build/banked/cpm3.sys": "4fbc5f745d039742167d047eba94115ee43b150424659463f0a4ac8f157deb9a",
+  "build/banked/platform-62400.cim": "82a8f7f85b44b5543605e20679acce62f42cd5651dda0f6af5dca9530a8d7d80",
+  "out/cpm-plus-1715-wm-banked-62400.img": "36f768c6abcf6b9e5a915b3a4d4e8e6e54d6c0d7a773b770de98d82fd60ca55c",
+  "reports/five-drive-pc001-20261113/format-driver.cim": "84bf7ccab1ba9b3650d3dd63e6ee1f9f7fd1065705d70edd1cba946dc7986614"
+}

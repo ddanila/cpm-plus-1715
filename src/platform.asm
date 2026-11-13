@@ -340,8 +340,13 @@ scroll: ld hl,(cursor)
 seldsk: ld a,c
         ld (drive),a
         ld hl,0
+.ifdef BANKED
+        cp 2
+        ret nc
+.else
         or a
         ret nz
+.endif
         inc hl
         ret
 settrk: ld (track),bc

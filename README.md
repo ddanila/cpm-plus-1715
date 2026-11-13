@@ -6,7 +6,7 @@ classic PIO floppy-controller interface. This is a new OS port, not a patched
 intercepts BDOS calls or injects disk records into guest RAM.
 
 The [1715M/W4 banked profile](docs/wm-banked.md) adds banked CP/M, at least
-47 KiB of advertised TPA, and a 96 KiB volatile B: RAM disk. It is the W4
+46 KiB of advertised TPA, serial A:/B:, physical C:/D:, and a 96 KiB volatile E: RAM disk. It is the W4
 launcher default; `--nonbanked` retains the previous system.
 
 A separate [serial build](https://github.com/ddanila/cpm-plus-1715/blob/main/docs/serial-console.md) adds stock-ROM V.24 boot,

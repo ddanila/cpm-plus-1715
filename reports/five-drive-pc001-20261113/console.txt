@@ -1,0 +1,123 @@
+^C
+A>REBOOT
+
+CP/M Plus 3.1 - Robotron 1715M banked
+A>PIP B:HELLO.TXT=A:HELLO.TXT
+
+A>TYPE B:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP E:HELLO.TXT=A:HELLO.TXT
+
+A>TYPE E:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>FORMAT C PROBE
+Drive ready; recalibration passed. No data written.
+
+A>FORMAT C ERASE
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+
+FORMAT FAIL; physical writes locked. Track/record/ST3/results: 00 00 30 EE 00 00 00 00 00 00 
+
+A>^C
+A>FDUCHK
+FDU init return/MSR: 00 80 
+C probe return/MSR, ST3, result: 00 80 30 20 00 1F D3 00 00 00 
+Motor off; no disk data written.
+
+A>FORMAT C ERASE
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+
+FORMAT FAIL; physical writes locked. Track/record/ST3/results: 00 00 30 EE 30 14 00 00 00 00 
+
+A>^C
+A>FDUCHK
+FDU init return/MSR: 00 80 
+C probe return/MSR, ST3, result: 00 80 30 20 00 28 D3 00 00 00 
+Motor off; no disk data written.
+
+A>FORMAT C ERASE
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+
+FORMAT FAIL; physical writes locked. Track/record/ST3/results: 00 00 30 40 10 00 00 08 05 03 
+
+A>^C
+A>FDUCHK
+FDU init return/MSR: 00 80 
+C probe return/MSR, ST3, result: 00 80 30 20 00 28 D3 08 05 03 
+Motor off; no disk data written.
+
+A>FORMAT C ERASE
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+..
+FORMAT FAIL; physical writes locked. Track/record/ST3/results: 02 29 30 40 10 00 01 08 05 03 
+
+A>^C
+A>FDUCHK
+FDU init return/MSR: 00 80 
+C probe return/MSR, ST3, result: 00 80 30 20 00 48 D3 00 00 00 
+Motor off; no disk data written.
+
+A>FORMAT C ERASE
+Erasing and verifying 80 cylinders, 2 heads, 5 x 1024 bytes
+................................................................................................................................................................
+FORMAT PASS: 800 KiB verified; selected floppy writes enabled.
+
+A>DIR C:
+No File
+A>PIP C:HELLO.TXT=A:HELLO.TXT
+
+A>TYPE C:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP B:FLOPPY.TXT=C:HELLO.TXT
+
+A>^C
+A>PIP C:CHECK.BIN=A:CHECK.BIN
+
+A>PIP B:CHECK.BIN=C:CHECK.BIN
+
+A>^C
+A>REBOOT
+
+CP/M Plus 3.1 - Robotron 1715M banked
+A>TYPE C:HELLO.TXT
+
+CP/M Error On C: Disk I/O
+BDOS Function = 14 
+A>PIP B:FINAL.BIN=C:CHECK.BIN
+
+ERROR: OPEN FILE NONRECOVERABLE - C:CHECK.BIN
+
+A>TYPE B:FLOPPY.TXT
+Native CP/M Plus on Robotron 1715
+
+A>DIR E:
+No File
+A>VIDTEST
+8275 initial/stopped/restarted: 04 00 04 
+VIDEO RAM PASS: 4096 char + 2048 screen (mirrored), two patterns + bidirectional alias, restored
+
+A>FORMAT C LOCK
+Physical writes locked.
+
+A>FORMAT C PROBE
+Drive ready; recalibration passed. No data written.
+
+A>TYPE C:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>^C
+A>REBOOT
+
+CP/M Plus 3.1 - Robotron 1715M banked
+A>TYPE C:HELLO.TXT
+Native CP/M Plus on Robotron 1715
+
+A>PIP B:FINAL.BIN=C:CHECK.BIN
+
+A>FORMAT C LOCK
+Physical writes locked.
+
+A>

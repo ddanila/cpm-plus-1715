@@ -170,13 +170,13 @@ $(OUT)/cpm-plus-1715-wm-9600.img: $(BUILD)/platform-wm-9600.cim $(BUILD)/cpm3.sy
 
 .PHONY: wm-banked
 wm-banked: $(foreach rate,9600 fast 62400,$(OUT)/cpm-plus-1715-wm-banked-$(rate).img $(BUILD)/banked/platform-$(rate).json)
-$(BUILD)/banked/cpm3.sys: src/cpm3-banked-bios.asm tools/build_banked.py tools/regenerate_cpm3.py third_party/cpm3/scb.asm third_party/cpm3/gencpm.dat $(wildcard third_party/cpm3/releases/*.zip) $(ZXCC)
+$(BUILD)/banked/cpm3.sys: $(ZMAC) src/wm-floppy.asm src/cpm3-banked-bios.asm tools/build_banked.py tools/regenerate_cpm3.py third_party/cpm3/scb.asm third_party/cpm3/gencpm.dat $(wildcard third_party/cpm3/releases/*.zip) $(ZXCC)
 	$(PYTHON) tools/build_banked.py
 $(BUILD)/banked/system.inc: $(BUILD)/banked/cpm3.sys
 	@test -f $@ || $(PYTHON) tools/build_banked.py
 $(BUILD)/banked/platform-%.cim: src/platform-banked-%.asm src/platform.asm src/banked-loader.asm src/serial-platform.asm src/serial-common.asm src/serial-crc-table.asm $(BUILD)/banked/system.inc $(ZMAC) $(wildcard third_party/juku-common/platform/*.asm) third_party/juku-common/platform/rom-abi.inc
 	$(ZMAC) --zmac -o $@ -o $(BUILD)/banked/platform-$*.lst $<
-$(OUT)/cpm-plus-1715-wm-banked-%.img: $(BUILD)/banked/platform-%.cim $(BUILD)/banked/cpm3.sys tools/build_image.py tools/media.py
+$(OUT)/cpm-plus-1715-wm-banked-%.img: $(BUILD)/wm-format.cim $(BUILD)/banked/platform-%.cim $(BUILD)/banked/cpm3.sys tools/build_image.py tools/media.py
 	$(PYTHON) tools/build_image.py --banked $*
 
 .SECONDARY: $(foreach rate,9600 fast 62400,$(BUILD)/banked/platform-$(rate).cim)
@@ -203,7 +203,24 @@ $(BUILD)/banked/platform-%.json: $(OUT)/cpm-plus-1715-wm-banked-%.img
 .PHONY: test-video
 test-video: build/video-test.cim build/video-probe build/banked/platform-62400.cim
 	build/video-probe build/video-test.cim build/banked/platform-62400.cim
-build/video-test.cim: src/video-test.asm $(ZMAC)
+build/video-signature.inc: build/banked/platform-62400.cim tools/video_signature.py
+	$(PYTHON) tools/video_signature.py
+build/video-test.cim: src/video-test.asm build/video-signature.inc $(ZMAC)
 	$(ZMAC) --zmac -o $@ -o build/video-test.lst $<
 build/video-probe: tests/video_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h
 	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) $< $(WM_CORE) -o $@
+
+build/wm-floppy.cim: src/wm-floppy.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ -o build/wm-floppy.lst $<
+build/floppy-probe: tests/floppy_probe.c $(WM_CORE) $(DAC)/machines/robotron1715m/robotron.h
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -I$(DAC) $< $(WM_CORE) -o $@
+.PHONY: test-floppy
+test-floppy: build/wm-floppy.cim build/floppy-probe
+	build/floppy-probe build/wm-floppy.cim
+
+build/wm-format.cim: src/wm-format.asm $(ZMAC)
+	$(ZMAC) --zmac -o $@ -o build/wm-format.lst $<
+
+.PHONY: test-formatter
+test-formatter: build/wm-floppy.cim build/wm-format.cim build/floppy-probe
+	build/floppy-probe build/wm-floppy.cim build/wm-format.cim
