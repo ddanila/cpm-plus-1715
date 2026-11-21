@@ -83,6 +83,36 @@ def main():
         data = console_io.command(text, marker, timeout)
         case(text)
         return data
+    def check_video(name):
+        # Let two full frames settle after the prompt; snapshot all state from
+        # one emulator control transaction, never derive pixels from RAM alone.
+        time.sleep(.15)
+        meta = a.out/'ram.bin.video.json'
+        meta.unlink(missing_ok=True)
+        os.write(commands, b'V')
+        until = time.monotonic()+10
+        while not meta.exists():
+            if time.monotonic()>until: raise TimeoutError('video snapshot')
+            time.sleep(.05)
+        state = json.loads(meta.read_text())
+        ram = (a.out/'ram.bin.video.ram').read_bytes()
+        raster = (a.out/'ram.bin.video.rgb').read_bytes()
+        assert state['running'] and state['latch']==0x3e, state
+        assert state['fetches'] and not state['underruns'] and not state['overflows'], state
+        assert b'A>' in ram[0xf800:0xff80]
+        expected = bytearray(640*288*3)
+        for row in range(24):
+            for col in range(80):
+                c = ram[0xf800+row*80+col]; assert c<128
+                for y in range(12):
+                    bits = 0 if c in (0,32) else ((c*13+y*7)|0x80)&255
+                    if [col,row]==state['cursor']: bits ^= 255
+                    for x in range(8):
+                        pos = ((row*12+y)*640+col*8+x)*3
+                        expected[pos:pos+3] = bytes([170 if bits&(128>>x) else 0])*3
+        assert any(expected) and raster==expected, (name, state)
+        (a.out/(name+'.ppm')).write_bytes(b'P6\n640 288\n255\n'+raster)
+        case(name+' full raster')
     def reset_boot(name, image, readonly=False):
         stop_host()
         os.write(commands,b'R')
@@ -96,8 +126,10 @@ def main():
         session=a.out/'session'
         start('boot',session)
         expect(b'A>');case('serial boot')
+        check_video('boot-video')
         time.sleep(1)
         basic_console(command)
+        check_video('console-video')
         if a.suite=='full':
             file_utilities(command, session/'disk.img', initial_files,
                            lambda: os.write(commands,b'F'),
@@ -114,6 +146,7 @@ def main():
                 time.sleep(.05)
             command('');case('host restart without guest reset')
             os.write(terminal,b'\x03');expect(b'A>');case('warm boot')
+            check_video('warm-video')
             # Original keyboard channel and local console remain usable.
             at=len(output)
             for ch in b'TYPE HELLO.TXT\r':
@@ -122,6 +155,7 @@ def main():
             expect(b'Native CP/M Plus on Robotron 1715',180,at)
             expect(b'A>',180,at);case('local keyboard with mirrored output')
             cold=reset_boot('cold',session/'disk.img')
+            check_video('cold-video')
             command('P1715TST R',b'P1715TEST VERIFY PASS',300)
             command('P1715TST C',b'P1715TEST CLEAN PASS',300)
             command('ERASE NEW.TXT')

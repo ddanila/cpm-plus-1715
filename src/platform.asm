@@ -93,6 +93,7 @@ init:   di
         ld de,0f801h
         ld bc,1919
         ldir
+        call display_init
 .ifdef SERIAL_BOOT
         call remote_init
 .endif
@@ -100,6 +101,51 @@ init:   di
 .endif
 unavailable: xor a
         ret
+.ifndef WM_BOOT
+; Ordinary PC1715/K7222.25, service manual pp.16,22-24 and ZRE sheet 2.
+; The stock serial loader does not establish a usable display configuration.
+; A23.2 D1..D5 select AB11..AB15; D6 selects the glyph bank. X12 supplies
+; AB10 from the counter. 20h..23h are floppy control, not the screen latch.
+display_init:
+        xor a
+        out (19h),a
+        ld a,4fh
+        out (18h),a
+        ld a,57h
+        out (18h),a
+        ld a,6bh
+        out (18h),a
+        ld a,6dh
+        out (18h),a
+        ld a,3eh             ; F800h, standard glyphs, 80-column wiring
+        out (34h),a
+        call display_cursor
+        ld a,20h
+        out (19h),a
+        ret
+display_cursor:
+        ld hl,(cursor)
+        ld de,0f800h
+        or a
+        sbc hl,de
+        ld de,80
+        ld b,0
+display_row:
+        or a
+        sbc hl,de
+        jr c,display_position
+        inc b
+        jr display_row
+display_position:
+        add hl,de
+        ld a,80h
+        out (19h),a
+        ld a,l
+        out (18h),a
+        ld a,b
+        out (18h),a
+        ret
+.endif
  ; Bounded cooperative service; never invoked inside an active disk field.
  ; Preserve all main registers and flags, including CRC and seek state.
 keyservice:
@@ -312,7 +358,11 @@ clear:  ld hl,0f800h
         ld de,0f801h
         ld bc,1919
         ldir
-coutdone: pop hl
+coutdone:
+.ifndef WM_BOOT
+        call display_cursor
+.endif
+        pop hl
         pop de
         pop bc
         pop af

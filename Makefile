@@ -224,3 +224,7 @@ build/wm-format.cim: src/wm-format.asm $(ZMAC)
 .PHONY: test-formatter
 test-formatter: build/wm-floppy.cim build/wm-format.cim build/floppy-probe
 	build/floppy-probe build/wm-floppy.cim build/wm-format.cim
+
+.PHONY: test-plain-video
+test-plain-video: all serial
+	$(PYTHON) tools/check_plain_video.py --dac $(DAC)

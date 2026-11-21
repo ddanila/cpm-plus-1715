@@ -73,7 +73,9 @@ Disk writes use 1024-byte read/modify/write with a clean read cache, no deferred
 BIOS write-back. Successful controller transfer is **not a promise of SD
 power-loss durability**. The carrier backup supply is not integrated here.
 Raw-image field timing is not physical rotational or electrical qualification.
-The simulator does not render the actual CRT or model serial waveforms.
+The serial emulator and dedicated display regression now check the digital
+8275 raster; they do not model analog CRT behavior or serial waveforms. See
+[the blank-display investigation and fix](docs/display-fix.md).
 
 Before physical use: qualify the board and connector independently, measure PIO
 handshake/seek timing, verify keyboard clocking and video setup on the actual

@@ -1,7 +1,8 @@
 # Serial boot, N4 console and host-backed A:
 
 The separate serial build uses the motherboard SIO-B at **9600 8O2**, without
-hardware flow control. Local keyboard/video remain active, and console output
+hardware flow control. The platform explicitly initializes the 8275 and selects F800h via port 34h
+(value 3Eh). Local keyboard/video remain active, and console output
 is mirrored through N4. Only A: is supported: a raw 800 KiB image, 160 logical
 tracks of forty 128-byte records. The classic PIO disk build stays the default.
 
@@ -137,3 +138,13 @@ LOAD/EXEC cannot be replayed safely and ends with an intervention-required
 error. Reset the machine before attempting recovery again.
 
 Details: [shared recovery](https://github.com/ddanila/8080-cosim/blob/master/docs/serial-recovery.md).
+
+## Display regression
+
+The serial emulator always installs independent synthetic glyphs and enables
+DAC's plain-PC1715 CRT. The runtime suite compares actual scanned pixels with
+an independent reference after boot, console commands, warm boot and cold reset.
+It also requires display fetches, correct screen selection and no FIFO/underrun
+errors. A transcript or nonempty F800h RAM alone is not display qualification.
+The fixtures use PTYs only, including macOS `/dev/ttysNNN`; they do not open
+physical serial adapters. See [display-fix.md](display-fix.md).

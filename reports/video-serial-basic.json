@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "hardware_executed": false,
+  "suite": "basic",
+  "rom_profile": "public-serial-fixture",
+  "rom_sha256": "33ad90a95b2cf10903280b556432ce14165a1e6dbbce96d33fda1833f1c677c0",
+  "image_sha256": "6b8a4088b767e0bcfed267b94eb25a40caa119fc4329904eb809cd772af9d693",
+  "platform_sha256": "58913a9be6a1ad69b41e52abbde808a5c788fc5d2a608004459eeacc23e64ff9",
+  "emulator_sha256": "66c1562ba6b6e511701459ed0f41cb3bf3d24e4ac5dc34febf6322fbcb6c709d",
+  "host_sha256": "6576f30cdb9337a74bdb487e60b06216fb62aa0d31aa3a469ccb937719a8a70a",
+  "cases": [
+    "serial boot",
+    "boot-video full raster",
+    "DIR",
+    "TYPE HELLX\bO.TXT",
+    "console-video full raster"
+  ],
+  "session_host_hashes": [
+    "6576f30cdb9337a74bdb487e60b06216fb62aa0d31aa3a469ccb937719a8a70a"
+  ],
+  "fault_injected": false
+}

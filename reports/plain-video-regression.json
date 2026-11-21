@@ -1,0 +1,48 @@
+{
+  "hardware_executed": false,
+  "cases": [
+    {
+      "legacy": 0,
+      "screen_ram_has_banner": true,
+      "running": 1,
+      "lit_pixels": 1491,
+      "fetches": 73840,
+      "underruns": 0,
+      "platform": "platform",
+      "sha256": "ad77135823e2ca740f6499ba9d6e3ebdcedf6c07384c269a1891a3816b0396bf"
+    },
+    {
+      "legacy": 0,
+      "screen_ram_has_banner": true,
+      "running": 1,
+      "lit_pixels": 1491,
+      "fetches": 73840,
+      "underruns": 0,
+      "platform": "platform-serial",
+      "sha256": "58913a9be6a1ad69b41e52abbde808a5c788fc5d2a608004459eeacc23e64ff9"
+    },
+    {
+      "legacy": 1,
+      "screen_ram_has_banner": true,
+      "running": 0,
+      "lit_pixels": 0,
+      "fetches": 0,
+      "underruns": 0,
+      "platform": "platform",
+      "sha256": "b42f77854d910e106a4927f992e725df7fbb2077a90d8e7b3315798a095ed645"
+    },
+    {
+      "legacy": 1,
+      "screen_ram_has_banner": true,
+      "running": 0,
+      "lit_pixels": 0,
+      "fetches": 0,
+      "underruns": 0,
+      "platform": "platform-serial",
+      "sha256": "09546a8ab354d0c5578cf4f87689046b1247dbd5bc428c5e7c633ab1fd9d9174"
+    }
+  ],
+  "dac_revision": "07449fbb51b256ced62739540fde8cbce616ac6d",
+  "before_source_revision": "ec3fabb97f9d5fcc7441b711570fc05193babd58",
+  "glyphs": "independent synthetic wiring fixture; not historical font ROMs"
+}

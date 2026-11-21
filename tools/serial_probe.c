@@ -23,6 +23,21 @@ static void trace_serial(void *p,const dac_trace_event *e){
  if(e->kind[0]=='I' && e->kind[1]=='W' && ((e->address&255)==15 || (e->address&255)==13) && e->data)
  fprintf(stderr,"SIO write %02x = %02x\n",e->address&255,e->data);
 }
+/* Independent synthetic glyphs let the serial campaign check real scanout,
+ * rather than mistaking characters in F800 RAM for a working display. */
+static void video_snapshot(pc1715 *m,const char *base){
+ char path[4096],temporary[4096];FILE *f;
+ snprintf(path,sizeof path,"%s.video.ram",base);f=fopen(path,"wb");
+ if(!f)exit(2);fwrite(m->ram,1,65536,f);fclose(f);
+ snprintf(path,sizeof path,"%s.video.rgb",base);f=fopen(path,"wb");
+ if(!f)exit(2);
+ for(unsigned i=0;i<640*288;i++){uint8_t rgb[3]={m->video.pixels[i]>>16,m->video.pixels[i]>>8,m->video.pixels[i]};fwrite(rgb,1,3,f);}fclose(f);
+ snprintf(path,sizeof path,"%s.video.json",base);
+ snprintf(temporary,sizeof temporary,"%s.video.json.tmp",base);
+ f=fopen(temporary,"wb");if(!f)exit(2);
+ fprintf(f,"{\"running\":%u,\"latch\":%u,\"cursor\":[%u,%u],\"fetches\":%llu,\"underruns\":%llu,\"overflows\":%llu}\n",m->video.running,m->video.latch,m->video.reg[4],m->video.reg[5],(unsigned long long)m->video.fetches,(unsigned long long)m->video.underruns,(unsigned long long)m->video.overflows);fclose(f);
+ if(rename(temporary,path))exit(2);
+}
 typedef struct {int fd;unsigned prefix,remaining,armed,corrupt_after,injected;} link_state;
 static void tx(void *p,uint8_t b){
  link_state *link=p;
@@ -41,6 +56,12 @@ int main(int argc,char **argv){
  if(control>=0)fcntl(control,F_SETFL,fcntl(control,F_GETFL)|O_NONBLOCK);
  int fd=atoi(argv[2]);pc1715 *m=calloc(1,sizeof(*m));if(!m)return 2;
  pc1715_init(m);
+ uint8_t glyphs[4096]={0};
+ for(unsigned c=1;c<128;c++)for(unsigned y=0;y<12;y++){
+  glyphs[y*128+c]=c==32?0:(uint8_t)((c*13+y*7)|0x80);
+  glyphs[2048+y*128+c]=~glyphs[y*128+c];
+ }
+ if(pc1715_video_load(m,glyphs,sizeof glyphs))return 2;
  /* An unreadable scratch floppy supplies the ROM's index/PIO environment.
   * It never supplies CP/M: all system records arrive over SIO B. */
  pico1715_controller controller={0};uint8_t *scratch=calloc(819200,1);
@@ -63,6 +84,7 @@ int main(int argc,char **argv){
     if(key_pending){(void)pc1715_sio_receive(m,0,command);key_pending=0;}
     else if(command=='K')key_pending=1;
     else if(command=='F')link.armed=1;
+    else if(command=='V')video_snapshot(m,argv[3]);
     else if(command=='R'){link.prefix=link.remaining=link.armed=link.corrupt_after=0;pc1715_reset(m);realtime=0;start=ns();base=next_rx=report=0;}
   }}
   if(m->cpu.cycles>=report){fprintf(stderr,"pc=%04x cycles=%llu\n",m->cpu.cpu.pc,(unsigned long long)m->cpu.cycles);fprintf(stderr," sel=%02x irq=%u svc=%u idx=%llu ram800=%u\n",controller.select,controller.irq_enabled,controller.service,(unsigned long long)controller.interrupts,m->ram[0x800]);fflush(stderr);report=m->cpu.cycles+PC1715_CLOCK_HZ*5u;}

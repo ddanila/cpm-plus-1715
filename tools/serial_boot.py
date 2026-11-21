@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Headless Robotron boot/attach using Ravi and the shared native N4 host (Linux)."""
-import argparse, hashlib, json, os, shutil, subprocess, time, sys
+import argparse, hashlib, json, os, shutil, subprocess, time, sys, re
 from contextlib import ExitStack
 from serial_session import bootstrap, host_command, validate_artifacts, positive
 from pathlib import Path
@@ -26,7 +26,9 @@ def main():
   load(a.host)
   from jh_recovery import preflight
   preflight(a.host)
- if a.emulator and not a.serial.startswith('/dev/pts/'):p.error('--emulator requires a PTY')
+ if a.emulator and not (a.serial.startswith('/dev/pts/') or
+                         (sys.platform=='darwin' and re.fullmatch(r'/dev/ttys\d+',a.serial))):
+  p.error('--emulator requires a Linux or macOS PTY')
  if a.timeout<=0:p.error('positive timeout required')
  positive(a.timeout)
  image,platform=validate_artifacts(a.image,a.platform)
