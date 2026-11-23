@@ -1,10 +1,10 @@
 {
   "complete": true,
-  "emulator_commit": "e53c19710a3d1a498082fa3fc60f4cfaa63ce52c",
+  "emulator_commit": "b7e912db2a245fc1a8a2a84605b89f57a59e68fb",
   "physical_instruction_cases": 20,
   "model_regression": "Fails old emulator; passes corrected emulator",
   "old_scalar_bios": "Rejected by existing BIOS probe interbank-copy assertion",
   "corrected_bios": "Passes BIOS probe and extended W4 runtime at 62400 with fragmented SYS and nonzero initial RAM",
   "runtime_report": "bank-bus-runtime.json",
-  "hardware_measurement": "https://github.com/ddanila/dac-emulation/blob/e53c19710a3d1a498082fa3fc60f4cfaa63ce52c/tests/fixtures/robotron-bank-bus/measurement.json"
+  "hardware_measurement": "https://github.com/ddanila/dac-emulation/blob/b7e912db2a245fc1a8a2a84605b89f57a59e68fb/tests/fixtures/robotron-bank-bus/measurement.json"
 }

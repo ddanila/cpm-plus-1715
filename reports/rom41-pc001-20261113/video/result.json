@@ -18,7 +18,7 @@
   "existing_host_disk_files_intact": true,
   "ram_disk_write_read_cleanup": "passed",
   "diagnostic_sha256": "d200852a0c5cb3235b36d84dd15b9b77cfbbeeb7c8fb4c301baa6f4ba9f47aef",
-  "emulator_revision": "8e559628",
+  "emulator_revision": "45cbbea5",
   "limitations": [
     "No visible video or analogue timing validation",
     "No keyboard or floppy I/O tested",

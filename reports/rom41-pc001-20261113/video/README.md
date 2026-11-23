@@ -37,7 +37,7 @@ success, injected readback corruption with successful restoration, an unsupporte
 platform rejection, and untouched non-application banks/common scratch.
 `make test-banked` also passes. DAC `test-robotron-devices` includes a regression
 which fails with the old decode; it and the 20 physical bank-bus cases pass.
-DAC fix: `8e559628`; the dependency pin includes it.
+DAC fix: `45cbbea5`; the dependency pin includes it.
 
 The COM is intentionally bound to this qualified banked 62400 platform's first
 32 jump-table bytes and an initial controller VE=1/IE=0 state. This is a narrow

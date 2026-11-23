@@ -42,7 +42,7 @@
       "sha256": "09546a8ab354d0c5578cf4f87689046b1247dbd5bc428c5e7c633ab1fd9d9174"
     }
   ],
-  "dac_revision": "07449fbb51b256ced62739540fde8cbce616ac6d",
+  "dac_revision": "063641e5d1641b4049cb0306cde2c6901379f305",
   "before_source_revision": "ec3fabb97f9d5fcc7441b711570fc05193babd58",
   "glyphs": "independent synthetic wiring fixture; not historical font ROMs"
 }

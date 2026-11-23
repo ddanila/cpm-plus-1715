@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ddanila/dac-emulation
-          ref: 7d71be59cac8afeb12d055266a547bb23c1175a3
+          ref: 4a458e6a837ee09285972ee4cb6a56a5d4404fe6
           path: build/deps/dac-emulation
       - uses: actions/checkout@v4
         with:

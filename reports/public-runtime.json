@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "pico": "dcfd610aa97edf097c2d8b33b4c7c0da11ea0c03",
-    "dac": "98f8f808c08ce21f6b98a00b95185f1e2226e70d",
+    "dac": "8d55c784085a8804c7d22f84117096f180b4a6c0",
     "juku_source": "61b2d5397589e794c0381aa836b7a0da2217e6c8"
   },
   "schema": 2,

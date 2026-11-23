@@ -185,7 +185,7 @@ also describes interbank transfers using LDIR or DMA. The emulator now models
 measured memory-cycle bank selection, with 20 physical instruction cases as
 regression expectations. CP/M CI pins that correction and runs its bank-bus
 regression; reverting the BIOS to scalar copies fails the BIOS probe. See the
-[model and measurement limits](https://github.com/ddanila/dac-emulation/blob/e53c19710a3d1a498082fa3fc60f4cfaa63ce52c/docs/robotron-bank-bus.md).
+[model and measurement limits](https://github.com/ddanila/dac-emulation/blob/b7e912db2a245fc1a8a2a84605b89f57a59e68fb/docs/robotron-bank-bus.md).
 
 The corrected build passed [physical PC001 acceptance at 62400](../reports/hardware-banked-pc001-20261112.json):
 47 KiB TPA test, B: full-directory/full-disk/random-record/reuse tests,
