@@ -28,7 +28,8 @@ static void trace_serial(void *p,const dac_trace_event *e){
 static void video_snapshot(pc1715 *m,const char *base){
  char path[4096],temporary[4096];FILE *f;
  snprintf(path,sizeof path,"%s.video.ram",base);f=fopen(path,"wb");
- if(!f)exit(2);fwrite(m->ram,1,65536,f);fclose(f);
+ if(!f)exit(2);
+ fwrite(m->ram,1,65536,f);fclose(f);
  snprintf(path,sizeof path,"%s.video.rgb",base);f=fopen(path,"wb");
  if(!f)exit(2);
  for(unsigned i=0;i<640*288;i++){uint8_t rgb[3]={m->video.pixels[i]>>16,m->video.pixels[i]>>8,m->video.pixels[i]};fwrite(rgb,1,3,f);}fclose(f);
