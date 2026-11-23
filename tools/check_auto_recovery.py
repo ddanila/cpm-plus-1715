@@ -13,7 +13,8 @@ def main():
  for fd in (wire,device,terminal,console):tty.setraw(fd)
  elog=(a.out/'emulator.log').open('wb');hlog=(a.out/'host.log').open('wb');host=None;emu=None
  env=dict(os.environ,PYTHONPATH=str(ROOT.parent/'ravi/src'),JH_TEST_PTY_UNPACED='1')
- rom=Path(str(files('ravi.backends.robotron1715w').joinpath('rom-w4.bin')))
+ # The stock run boots serial-test.rom; only the W4 model needs the ROM from ravi.
+ rom=None if a.stock else Path(str(files('ravi.backends.robotron1715w').joinpath('rom-w4.bin')))
  def model():
   command=[str(ROOT/'build/wm-probe'),str(rom),str(wire),str(a.out/'ram.bin'),str(a.baud)]
   if a.stock:command=[str(ROOT/'build/serial-probe'),str(ROOT/'build/serial-test.rom'),str(wire),str(a.out/'ram.bin')]

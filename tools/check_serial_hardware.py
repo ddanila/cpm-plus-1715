@@ -146,6 +146,9 @@ def main(argv=None):
                 service.stop()
                 time.sleep(2)
                 service.start()
+                # Resync the prompt first, as check_serial_runtime does: a key
+                # typed while the restarted host reattaches can be lost.
+                command('')
                 command('TYPE HELLO.TXT', b'Native CP/M Plus on Robotron 1715')
                 command('P1715TST R', b'P1715TEST VERIFY PASS', 600)
                 patterned_file(working)

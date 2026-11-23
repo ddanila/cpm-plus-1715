@@ -1,7 +1,19 @@
 name: CP/M 3 source and runtime checks
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore: ['**/*.md', 'docs/**']
+  pull_request:
+    paths-ignore: ['**/*.md', 'docs/**']
+  # Every push runs a representative serial subset; the weekly and manual
+  # runs cover every serial runner.
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   native:
     runs-on: ubuntu-24.04
@@ -67,7 +79,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [emulator, hardware, managed, managed-failures, tools-utilities, tools-streams, tools-binary, tools-large, tools-failures, tools-upgrade]
+        runner: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["emulator","hardware","managed","managed-failures","tools-utilities","tools-streams","tools-binary","tools-large","tools-failures","tools-upgrade"]' || '["emulator","managed","tools-upgrade"]') }}
     defaults:
       run:
         working-directory: cpm-plus-1715
