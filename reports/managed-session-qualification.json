@@ -1239,12 +1239,12 @@
   },
   "classic_reports": {
     "managed-classic-native.json": {
-      "sha256": "c6b672b86f77c68f098e855a50dff1a66d5198fb704480ff120643313402dab2",
+      "sha256": "6cd7d578b4061b08ba4450f6d25f83440638f4a34754290af576b380810ed347",
       "cases": 43,
       "status": "passed"
     },
     "managed-classic-firmware-smoke.json": {
-      "sha256": "a42d10da613fbccd65eae3ef4d2480d8e0afda48a93b0677f36dcb36bc5d0e56",
+      "sha256": "288cc29b98e5c4ac63a9599ab059d68a785700b929f15cf4638eddf3ef90e954",
       "cases": 3,
       "status": "passed"
     }

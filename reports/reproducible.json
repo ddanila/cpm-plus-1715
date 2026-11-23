@@ -3,7 +3,7 @@
   "status": "passed",
   "source_sha256": {
     "Makefile": "d1f08d82f668fc2f53ad0ecb4bd858c485354a4b22cbca708995928f88f6d6b3",
-    "dependencies.json": "3b62bb96aa34f71e264b21d7878d36c9db46dbe7191147c7c749499adcca94ef",
+    "dependencies.json": "f4aa8806534c2a0431e7c90005896ed68c9a5ec16c1423d963c627a9f2d2bf8c",
     "src/banked-disk-test.asm": "bba0c7cabadb92f926bfbcee56a42a1e81991c640ea9dccaf7c44a3e56bddd05",
     "src/banked-loader.asm": "fb256c532da3cddcebcf8bb685d3b161a4bc3b16cf9a29392f070bfc71d4d3cb",
     "src/banked-tpa-test.asm": "77afa052880fa345073834975054c77c37e636f456db854e9e6f8cfb6fd17260",
@@ -488,7 +488,7 @@
     "tools/system_contract.py": "907393cdc44b14b80ddd64d8d325d2c97f9f0add45fcbf9fb25153927dd73668",
     "tools/tool_bundle.py": "111120dfe4dc8e895aa1fa306099c44dc72699a0ce85a846250ccddb0dc75f94",
     "tools/video_signature.py": "39c8a37a9a086a9489c966419ac946fc746166788ffa67fc260a6e01285568fb",
-    "tools/wm-dependencies.json": "9e8b82b50df5f9a113497a5889b2378c9463c20be6f5572d5b2e67c393090b93",
+    "tools/wm-dependencies.json": "592d90d7b74a689a8f27900902fa3ae576fa80d60325e595c1c7cc3abdda78af",
     "tools/wm_probe.c": "062be51eeb7be59e68b343049125db7c449acb06d29adf304f2d74ce4cf6d8d3",
     "tools/wm_usb_rate.py": "dafb764e6df2619980296c6c3a259e313022e897fce7b1d8cb55425fa17983f5"
   },
