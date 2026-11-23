@@ -4,15 +4,15 @@ on:
     paths-ignore: ['**/*.md', 'docs/**']
   pull_request:
     paths-ignore: ['**/*.md', 'docs/**']
-  # Every push runs a representative serial subset; the weekly and manual
-  # runs cover every serial runner.
+  # A push runs unit tests, the native suite and short smokes; the nightly
+  # and manual runs cover every serial runner and the firmware diagnostics.
   schedule:
-    - cron: '17 3 * * 1'
+    - cron: '17 3 * * *'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  # Per trigger, so a push never cancels the weekly or manual full run.
+  # Per trigger, so a push never cancels the nightly or manual full run.
   group: check-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 jobs:
@@ -67,7 +67,8 @@ jobs:
       - run: make -j2 all test-rom
       - run: make firmware-probe PICO=build/deps/Pico1715 DAC=build/deps/dac-emulation
       - run: python3 tools/check_runtime.py --binary build/firmware/classic-probe --rom build/test.rom --backend firmware --suite smoke --out local/firmware-smoke --report local/firmware-smoke.json
-      - run: python3 tools/check_diagnostics.py --binary build/firmware/classic-probe --rom build/test.rom --backend firmware --out local/firmware-diagnostics
+      - if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: python3 tools/check_diagnostics.py --binary build/firmware/classic-probe --rom build/test.rom --backend firmware --out local/firmware-diagnostics
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -80,7 +81,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["emulator","hardware","managed","managed-failures","tools-utilities","tools-streams","tools-binary","tools-large","tools-failures","tools-upgrade"]' || '["emulator","managed","tools-upgrade"]') }}
+        runner: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["emulator","hardware","managed","managed-failures","tools-utilities","tools-streams","tools-binary","tools-large","tools-failures","tools-upgrade"]' || '["smoke"]') }}
     defaults:
       run:
         working-directory: cpm-plus-1715
@@ -112,6 +113,8 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y build-essential bison python3-pexpect
       - run: ../8080-cosim/sync/jukuhost_linux_build.sh
       - run: make serial-probe test
+      - if: matrix.runner == 'smoke'
+        run: python3 tools/check_serial_runtime.py --rom build/serial-test.rom --suite basic --out local/serial-smoke
       - if: matrix.runner == 'emulator'
         run: python3 tools/check_serial_runtime.py --rom build/serial-test.rom --out local/serial-ci
       - if: matrix.runner == 'emulator'

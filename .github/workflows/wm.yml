@@ -3,14 +3,15 @@ on:
   push:
     branches: [main]
     paths-ignore: ['**/*.md', 'docs/**']
-  # macOS repeats the Linux job; it runs weekly and on manual dispatch.
+  # A push runs Linux unit tests and one W3 session; the nightly and manual
+  # runs add every W2/W4/banked/recovery case and macOS.
   schedule:
-    - cron: '47 3 * * 1'
+    - cron: '47 3 * * *'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  # Per trigger, so a push never cancels the weekly or manual full run.
+  # Per trigger, so a push never cancels the nightly or manual full run.
   group: wm-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 jobs:
@@ -20,6 +21,8 @@ jobs:
       matrix:
         os: ${{ fromJSON(github.event_name == 'push' && '["ubuntu-24.04"]' || '["ubuntu-24.04","macos-26"]') }}
     runs-on: ${{ matrix.os }}
+    env:
+      FULL: ${{ github.event_name != 'push' }}
     # macOS runners take about 47 min for the full set.
     timeout-minutes: ${{ matrix.os == 'macos-26' && 75 || 40 }}
     steps:
@@ -59,16 +62,22 @@ jobs:
       - run: make test
       - run: DAC=build/deps/dac-emulation python -m unittest discover -s tests -p serial_crc_fast_test.py
       - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-w3 --corrupt-read
-      - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom.bin --rom-profile w2 --out local/wm-w2
-      - run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-readonly --read-only
-      - run: |
+      - if: env.FULL == 'true'
+        run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom.bin --rom-profile w2 --out local/wm-w2
+      - if: env.FULL == 'true'
+        run: python tools/check_wm_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w3.bin --out local/wm-readonly --read-only
+      - if: env.FULL == 'true'
+        run: |
           for rate in 9600 41600 62400; do
             python tools/check_w4_runtime.py --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/w4-$rate --baud $rate
           done
-      - run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
+      - if: env.FULL == 'true'
+        run: python tools/package_wm.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reports local/wm-w3/result.json local/wm-w2/result.json local/wm-readonly/result.json
       - run: make test-banked test-video test-floppy test-formatter DAC=build/deps/dac-emulation
-      - run: python tools/check_banked_reproducible.py
-      - run: |
+      - if: env.FULL == 'true'
+        run: python tools/check_banked_reproducible.py
+      - if: env.FULL == 'true'
+        run: |
           for rate in 9600 41600 62400; do
             extra=""
             if [ "$rate" = 41600 ]; then extra="--corrupt-read"; fi
@@ -80,12 +89,14 @@ jobs:
             python tools/check_w4_runtime.py --banked --fault "$fault" --host build/deps/8080-cosim/build/jukuhost --rom build/deps/ravi/src/ravi/backends/robotron1715w/rom-w4.bin --out local/banked-$fault
           done
       - name: Shared automatic recovery, banked and nonbanked
+        if: env.FULL == 'true'
         run: |
           for rate in 9600 41600 62400; do
             python tools/check_auto_recovery.py --host build/deps/8080-cosim/build/jukuhost --out local/auto-banked-$rate --baud $rate
             python tools/check_auto_recovery.py --host build/deps/8080-cosim/build/jukuhost --out local/auto-nonbanked-$rate --baud $rate --nonbanked
           done
-      - run: python tools/package_banked.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reproducible reports/banked-reproducible.json --reports local/banked-*/result.json
+      - if: env.FULL == 'true'
+        run: python tools/package_banked.py --ravi build/deps/ravi --host build/deps/8080-cosim/build/jukuhost --reproducible reports/banked-reproducible.json --reports local/banked-*/result.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
