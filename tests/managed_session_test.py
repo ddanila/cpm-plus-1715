@@ -90,8 +90,9 @@ class ManagedTests(unittest.TestCase):
             parent.kill(); parent.wait(timeout=5)
             until=time.monotonic()+5
             while time.monotonic()<until:
-                stat=Path(f'/proc/{child}/stat')
-                if not stat.exists() or stat.read_text().split()[2]=='Z': break
+                try:
+                    if Path(f'/proc/{child}/stat').read_text().split()[2]=='Z': break
+                except FileNotFoundError: break  # reaped between polls
                 time.sleep(.01)
             else: self.fail('host survived supervisor death')
         finally:

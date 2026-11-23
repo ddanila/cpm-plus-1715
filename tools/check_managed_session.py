@@ -19,6 +19,14 @@ from media import inspect
 from cpm_session import status, request
 
 
+def gone(pid):
+    """True once a process has exited; it may be reaped between checks."""
+    try:
+        return Path(f'/proc/{pid}/stat').read_text().split()[2] == 'Z'
+    except FileNotFoundError:
+        return True
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom', type=Path, required=True)
@@ -153,7 +161,7 @@ def main():
             wait_state(session, 'failed')
             until=time.monotonic()+10
             while time.monotonic()<until:
-                if all(not Path(f'/proc/{pid}/stat').exists() or Path(f'/proc/{pid}/stat').read_text().split()[2]=='Z' for pid in child_ids):
+                if all(gone(pid) for pid in child_ids):
                     break
                 time.sleep(.05)
             else: raise AssertionError('orphaned native host')
