@@ -10,7 +10,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: wm-${{ github.ref }}
+  # Per trigger, so a push never cancels the weekly or manual full run.
+  group: wm-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 jobs:
   wm:
