@@ -132,7 +132,8 @@ def main():
         with SerialTransport(
             os.ttyname(device), 9600, parity="N", stop_bits=1, exclusive=True
         ) as port:
-            m = identify_at_rate(port, 5)
+            # Allow for emulator start-up and ROM boot on a loaded runner.
+            m = identify_at_rate(port, 30)
             report["rom"] = m.identity
             assert m.identity["protocol"] == "W4" and m.identity["baud"] == a.baud
             m.write_memory(0xE000 if a.banked else 0xC000, code)

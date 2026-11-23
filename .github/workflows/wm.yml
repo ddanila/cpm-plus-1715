@@ -20,7 +20,8 @@ jobs:
       matrix:
         os: ${{ fromJSON(github.event_name == 'push' && '["ubuntu-24.04"]' || '["ubuntu-24.04","macos-26"]') }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 50
+    # macOS runners take about 47 min for the full set.
+    timeout-minutes: ${{ matrix.os == 'macos-26' && 75 || 40 }}
     steps:
       - uses: actions/checkout@v4
         with:
